@@ -1,3 +1,4 @@
+import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -34,7 +35,7 @@ class _LoginPageState extends State<LoginPage> {
             const Text(
               "Flick",
               style: TextStyle(
-                color: Color(0xff47D294),
+                color: PRIMARY_COLOR,
                 fontWeight: FontWeight.bold,
                 fontSize: 50, // 이 부분은 고정 크기로 유지
                 fontFamily: "Pretendard",
@@ -76,7 +77,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             "카카오로 3초 만에 로그인",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: SUB_COLOR,
                               fontSize: 20, // 이 부분은 고정 크기로 유지
                               fontFamily: "Pretendard",
                               fontWeight: FontWeight.bold,
@@ -123,7 +124,7 @@ class _LoginPageState extends State<LoginPage> {
                           child: Text(
                             "구글로 로그인",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: SUB_COLOR,
                               fontSize: 20, // 이 부분은 고정 크기로 유지
                               fontFamily: "Pretendard",
                               fontWeight: FontWeight.bold,

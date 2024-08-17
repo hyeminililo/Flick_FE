@@ -1,3 +1,4 @@
+import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 
 class Success extends StatefulWidget {
@@ -26,7 +27,7 @@ class _SuccessState extends State<Success> {
           ),
           Icon(
             Icons.check_circle,
-            color: const Color(0xff47D294),
+            color: PRIMARY_COLOR,
             size: screenWidth * 0.30,
           ),
           SizedBox(
@@ -53,7 +54,7 @@ class _SuccessState extends State<Success> {
               _alertSignUp(context, screenWidth, screenHeight);
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xff47D294),
+              backgroundColor: PRIMARY_COLOR,
               padding: EdgeInsets.symmetric(
                 horizontal: screenWidth * 0.38, // 버튼 가로 크기를 동적으로 설정
                 vertical: screenHeight * 0.023, // 버튼 세로 크기를 동적으로 설정
@@ -64,7 +65,7 @@ class _SuccessState extends State<Success> {
             ),
             child: const Text(
               "시작하기",
-              style: TextStyle(color: Colors.white),
+              style: TextStyle(color: SUB_COLOR),
             ),
           )
         ],
@@ -83,7 +84,7 @@ Future<dynamic> _alertSignUp(
       title: Column(
         children: [
           Icon(Icons.check_circle,
-              color: const Color(0xff47D294), size: screenWidth * 0.30),
+              color: PRIMARY_COLOR, size: screenWidth * 0.30),
           SizedBox(
             height: screenHeight * 0.07,
           ),
@@ -106,7 +107,7 @@ Future<dynamic> _alertSignUp(
         ElevatedButton(
           onPressed: () => Navigator.of(context).pop(),
           style: ElevatedButton.styleFrom(
-            backgroundColor: const Color(0xff47D294),
+            backgroundColor: PRIMARY_COLOR,
             padding: EdgeInsets.symmetric(
                 horizontal: screenWidth * 0.38, // 버튼 가로 크기를 동적으로 설정
                 vertical: screenHeight * 0.023),
@@ -117,40 +118,10 @@ Future<dynamic> _alertSignUp(
           child: Text(
             "확인",
             style: TextStyle(
-                fontSize: screenWidth > 600 ? 30 : 20, color: Colors.white),
+                fontSize: screenWidth > 600 ? 30 : 20, color: SUB_COLOR),
           ),
         )
       ],
     ),
   );
 }
-
-// Container(
-//                 width: 350,
-//                 height: 56,
-//                 decoration: const BoxDecoration(
-//                     color: Colors.yellow,
-//                     borderRadius: BorderRadius.all(Radius.circular(10))),
-//                 child: const Row(
-//                   mainAxisAlignment: MainAxisAlignment.center,
-//                   crossAxisAlignment: CrossAxisAlignment.center,
-//                   children: [
-//                     Icon(
-//                       Icons.check_circle,
-//                       color: Colors.white,
-//                     ),
-//                     SizedBox(
-//                       width: 8.0,
-//                     ),
-//                     Expanded(
-//                       child: Text(
-//                         textAlign: TextAlign.center,
-//                         "카카오로 3초 만에 로그인 하기.",
-//                         style: TextStyle(
-//                             color: Colors.white,
-//                             fontSize: 10,
-//                             fontWeight: FontWeight.bold),
-//                       ),
-//                     )
-//                   ],
-//                 ))
