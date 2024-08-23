@@ -36,17 +36,17 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>kakao600ab9e1fb2bc702bab16e3f5bf9d36f</string>
+				<string>$(KAKAO_NATIVE_APP_KEY)</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>KAKAO_APP_KEY</key>
-	<string>600ab9e1fb2bc702bab16e3f5bf9d36f</string>
+	<string>$(KAKAO_NATIVE_APP_KEY)</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
-		<string>kakao${600ab9e1fb2bc702bab16e3f5bf9d36f}</string>
+		<string>$(KAKAO_NATIVE_APP_KEY)</string>
 		<string>kakaokompassauth</string>
 		<string>storykompassauth</string>
 		<string>kakaolink</string>
