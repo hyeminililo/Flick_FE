@@ -9,7 +9,9 @@ void main() async {
   // String? kakaoNativeKey = dotenv.env['KAKAO_NATIVE_KEY'];
   // await FlutterConfig.loadEnvVariables();
   var kakaoNativeAppKey = Env.kakaoNativeAppKey;
-  KakaoSdk.init(nativeAppKey: kakaoNativeAppKey);
+  var kakaoJavaScriptKey = Env.kakaoJavaScriptKey;
+  KakaoSdk.init(
+      nativeAppKey: kakaoNativeAppKey, javaScriptAppKey: kakaoJavaScriptKey);
 //  KakaoSdk.init(nativeAppKey: kakaoNativeKey);
   runApp(const KakaoLogin_view());
 }

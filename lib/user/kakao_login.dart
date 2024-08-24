@@ -7,6 +7,7 @@ class KakaoLogin implements SocialLogin {
     try {
       bool isInstalled = await isKakaoTalkInstalled();
       if (isInstalled) {
+        // app 서비스로 구현 -> 앱 에서 받을 수 있는 인증토큰
         try {
           await UserApi.instance.loginWithKakaoTalk();
           return true;
@@ -14,6 +15,7 @@ class KakaoLogin implements SocialLogin {
           return false;
         }
       } else {
+        // web view 방식으로 구현 -> chrome으로 확인해보기 ( 설치되어있지 않을 때 ) -> redirect url 처럼 web 방식으로 구현289
         try {
           await UserApi.instance.loginWithKakaoAccount();
           return true;
