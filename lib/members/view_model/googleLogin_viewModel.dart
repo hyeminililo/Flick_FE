@@ -1,6 +1,4 @@
-import 'package:dio/dio.dart';
 import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
-import 'package:flick_frontend/const/uri.dart';
 import 'package:flick_frontend/members/component/social_login.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

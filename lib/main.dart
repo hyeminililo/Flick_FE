@@ -1,11 +1,7 @@
 import 'package:flick_frontend/env.dart';
 import 'package:flick_frontend/members/view/google_login_screen.dart';
-import 'package:flick_frontend/members/view_model/google_login.dart';
-
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-
-import 'members/view/kakaoLogin.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
