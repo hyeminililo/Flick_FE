@@ -1,23 +1,23 @@
-import 'package:flick_frontend/user/social_login.dart';
+import 'package:flick_frontend/members/social_login.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class MainViewModel {
   final SocialLogin _socialLogin;
-  bool isLogined = false;
+  String isLogined = 'Failed to Login';
   User? user;
 
   MainViewModel(this._socialLogin);
 
   Future login() async {
     isLogined = await _socialLogin.login();
-    if (isLogined) {
+    if (isLogined == 'ok') {
       user = await UserApi.instance.me();
     }
   }
 
   Future logout() async {
     await _socialLogin.logout();
-    isLogined = false;
+    isLogined = 'Failed to Login';
     user = null;
   }
 }
