@@ -33,6 +33,7 @@ migrate_working_dir/
 .env
 lib/env.dart
 lib/env.g.dart
+lib/const/uri.dart
 # Symbolication related
 app.*.symbols
 

@@ -1,18 +1,30 @@
-import 'package:flick_frontend/user/kakao_login.dart';
-import 'package:flick_frontend/user/view_model/main_view.dart';
+import 'package:dio/dio.dart';
+import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
+import 'package:flick_frontend/const/uri.dart';
+import 'package:flick_frontend/members/kakao_login.dart';
+import 'package:flick_frontend/members/view_model/main_view.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+class KakaoLoginScreen extends StatefulWidget {
+  const KakaoLoginScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<KakaoLoginScreen> createState() => _KakaoLoginScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final viewModel = MainViewModel(KakaoLogin());
+class _KakaoLoginScreenState extends State<KakaoLoginScreen> {
+  late final MainViewModel viewModel;
+  late final AuthRepository authRepository;
+  Dio dio = Dio();
+
+  @override
+  void initState() {
+    super.initState();
+    authRepository = AuthRepository(dio, baseUrl: BASE_URl);
+    viewModel = MainViewModel(KakaoLogin(authRepository));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +39,14 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             Image.network(
                 viewModel.user?.kakaoAccount?.profile?.profileImageUrl ?? ''),
+            Text(viewModel.user?.kakaoAccount?.profile?.nickname ?? ''),
             Text(
-              "${viewModel.isLogined}",
+              viewModel.isLogined,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             ElevatedButton(
                 onPressed: () async {
                   await viewModel.login();
-
                   setState(() {});
                 },
                 child: const Text("Login")),
