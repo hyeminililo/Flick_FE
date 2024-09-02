@@ -1,7 +1,7 @@
 import 'package:flick_frontend/auth/model/idToken_model.dart';
 import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
 import 'package:flick_frontend/const/uri.dart';
-import 'package:flick_frontend/members/social_login.dart';
+import 'package:flick_frontend/members/component/social_login.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class KakaoLogin implements SocialLogin {
@@ -37,7 +37,7 @@ class KakaoLogin implements SocialLogin {
 
           final tokenResponse =
               await authRepository.requestAccessToken('kakao', {
-            'id_token': idTokenModel.idToken,
+            'id_token': idTokenModel.idToken!,
           });
           print('AccessToken: ${tokenResponse.accessToken}');
           print('RefreshToken: ${tokenResponse.refreshToken}');

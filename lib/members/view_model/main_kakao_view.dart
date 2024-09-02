@@ -1,4 +1,4 @@
-import 'package:flick_frontend/members/social_login.dart';
+import 'package:flick_frontend/members/component/social_login.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class MainViewModel {

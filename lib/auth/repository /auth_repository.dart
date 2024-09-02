@@ -16,19 +16,13 @@ abstract class AuthRepository {
 
   @POST('/{provider}/token')
   Future<TokenResponseModel> requestAccessToken(
-      @Path("provider") String provider, @Body() Map<String, dynamic> body);
-
-  @POST('/{provider}/token')
-  Future<TokenResponseModel> requestAccessToken2(
-    @Path("provider") String provider,
-    @Body() Map<String, dynamic> body,
-  );
+      @Path("provider") String provider, @Body() Map<String, String> body);
 
   @POST('/{provider}/token')
   Future<TokenResponseModel> requestRefrechToken(
-      @Path("provider") String provider, @Body() Map<String, dynamic> body);
+      @Path("provider") String provider, @Body() Map<String, String> body);
 
   @POST('/token/access')
   Future<TokenResponseModel> requestReIssueAccessToken(
-      @Body() Map<String, dynamic> body);
+      @Body() Map<String, String> body);
 }
