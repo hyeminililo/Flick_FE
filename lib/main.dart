@@ -1,5 +1,6 @@
 import 'package:flick_frontend/env.dart';
-import 'package:flick_frontend/members/view/google_login_screen.dart';
+import 'package:flick_frontend/members/view/googleLogin_screen.dart';
+import 'package:flick_frontend/members/view/kakaoLogin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
@@ -23,6 +24,6 @@ class KakaoLogin_view extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const GoogleLoginScreen(title: ''));
+        home: const KakaoLoginScreen(title: ''));
   }
 }

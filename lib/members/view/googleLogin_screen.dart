@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
 import 'package:flick_frontend/const/uri.dart';
-import 'package:flick_frontend/members/view_model/google_login.dart';
+import 'package:flick_frontend/members/view_model/googleLogin_viewModel.dart';
 import 'package:flutter/material.dart';
 
 class GoogleLoginScreen extends StatefulWidget {

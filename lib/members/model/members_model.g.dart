@@ -6,16 +6,14 @@ part of 'members_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Members_Model _$Members_ModelFromJson(Map<String, dynamic> json) =>
-    Members_Model(
+Members _$MembersFromJson(Map<String, dynamic> json) => Members(
       type: $enumDecode(_$UserTypeEnumMap, json['type']),
       nickname: json['nickname'] as String,
       school: json['school'] as String,
       gradeClass: json['gradeClass'] as String,
     );
 
-Map<String, dynamic> _$Members_ModelToJson(Members_Model instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MembersToJson(Members instance) => <String, dynamic>{
       'type': _$UserTypeEnumMap[instance.type]!,
       'nickname': instance.nickname,
       'school': instance.school,

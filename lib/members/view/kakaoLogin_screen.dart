@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
 import 'package:flick_frontend/const/uri.dart';
-import 'package:flick_frontend/members/view_model/kakao_login.dart';
-import 'package:flick_frontend/members/view_model/main_kakao_view.dart';
+import 'package:flick_frontend/members/view_model/kakaoLogin_viewModel.dart';
+import 'package:flick_frontend/members/view_model/mainKakao_viewModel.dart';
 import 'package:flutter/material.dart';
 
 class KakaoLoginScreen extends StatefulWidget {

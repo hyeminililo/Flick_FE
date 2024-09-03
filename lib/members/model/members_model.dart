@@ -5,20 +5,20 @@ part 'members_model.g.dart';
 enum UserType { STUDENT, GENERAL }
 
 @JsonSerializable()
-class Members_Model {
+class Members {
   UserType type;
   String nickname;
   String school;
   String gradeClass;
 
-  Members_Model(
+  Members(
       {required this.type,
       required this.nickname,
       required this.school,
       required this.gradeClass});
 
-  factory Members_Model.fromJson(Map<String, dynamic> json) =>
-      _$Members_ModelFromJson(json);
+  factory Members.fromJson(Map<String, dynamic> json) =>
+      _$MembersFromJson(json);
 
-  Map<String, dynamic> toJson() => _$Members_ModelToJson(this);
+  Map<String, dynamic> toJson() => _$MembersToJson(this);
 }

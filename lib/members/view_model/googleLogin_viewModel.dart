@@ -13,7 +13,7 @@ class GoogleLogin implements SocialLogin {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication googleAuth =
           await googleUser!.authentication;
-      print('구글 로그인 성공1: ${googleUser.serverAuthCode}');
+      print('구글 로그인 idToken : ${googleAuth.idToken}');
       print('구글 로그인 성공1: ${googleAuth.accessToken}');
       print('구글 로그인 성공1: ${googleUser.displayName}');
       String idToken = googleAuth.idToken!;
