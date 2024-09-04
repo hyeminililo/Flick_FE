@@ -1,5 +1,5 @@
 import 'package:flick_frontend/env.dart';
-import 'package:flick_frontend/members/view/kakaoLogin_screen.dart';
+import 'package:flick_frontend/members/view/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
@@ -23,7 +23,7 @@ class KakaoLogin_view extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const KakaoLoginScreen(title: 'title'),
+      home: const SuccessScreen(userName: 'userName'),
     );
   }
 }

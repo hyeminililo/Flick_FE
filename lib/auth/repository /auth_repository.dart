@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flick_frontend/auth/model/idToken_model.dart';
 import 'package:flick_frontend/auth/model/tokenResponse_model.dart';
-import 'package:flick_frontend/const/uri.dart';
+import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:retrofit/retrofit.dart';
 
 part 'auth_repository.g.dart';

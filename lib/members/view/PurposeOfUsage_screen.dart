@@ -10,7 +10,6 @@ class PurposeOfUsage extends StatefulWidget {
 
 class _PurposeOfUsageState extends State<PurposeOfUsage> {
   String selectedPurpose = "";
-
   void _showPurposeSelection() {
     showModalBottomSheet(
       context: context,
