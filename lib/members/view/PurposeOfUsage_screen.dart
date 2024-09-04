@@ -11,7 +11,6 @@ class PurposeOfUsage extends StatefulWidget {
 class _PurposeOfUsageState extends State<PurposeOfUsage> {
   String selectedPurpose = "";
 
-  // _는 java에서 private 역할을 한다고 이해.
   void _showPurposeSelection() {
     showModalBottomSheet(
       context: context,
