@@ -1,10 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
+import 'package:flick_frontend/auth/repository%20/google_login_repository.dart';
+import 'package:flick_frontend/auth/repository%20/kakao_login_repository.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
-import 'package:flick_frontend/members/view_model/googleLogin_viewModel.dart';
-import 'package:flick_frontend/members/view_model/kakaoLogin_viewModel.dart';
-import 'package:flick_frontend/members/view_model/mainKakao_viewModel.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -16,8 +15,8 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   late final AuthRepository authRepository;
-  late final GoogleLogin googleLogin;
-  late final MainViewModel kakaoLogin;
+  late final GoogleLoginRepository googleLogin;
+  late final KakaoLoginRepository kakaoLogin;
 
   Dio dio = Dio();
 
@@ -25,8 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void initState() {
     super.initState();
     authRepository = AuthRepository(dio, baseUrl: BASE_URl);
-    googleLogin = GoogleLogin(authRepository);
-    kakaoLogin = MainViewModel(KakaoLogin(authRepository));
+    googleLogin = GoogleLoginRepository(authRepository);
+    kakaoLogin = KakaoLoginRepository(authRepository);
   }
 
   @override
@@ -34,6 +33,7 @@ class _LoginScreenState extends State<LoginScreen> {
     // MediaQuery로 화면의 크기를 가져옴.
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+
     String userName = kakaoLogin.user?.kakaoAccount?.profile?.nickname ?? '';
 
     return Scaffold(

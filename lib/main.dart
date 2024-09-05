@@ -1,5 +1,5 @@
+import 'package:flick_frontend/auth/view/login_screen.dart';
 import 'package:flick_frontend/env.dart';
-import 'package:flick_frontend/members/view/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
@@ -9,11 +9,11 @@ void main() async {
   var kakaoJavaScriptKey = Env.kakaoJavaScriptKey;
   KakaoSdk.init(
       nativeAppKey: kakaoNativeAppKey, javaScriptAppKey: kakaoJavaScriptKey);
-  runApp(const KakaoLogin_view());
+  runApp(const InitializeView());
 }
 
-class KakaoLogin_view extends StatelessWidget {
-  const KakaoLogin_view({super.key});
+class InitializeView extends StatelessWidget {
+  const InitializeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class KakaoLogin_view extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const SuccessScreen(userName: 'userName'),
+      home: const LoginScreen(),
     );
   }
 }

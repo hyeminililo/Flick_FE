@@ -1,4 +1,4 @@
 abstract class SocialLogin {
-  Future<String> login();
+  Future<bool> login();
   Future<bool> logout();
 }
