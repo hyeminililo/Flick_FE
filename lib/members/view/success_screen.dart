@@ -1,21 +1,19 @@
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 
-class Success extends StatefulWidget {
+class SuccessScreen extends StatefulWidget {
   final String userName;
-  const Success({super.key, required this.userName});
+  const SuccessScreen({super.key, required this.userName});
 
   @override
-  State<Success> createState() => _SuccessState();
+  State<SuccessScreen> createState() => _SuccessScreenState();
 }
 
-class _SuccessState extends State<Success> {
+class _SuccessScreenState extends State<SuccessScreen> {
   @override
   Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-    // print(screenWidth);
-    // print(screenHeight);
 
     return Scaffold(
         body: Center(

@@ -1,21 +1,40 @@
+import 'package:dio/dio.dart';
+import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
 import 'package:flick_frontend/common/const/colors.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flick_frontend/common/dio/uri.dart';
+import 'package:flick_frontend/members/view_model/googleLogin_viewModel.dart';
+import 'package:flick_frontend/members/view_model/kakaoLogin_viewModel.dart';
+import 'package:flick_frontend/members/view_model/mainKakao_viewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
+  late final AuthRepository authRepository;
+  late final GoogleLogin googleLogin;
+  late final MainViewModel kakaoLogin;
+
+  Dio dio = Dio();
+
+  @override
+  void initState() {
+    super.initState();
+    authRepository = AuthRepository(dio, baseUrl: BASE_URl);
+    googleLogin = GoogleLogin(authRepository);
+    kakaoLogin = MainViewModel(KakaoLogin(authRepository));
+  }
+
   @override
   Widget build(BuildContext context) {
     // MediaQuery로 화면의 크기를 가져옴.
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
+    String userName = kakaoLogin.user?.kakaoAccount?.profile?.nickname ?? '';
 
     return Scaffold(
       body: Center(
@@ -45,7 +64,13 @@ class _LoginPageState extends State<LoginPage> {
               height: screenHeight * 0.13, // 화면 높이의 13%
             ),
             ElevatedButton(
-              onPressed: () {},
+              //to do : 1.카카오 로그인 메소드 병합
+              onPressed: () async {
+                await kakaoLogin.login();
+                setState(() {});
+
+                print(userName);
+              },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.05, // 화면 너비의 5%
@@ -92,7 +117,11 @@ class _LoginPageState extends State<LoginPage> {
               height: screenHeight * 0.04, // 화면 높이의 2%
             ),
             ElevatedButton(
-              onPressed: () {},
+              //to do : 1.구글 로그인 메소드 병합
+              onPressed: () async {
+                await googleLogin.login();
+                setState(() {});
+              },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.05, // 화면 너비의 5%
