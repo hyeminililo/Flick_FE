@@ -1,6 +1,7 @@
 import 'package:flick_frontend/auth/view/login_screen.dart';
 import 'package:flick_frontend/env.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 void main() async {
@@ -9,7 +10,7 @@ void main() async {
   var kakaoJavaScriptKey = Env.kakaoJavaScriptKey;
   KakaoSdk.init(
       nativeAppKey: kakaoNativeAppKey, javaScriptAppKey: kakaoJavaScriptKey);
-  runApp(const InitializeView());
+  runApp(const ProviderScope(child: InitializeView()));
 }
 
 class InitializeView extends StatelessWidget {

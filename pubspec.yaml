@@ -48,6 +48,7 @@ dependencies:
   retrofit: ^4.2.0
   retrofit_generator: ^8.2.1
   json_annotation: ^4.9.0
+  flutter_riverpod: ^2.5.1
 
 dev_dependencies:
   flutter_test:

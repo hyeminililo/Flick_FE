@@ -1,40 +1,20 @@
 import 'package:dio/dio.dart';
+import 'package:flick_frontend/auth/provider/auth_provider.dart';
 import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
 import 'package:flick_frontend/auth/repository%20/google_login_repository.dart';
 import 'package:flick_frontend/auth/repository%20/kakao_login_repository.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends ConsumerWidget {
   const LoginScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  late final AuthRepository authRepository;
-  late final GoogleLoginRepository googleLogin;
-  late final KakaoLoginRepository kakaoLogin;
-
-  Dio dio = Dio();
-
-  @override
-  void initState() {
-    super.initState();
-    authRepository = AuthRepository(dio, baseUrl: BASE_URl);
-    googleLogin = GoogleLoginRepository(authRepository);
-    kakaoLogin = KakaoLoginRepository(authRepository);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    // MediaQuery로 화면의 크기를 가져옴.
+  Widget build(BuildContext context, WidgetRef ref) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
-
-    String userName = kakaoLogin.user?.kakaoAccount?.profile?.nickname ?? '';
 
     return Scaffold(
       body: Center(
@@ -66,10 +46,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ElevatedButton(
               //to do : 1.카카오 로그인 메소드 병합
               onPressed: () async {
-                await kakaoLogin.login();
-                setState(() {});
-
-                print(userName);
+                final kakaoLgoinRe = KakaoLoginRepository(
+                    AuthRepository(Dio(), baseUrl: BASE_URl));
+                await kakaoLgoinRe.login(ref);
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
@@ -119,8 +98,9 @@ class _LoginScreenState extends State<LoginScreen> {
             ElevatedButton(
               //to do : 1.구글 로그인 메소드 병합
               onPressed: () async {
-                await googleLogin.login();
-                setState(() {});
+                final googleLoginRepo = GoogleLoginRepository(
+                    AuthRepository(Dio(), baseUrl: BASE_URl));
+                await googleLoginRepo.login(ref);
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(

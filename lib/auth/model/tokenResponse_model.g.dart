@@ -8,12 +8,14 @@ part of 'tokenResponse_model.dart';
 
 TokenResponseModel _$TokenResponseModelFromJson(Map<String, dynamic> json) =>
     TokenResponseModel(
-      accessToken: json['accessToken'] as String?,
-      refreshToken: json['refreshToken'] as String?,
+      statusCode: (json['statusCode'] as num).toInt(),
+      message: json['message'] as String,
+      data: TokenData.fromJson(json['data'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$TokenResponseModelToJson(TokenResponseModel instance) =>
     <String, dynamic>{
-      'accessToken': instance.accessToken,
-      'refreshToken': instance.refreshToken,
+      'statusCode': instance.statusCode,
+      'message': instance.message,
+      'data': instance.data,
     };

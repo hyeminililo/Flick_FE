@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flick_frontend/auth/model/idToken_model.dart';
 import 'package:flick_frontend/auth/model/tokenResponse_model.dart';
+import 'package:flick_frontend/auth/model/token_model.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -15,14 +16,9 @@ abstract class AuthRepository {
       @Path("provider") String provider, @Query("code") String code);
 
   @POST('/{provider}/token')
-  Future<TokenResponseModel> requestAccessToken(
-      @Path("provider") String provider, @Body() Map<String, String> body);
-
-  @POST('/{provider}/token')
-  Future<TokenResponseModel> requestRefrechToken(
+  Future<TokenResponseModel> requestAuthToken(
       @Path("provider") String provider, @Body() Map<String, String> body);
 
   @POST('/token/access')
-  Future<TokenResponseModel> requestReIssueAccessToken(
-      @Body() Map<String, String> body);
+  Future<TokenData> requestReIssueAccessToken(@Body() Map<String, String> body);
 }

@@ -7,7 +7,7 @@ part of 'idToken_model.dart';
 // **************************************************************************
 
 IdTokenModel _$IdTokenModelFromJson(Map<String, dynamic> json) => IdTokenModel(
-      idToken: json['idToken'] as String?,
+      idToken: json['idToken'] as String,
     );
 
 Map<String, dynamic> _$IdTokenModelToJson(IdTokenModel instance) =>
