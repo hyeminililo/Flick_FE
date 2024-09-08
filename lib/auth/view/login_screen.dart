@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:flick_frontend/auth/provider/auth_provider.dart';
 import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
 import 'package:flick_frontend/auth/repository%20/google_login_repository.dart';
 import 'package:flick_frontend/auth/repository%20/kakao_login_repository.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
+import 'package:flick_frontend/members/view/PurposeOfUsage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -48,7 +48,16 @@ class LoginScreen extends ConsumerWidget {
               onPressed: () async {
                 final kakaoLgoinRe = KakaoLoginRepository(
                     AuthRepository(Dio(), baseUrl: BASE_URl));
-                await kakaoLgoinRe.login(ref);
+                bool loginResult = await kakaoLgoinRe.login(ref);
+                try {
+                  if (loginResult) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PurposeOfUsageScreen(),
+                    ));
+                  }
+                } catch (err) {
+                  // 오류 화면 출력
+                }
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
@@ -96,11 +105,21 @@ class LoginScreen extends ConsumerWidget {
               height: screenHeight * 0.04, // 화면 높이의 2%
             ),
             ElevatedButton(
-              //to do : 1.구글 로그인 메소드 병합
               onPressed: () async {
                 final googleLoginRepo = GoogleLoginRepository(
                     AuthRepository(Dio(), baseUrl: BASE_URl));
-                await googleLoginRepo.login(ref);
+                bool loginResult = await googleLoginRepo.login(ref);
+                try {
+                  // if (!mounted) return; // 위젯이 여전히 존재하는지 확인
+
+                  if (loginResult) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PurposeOfUsageScreen(),
+                    ));
+                  }
+                } catch (err) {
+                  // 오류 화면 출력
+                }
               },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(

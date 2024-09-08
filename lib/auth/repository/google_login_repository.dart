@@ -23,8 +23,6 @@ class GoogleLoginRepository implements SocialLogin {
       String idToken = googleAuth.idToken!;
       print('IdToken  : $idToken');
       _fetchTokens(idToken, ref);
-
-      //  await fetchTokens(idToken);
     } catch (err) {
       print('Error during Google Login: $err');
     }
