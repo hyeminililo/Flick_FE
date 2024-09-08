@@ -7,7 +7,6 @@ part 'newsResponse_model.g.dart';
 class NewsResponse {
   final int statusCode;
   final String message;
-  // data 라고 해도 괜찮은지 모르겠ㄲ음 newsInfo로 안 해도 될지 모루겠음 -> 음 data로 해야할 것 같음
   final List<NewsInfo>? data;
 
   NewsResponse({
