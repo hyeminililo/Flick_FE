@@ -1,19 +1,18 @@
+import 'package:dio/dio.dart';
+import 'package:flick_frontend/auth/repository/auth_repository.dart';
+import 'package:flick_frontend/auth/repository/google_login_repository.dart';
+import 'package:flick_frontend/auth/repository/kakao_login_repository.dart';
 import 'package:flick_frontend/common/const/colors.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flick_frontend/common/dio/uri.dart';
+import 'package:flick_frontend/members/view/PurposeOfUsage_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class LoginScreen extends ConsumerWidget {
+  const LoginScreen({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  @override
-  Widget build(BuildContext context) {
-    // MediaQuery로 화면의 크기를 가져옴.
+  Widget build(BuildContext context, WidgetRef ref) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -45,7 +44,21 @@ class _LoginPageState extends State<LoginPage> {
               height: screenHeight * 0.13, // 화면 높이의 13%
             ),
             ElevatedButton(
-              onPressed: () {},
+              //to do : 1.카카오 로그인 메소드 병합
+              onPressed: () async {
+                final kakaoLgoinRe = KakaoLoginRepository(
+                    AuthRepository(Dio(), baseUrl: BASE_URl));
+                bool loginResult = await kakaoLgoinRe.login(ref);
+                try {
+                  if (loginResult) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PurposeOfUsageScreen(),
+                    ));
+                  }
+                } catch (err) {
+                  // 오류 화면 출력
+                }
+              },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.05, // 화면 너비의 5%
@@ -92,7 +105,22 @@ class _LoginPageState extends State<LoginPage> {
               height: screenHeight * 0.04, // 화면 높이의 2%
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final googleLoginRepo = GoogleLoginRepository(
+                    AuthRepository(Dio(), baseUrl: BASE_URl));
+                bool loginResult = await googleLoginRepo.login(ref);
+                try {
+                  // if (!mounted) return; // 위젯이 여전히 존재하는지 확인
+
+                  if (loginResult) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PurposeOfUsageScreen(),
+                    ));
+                  }
+                } catch (err) {
+                  // 오류 화면 출력
+                }
+              },
               style: ElevatedButton.styleFrom(
                 padding: EdgeInsets.symmetric(
                   horizontal: screenWidth * 0.05, // 화면 너비의 5%

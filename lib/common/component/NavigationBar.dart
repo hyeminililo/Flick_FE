@@ -1,12 +1,12 @@
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 
-class Navigationbar extends StatefulWidget {
+class CustomNavigationBar extends StatefulWidget {
   final int selectedIndex;
   final ValueChanged<int> onIndexChanged;
   final TabController tabController;
 
-  const Navigationbar({
+  const CustomNavigationBar({
     super.key,
     required this.selectedIndex,
     required this.onIndexChanged,
@@ -14,10 +14,10 @@ class Navigationbar extends StatefulWidget {
   });
 
   @override
-  State<Navigationbar> createState() => _NavigationbarState();
+  State<CustomNavigationBar> createState() => _CustomNavigationBarState();
 }
 
-class _NavigationbarState extends State<Navigationbar> {
+class _CustomNavigationBarState extends State<CustomNavigationBar> {
   @override
   Widget build(BuildContext context) {
     double screenHeight = MediaQuery.of(context).size.height;

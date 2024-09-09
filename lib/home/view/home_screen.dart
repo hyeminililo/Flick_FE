@@ -52,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           MypageScreen()
         ],
       ),
-      bottomNavigationBar: Navigationbar(
+      bottomNavigationBar: CustomNavigationBar(
         selectedIndex: _selectedIndex,
         onIndexChanged: _onIndexChanged,
         tabController: _tabController,

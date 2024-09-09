@@ -15,8 +15,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
     return Scaffold(
       body: Center(
         child: Image.asset("assets/images/flick.png",
-            height: screenHeight * 0.20, // 화면 높이의 20%
-            width: screenWidth * 0.3),
+            height: screenHeight * 0.20, width: screenWidth * 0.3),
       ),
     );
   }

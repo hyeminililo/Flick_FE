@@ -1,17 +1,15 @@
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 
-class PurposeOfUsage extends StatefulWidget {
-  const PurposeOfUsage({super.key});
+class PurposeOfUsageScreen extends StatefulWidget {
+  const PurposeOfUsageScreen({super.key});
 
   @override
-  State<PurposeOfUsage> createState() => _PurposeOfUsageState();
+  State<PurposeOfUsageScreen> createState() => _PurposeOfUsageScreenState();
 }
 
-class _PurposeOfUsageState extends State<PurposeOfUsage> {
+class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
   String selectedPurpose = "";
-
-  // _는 java에서 private 역할을 한다고 이해.
   void _showPurposeSelection() {
     showModalBottomSheet(
       context: context,

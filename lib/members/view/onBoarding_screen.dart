@@ -1,4 +1,4 @@
-import 'package:flick_frontend/members/view/login_screen.dart';
+import 'package:flick_frontend/auth/view/login_screen.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -75,7 +75,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const LoginPage()));
+                            builder: (context) => const LoginScreen()));
                   },
                   child: const Text(
                     '건너뛰기',
@@ -107,7 +107,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginPage()));
+                          builder: (context) => const LoginScreen()));
                 }
               },
               child: Text(
