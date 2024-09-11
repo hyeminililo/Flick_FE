@@ -4,7 +4,7 @@ import 'package:flick_frontend/auth/repository/google_login_repository.dart';
 import 'package:flick_frontend/auth/repository/kakao_login_repository.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
-import 'package:flick_frontend/members/view/PurposeOfUsage_screen.dart';
+import 'package:flick_frontend/members/view/purposeOfUsage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
