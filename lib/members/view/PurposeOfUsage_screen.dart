@@ -1,4 +1,5 @@
 import 'package:flick_frontend/common/const/colors.dart';
+import 'package:flick_frontend/members/view/success_screen.dart';
 import 'package:flutter/material.dart';
 
 class PurposeOfUsageScreen extends StatefulWidget {
@@ -9,7 +10,9 @@ class PurposeOfUsageScreen extends StatefulWidget {
 }
 
 class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
+  final TextEditingController _nameController = TextEditingController();
   String selectedPurpose = "";
+
   void _showPurposeSelection() {
     showModalBottomSheet(
       context: context,
@@ -63,6 +66,13 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    // 메모리 누수를 방지하기 위해 dispose에서 컨트롤러 해제
+    _nameController.dispose();
+    super.dispose();
   }
 
   @override
@@ -143,6 +153,7 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                     ),
                     const SizedBox(height: 8.0),
                     TextField(
+                      controller: _nameController,
                       decoration: InputDecoration(
                         hintText: '예) 홍길동',
                         border: OutlineInputBorder(
@@ -154,7 +165,15 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
-                          // 가입하기 버튼 누를 때 동작
+                          String userName = _nameController.text;
+
+                          if (userName.isNotEmpty) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SuccessScreen(userName: userName)));
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.green,
@@ -207,6 +226,7 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                     ),
                     const SizedBox(height: 8.0),
                     TextField(
+                      controller: _nameController,
                       decoration: InputDecoration(
                         hintText: '예) 홍길동',
                         border: OutlineInputBorder(
@@ -218,7 +238,17 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                     Center(
                       child: ElevatedButton(
                         onPressed: () {
-                          // 가입하기 버튼 누를 때 동작
+                          String userName = _nameController.text;
+
+                          if (userName.isNotEmpty) {
+                            // context.go('')
+                            Navigator.push(
+                                // context.go(''),
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        SuccessScreen(userName: userName)));
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: STUDENT_BUTTON_COLOR,

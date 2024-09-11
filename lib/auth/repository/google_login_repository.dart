@@ -1,7 +1,7 @@
 import 'package:flick_frontend/auth/component/social_login.dart';
 import 'package:flick_frontend/auth/model/token_model.dart';
 import 'package:flick_frontend/auth/provider/auth_provider.dart';
-import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
+import 'package:flick_frontend/auth/repository/auth_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 

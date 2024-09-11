@@ -1,0 +1,59 @@
+[33mcommit faf1cad60f79fef56db0f460f6bf4ac16d9efe0d[m[33m ([m[1;36mHEAD -> [m[1;32mseung[m[33m, [m[1;31morigin/seung[m[33m)[m
+Author: Lee Seungchang <jjekrrq01@naver.com>
+Date:   Thu Aug 22 00:23:34 2024 +0900
+
+    #3 feat : SingleChildScrollView를 사용해 사용자 텍스트 창 클릭시 화면도 같이 올라가게 만드는 기능 추가
+
+[33mcommit af77072603e8a9f39a397c912eff5629d2f35a27[m
+Author: Lee Seungchang <jjekrrq01@naver.com>
+Date:   Wed Aug 21 23:48:20 2024 +0900
+
+    #3 feat : 사용 목적에 따른 UI(일반/학생) 구현
+
+[33mcommit 4ed3f41217873b209cd0119b5134bb3bc3d5a579[m
+Author: Lee Seungchang <jjekrrq01@naver.com>
+Date:   Sat Aug 17 20:40:16 2024 +0900
+
+    #3 refactor : make the Color 'const' and style : remove not necessary annotation
+
+[33mcommit a656593c7548b4b8458922c836126963b3ead358[m
+Merge: 0280b82 54483e7
+Author: Lee Seungchang <jjekrrq01@naver.com>
+Date:   Sat Aug 17 19:52:39 2024 +0900
+
+    Merge branch 'dev' of https://github.com/hyeminililo/Flick_FE into seung
+
+[33mcommit 54483e77b13e4e4e9ec4189d35904f11c63b39a4[m[33m ([m[1;31morigin/dev[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Merge: cd754da 7c6798f
+Author: hyeminililo <143622050+hyeminililo@users.noreply.github.com>
+Date:   Sat Aug 17 19:20:36 2024 +0900
+
+    Merge pull request #5 from hyeminililo/common/const
+    
+    #4 feat : 색상 추가
+
+[33mcommit 7c6798f194b825119b19540a043b1c4d1196818c[m
+Author: hyeminililo <143622050+hyeminililo@users.noreply.github.com>
+Date:   Sat Aug 17 00:33:34 2024 +0900
+
+    #4 feat : 색상 추가
+    
+    프로그램 내에서 전반적으로 필요한 색상 추가
+
+[33mcommit 0280b82495b2b838b85500bc0bd3fdb37954337a[m
+Author: Lee Seungchang <jjekrrq01@naver.com>
+Date:   Fri Aug 16 19:05:28 2024 +0900
+
+     feat : login_view, loading_view, success_view
+
+[33mcommit cd754dad877ebd47f183066d55ceac3f8f6cc8d4[m[33m ([m[1;32mhyem[m[33m, [m[1;32mfeature/1_login[m[33m, [m[1;32mdev[m[33m)[m
+Author: hyeminililo <143622050+hyeminililo@users.noreply.github.com>
+Date:   Wed Aug 14 16:34:48 2024 +0900
+
+    docs : 이슈 템플릿 생성
+
+[33mcommit b6f38d86e8368f600714ddcf99e26124db2e2834[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mmain[m[33m)[m
+Author: hyeminililo <143622050+hyeminililo@users.noreply.github.com>
+Date:   Wed Aug 7 18:13:03 2024 +0900
+
+    set : Initialize commit

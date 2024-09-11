@@ -3,7 +3,7 @@ import 'package:flick_frontend/auth/model/tokenResponse_model.dart';
 import 'package:flick_frontend/auth/model/token_model.dart';
 
 import 'package:flick_frontend/auth/provider/auth_provider.dart';
-import 'package:flick_frontend/auth/repository%20/auth_repository.dart';
+import 'package:flick_frontend/auth/repository/auth_repository.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';

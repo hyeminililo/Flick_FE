@@ -1,5 +1,6 @@
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SuccessScreen extends StatefulWidget {
   final String userName;
@@ -82,41 +83,49 @@ Future<dynamic> _alertSignUp(
       title: Column(
         children: [
           Icon(Icons.check_circle,
-              color: PRIMARY_COLOR, size: screenWidth * 0.30),
+              color: PRIMARY_COLOR, size: screenWidth * 0.1),
           SizedBox(
-            height: screenHeight * 0.07,
+            height: screenHeight * 0.02,
           ),
           Text(
             "회원가입 완료",
             style: TextStyle(
-                fontSize: screenWidth > 600 ? 40 : 30,
+                fontSize: screenWidth > 600 ? 30 : 20,
                 fontWeight: FontWeight.bold),
           )
         ],
       ),
       content: Text(
         "지금 바로 다양한\n챌린지에 참여해보세요.",
+        textAlign: TextAlign.center,
         style: TextStyle(
             color: const Color(0xff383838),
-            fontSize: screenWidth > 600 ? 10 : 5,
+            fontSize: screenWidth > 600 ? 25 : 15,
             fontFamily: "Pretendard"),
       ),
       actions: [
-        ElevatedButton(
-          onPressed: () => Navigator.of(context).pop(),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: PRIMARY_COLOR,
-            padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.38, // 버튼 가로 크기를 동적으로 설정
-                vertical: screenHeight * 0.023),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15), // 버튼 모서리 둥글기 설정
+        Center(
+          child: ElevatedButton(
+            onPressed: () =>
+                Navigator.of(context).popAndPushNamed('/homeScreen'),
+            // onPressed: () {
+            //   GoRouter.of(context).go('homeScreen');
+            // },
+            style: ElevatedButton.styleFrom(
+              alignment: Alignment.center,
+              backgroundColor: PRIMARY_COLOR,
+              padding: EdgeInsets.symmetric(
+                  horizontal: screenWidth * 0.2, // 버튼 가로 크기를 동적으로 설정
+                  vertical: screenHeight * 0.001),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15), // 버튼 모서리 둥글기 설정
+              ),
             ),
-          ),
-          child: Text(
-            "확인",
-            style: TextStyle(
-                fontSize: screenWidth > 600 ? 30 : 20, color: SUB_COLOR),
+            child: Text(
+              "확인",
+              style: TextStyle(
+                  fontSize: screenWidth > 600 ? 30 : 20, color: SUB_COLOR),
+            ),
           ),
         )
       ],
