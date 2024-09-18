@@ -1,6 +1,5 @@
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class SuccessScreen extends StatefulWidget {
   final String userName;

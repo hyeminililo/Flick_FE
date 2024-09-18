@@ -241,9 +241,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flick_frontend/common/const/colors.dart';
-import 'package:flick_frontend/members/view/communityAgreement_screen.dart';
-import 'package:flick_frontend/members/view/personalInfoAgreement_screen.dart';
-import 'package:flick_frontend/members/view/serviceAgreement_screen.dart';
 
 class AgreementScreen extends StatefulWidget {
   const AgreementScreen({super.key});
@@ -395,7 +392,7 @@ class _AgreementScreenState extends State<AgreementScreen> {
                             // 다음 화면으로 이동
                             print('Button Pressed');
                             // context.go('/onboarding');
-                            Navigator.pushNamed(context, '/onboarding');
+                            context.go('/onboarding');
                           }
                         : null,
                     style: ElevatedButton.styleFrom(
