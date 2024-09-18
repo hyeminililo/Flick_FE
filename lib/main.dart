@@ -1,7 +1,6 @@
 import 'package:flick_frontend/auth/view/communityAgreement_screen.dart';
 import 'package:flick_frontend/auth/view/personalInfoAgreement_screen.dart';
 import 'package:flick_frontend/auth/view/serviceAgreement_screen.dart';
-import 'package:flick_frontend/members/view/agreement_screen.dart';
 import 'package:flick_frontend/members/view/purposeOfUsage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
