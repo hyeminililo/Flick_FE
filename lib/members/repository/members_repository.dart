@@ -12,7 +12,7 @@ abstract class MembersRepository {
   // to do
   //1. 소셜 로그인 후 온보딩
   @POST('/onboarding')
-  Future<Members> postMembers(@Body() Map<String, dynamic> body);
+  Future<Members> postMembers(@Body() Members member);
 
   //2. 첫 로그인 유무
   @GET('/first/login')

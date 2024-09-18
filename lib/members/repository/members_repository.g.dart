@@ -24,12 +24,12 @@ class _MembersRepository implements MembersRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<Members> postMembers(Map<String, dynamic> body) async {
+  Future<Members> postMembers(Members member) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(body);
+    _data.addAll(member.toJson());
     final _options = _setStreamType<Members>(Options(
       method: 'POST',
       headers: _headers,

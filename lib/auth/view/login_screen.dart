@@ -46,9 +46,9 @@ class LoginScreen extends ConsumerWidget {
             ElevatedButton(
               //to do : 1.카카오 로그인 메소드 병합
               onPressed: () async {
-                final kakaoLgoinRe = KakaoLoginRepository(
+                final kakaoLgoinRepo = KakaoLoginRepository(
                     AuthRepository(Dio(), baseUrl: BASE_URl));
-                bool loginResult = await kakaoLgoinRe.login(ref);
+                bool loginResult = await kakaoLgoinRepo.login(ref);
                 try {
                   if (loginResult) {
                     Navigator.of(context).push(MaterialPageRoute(

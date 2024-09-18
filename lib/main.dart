@@ -1,16 +1,15 @@
+import 'package:flick_frontend/auth/view/communityAgreement_screen.dart';
+import 'package:flick_frontend/auth/view/personalInfoAgreement_screen.dart';
+import 'package:flick_frontend/auth/view/serviceAgreement_screen.dart';
 import 'package:flick_frontend/members/view/agreement_screen.dart';
 import 'package:flick_frontend/members/view/purposeOfUsage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flick_frontend/members/view/communityAgreement_screen.dart';
-import 'package:flick_frontend/members/view/personalInfoAgreement_screen.dart';
-import 'package:flick_frontend/members/view/serviceAgreement_screen.dart';
 import 'package:flick_frontend/auth/view/login_screen.dart';
-import 'package:flick_frontend/members/view/success_screen.dart';
 import 'package:flick_frontend/env.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'members/view/onBoarding_screen.dart';
+import 'auth/view/onBoarding_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +22,7 @@ void main() async {
     routes: [
       GoRoute(
         path: '/',
-        builder: (context, state) => const AgreementScreen(),
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: '/login',

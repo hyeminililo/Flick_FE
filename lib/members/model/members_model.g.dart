@@ -9,8 +9,8 @@ part of 'members_model.dart';
 Members _$MembersFromJson(Map<String, dynamic> json) => Members(
       type: $enumDecode(_$UserTypeEnumMap, json['type']),
       nickname: json['nickname'] as String,
-      school: json['school'] as String,
-      gradeClass: json['gradeClass'] as String,
+      school: json['school'] as String?,
+      gradeClass: json['gradeClass'] as String?,
     );
 
 Map<String, dynamic> _$MembersToJson(Members instance) => <String, dynamic>{
