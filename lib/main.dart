@@ -19,52 +19,64 @@ void main() async {
   KakaoSdk.init(
       nativeAppKey: kakaoNativeAppKey, javaScriptAppKey: kakaoJavaScriptKey);
 
-  final router = GoRouter(
-    routes: [
-      GoRoute(
-        path: '/',
-        builder: (context, state) => const AgreementScreen(),
-      ),
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginScreen(),
-      ),
-      GoRoute(
-        path: '/purpose',
-        builder: (context, state) => const PurposeOfUsageScreen(),
-      ),
-      GoRoute(
-        path: '/service-agreement',
-        builder: (context, state) => Serviceagreement(
-            title: (state.extra as Map<String, dynamic>?)?['title'] ?? ''),
-      ),
-      GoRoute(
-        path: '/personal-info-agreement',
-        builder: (context, state) => PersonalInfoAgreement(
-            title: (state.extra as Map<String, dynamic>?)?['title'] ?? ''),
-      ),
-      GoRoute(
-        path: '/community-agreement',
-        builder: (context, state) => CommunityAgreement(
-            title: (state.extra as Map<String, dynamic>?)?['title'] ?? ''),
-      ),
-      GoRoute(
-        path: '/onboarding',
-        builder: (context, state) => const OnboardingScreen(),
-      ),
-    ],
-  );
+  // final router = GoRouter(
+  //   routes: [
+  //     GoRoute(
+  //       path: '/',
+  //       builder: (context, state) => const AgreementScreen(),
+  //     ),
+  //     GoRoute(
+  //       path: '/login',
+  //       builder: (context, state) => const LoginScreen(),
+  //     ),
+  //     GoRoute(
+  //       path: '/purpose',
+  //       builder: (context, state) => const PurposeOfUsageScreen(),
+  //     ),
+  //     GoRoute(
+  //       path: '/service-agreement',
+  //       builder: (context, state) => Serviceagreement(
+  //           title: (state.extra as Map<String, dynamic>?)?['title'] ?? ''),
+  //     ),
+  //     GoRoute(
+  //       path: '/personal-info-agreement',
+  //       builder: (context, state) => PersonalInfoAgreement(
+  //           title: (state.extra as Map<String, dynamic>?)?['title'] ?? ''),
+  //     ),
+  //     GoRoute(
+  //       path: '/community-agreement',
+  //       builder: (context, state) => CommunityAgreement(
+  //           title: (state.extra as Map<String, dynamic>?)?['title'] ?? ''),
+  //     ),
+  //     GoRoute(
+  //       path: '/onboarding',
+  //       builder: (context, state) => const OnboardingScreen(),
+  //     ),
+  //   ],
+  // );
 
+  // runApp(
+  //   ProviderScope(
+  //     child: MaterialApp.router(
+  //       routerDelegate: router.routerDelegate,
+  //       routeInformationParser: router.routeInformationParser,
+  //       title: 'Flutter Demo',
+  //       theme: ThemeData(
+  //         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+  //         useMaterial3: true,
+  //       ),
+  //     ),
+  //   ),
+  // );
   runApp(
     ProviderScope(
-      child: MaterialApp.router(
-        routerDelegate: router.routerDelegate,
-        routeInformationParser: router.routeInformationParser,
+      child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
+        home: const AgreementScreen(),
       ),
     ),
   );

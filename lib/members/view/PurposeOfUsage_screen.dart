@@ -20,49 +20,109 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
       ),
       builder: (BuildContext context) {
-        return Wrap(
-          children: [
-            ListTile(
-              leading: Icon(
-                selectedPurpose == "일반유저 목적으로 사용"
-                    ? Icons.check_circle
-                    : Icons.circle_outlined,
-                color: selectedPurpose == "일반유저 목적으로 사용"
-                    ? PRIMARY_COLOR
-                    : Colors.grey,
-              ),
-              title: const Text('일반유저 목적으로 사용'),
-              onTap: () {
-                setState(() {
-                  selectedPurpose = "일반유저 목적으로 사용";
-                });
-                Navigator.pop(context);
-              },
+        return Container(
+          color: Colors.white, // 전체 배경 흰색으로 설정
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height * 0.25, // 높이 조정
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start, // 텍스트 정렬
+              children: [
+                // 상단 제목 추가
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  child: Text(
+                    '앱 사용 목적', // 제목 텍스트
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                // 첫 번째 옵션
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25), // 모서리 둥글게
+                    border: Border.all(
+                      color: selectedPurpose == "일반유저 목적으로 사용"
+                          ? PRIMARY_COLOR
+                          : Colors.grey, // 선택된 항목 테두리 색상
+                    ),
+                    color: Colors.white, // 각 항목의 배경색도 흰색으로 설정
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      '일반유저 목적으로 사용',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: selectedPurpose == "일반유저 목적으로 사용"
+                            ? PRIMARY_COLOR // 선택 시 PRIMARY_COLOR
+                            : Colors.grey, // 비선택 시 검은색
+                      ),
+                    ),
+                    trailing: Icon(
+                      selectedPurpose == "일반유저 목적으로 사용"
+                          ? Icons.check_circle
+                          : Icons.circle_outlined,
+                      color: selectedPurpose == "일반유저 목적으로 사용"
+                          ? PRIMARY_COLOR
+                          : Colors.grey,
+                      size: 30, // 아이콘 크기 조정
+                    ),
+                    onTap: () {
+                      setState(() {
+                        selectedPurpose = "일반유저 목적으로 사용";
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+                // 두 번째 옵션
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                    border: Border.all(
+                      color: selectedPurpose == "학교 학생 목적으로 사용"
+                          ? PRIMARY_COLOR
+                          : Colors.grey,
+                    ),
+                    color: Colors.white, // 각 항목의 배경색도 흰색으로 설정
+                  ),
+                  child: ListTile(
+                    title: Text(
+                      '학교 학생 목적으로 사용',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: selectedPurpose == "학교 학생 목적으로 사용"
+                            ? PRIMARY_COLOR // 선택 시 PRIMARY_COLOR
+                            : Colors.grey, // 비선택 시 검은색
+                      ),
+                    ),
+                    trailing: Icon(
+                      selectedPurpose == "학교 학생 목적으로 사용"
+                          ? Icons.check_circle
+                          : Icons.circle_outlined,
+                      color: selectedPurpose == "학교 학생 목적으로 사용"
+                          ? PRIMARY_COLOR
+                          : Colors.grey,
+                      size: 30, // 아이콘 크기 조정
+                    ),
+                    onTap: () {
+                      setState(() {
+                        selectedPurpose = "학교 학생 목적으로 사용";
+                      });
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
             ),
-            ListTile(
-              leading: Icon(
-                selectedPurpose == "학교 학생 목적으로 사용"
-                    ? Icons.check_circle
-                    : Icons.circle_outlined,
-                color: selectedPurpose.isEmpty
-                    ? Colors.grey
-                    : STUDENT_BUTTON_COLOR,
-              ),
-              title: Text(
-                '학교 학생 목적으로 사용',
-                style: TextStyle(
-                    color: selectedPurpose.isEmpty
-                        ? Colors.black
-                        : STUDENT_BUTTON_COLOR),
-              ),
-              onTap: () {
-                setState(() {
-                  selectedPurpose = "학교 학생 목적으로 사용";
-                });
-                Navigator.pop(context);
-              },
-            ),
-          ],
+          ),
         );
       },
     );

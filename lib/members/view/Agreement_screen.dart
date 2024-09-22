@@ -238,6 +238,7 @@
 //     });
 //   }
 // }
+import 'package:flick_frontend/members/view/onBoarding_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flick_frontend/common/const/colors.dart';
@@ -268,6 +269,7 @@ class _AgreementScreenState extends State<AgreementScreen> {
         padding: EdgeInsets.only(
           top: screenHeight * 0.05,
           left: screenWidth * 0.05,
+          right: screenWidth * 0.05,
         ),
         child: Center(
           child: Column(
@@ -342,6 +344,9 @@ class _AgreementScreenState extends State<AgreementScreen> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: screenHeight * 0.05,
+              ),
               _buildCheckboxListTile(
                 title: '[필수] 서비스 이용약관 동의',
                 value: _serviceAgreement,
@@ -352,8 +357,14 @@ class _AgreementScreenState extends State<AgreementScreen> {
                   });
                 },
                 onTapIcon: () {
-                  context
-                      .go('/service-agreement', extra: {'title': '서비스 이용약관'});
+                  // context
+                  //     .go('/service-agreement', extra: {'title': '서비스 이용약관'});
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Serviceagreement(
+                                title: "Service",
+                              )));
                 },
               ),
               _buildCheckboxListTile(
@@ -366,8 +377,13 @@ class _AgreementScreenState extends State<AgreementScreen> {
                   });
                 },
                 onTapIcon: () {
-                  context.go('/personal-info-agreement',
-                      extra: {'title': '개인 정보 수집 및 이용'});
+                  // context.go('/personal-info-agreement',
+                  //     extra: {'title': '개인 정보 수집 및 이용'});
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const PersonalInfoAgreement(
+                              title: "personalInfo")));
                 },
               ),
               _buildCheckboxListTile(
@@ -383,8 +399,16 @@ class _AgreementScreenState extends State<AgreementScreen> {
                   // context.go('/community-agreement',
                   //     extra: {'title': '커뮤니티 이용규칙'});
                   // Navigator.pushNamed(context, '/community-agreement');
-                  context.go('/community-agreement', extra: '커뮤니티 이용규칙');
+                  // context.go('/community-agreement', extra: '커뮤니티 이용규칙');
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const CommunityAgreement(title: "community")));
                 },
+              ),
+              SizedBox(
+                height: screenHeight * 0.35,
               ),
               Padding(
                 padding: EdgeInsets.only(top: screenHeight * 0.05),
@@ -395,16 +419,22 @@ class _AgreementScreenState extends State<AgreementScreen> {
                             // 다음 화면으로 이동
                             print('Button Pressed');
                             // context.go('/onboarding');
-                            Navigator.pushNamed(context, '/onboarding');
+                            // Navigator.pushNamed(context, '/onboarding');
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const OnboardingScreen()));
                           }
                         : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: PRIMARY_COLOR,
-                      padding: EdgeInsets.symmetric(
-                        horizontal: screenWidth * 0.3,
-                        vertical: screenHeight * 0.02,
-                      ),
-                    ),
+                        backgroundColor: PRIMARY_COLOR,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: screenWidth * 0.345,
+                          vertical: screenHeight * 0.02,
+                        ),
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10))),
                     child: Text(
                       '다음으로',
                       style: TextStyle(
@@ -429,6 +459,8 @@ class _AgreementScreenState extends State<AgreementScreen> {
   }) {
     return ListTile(
       leading: Checkbox(
+        activeColor: PRIMARY_COLOR,
+        overlayColor: const WidgetStatePropertyAll(PRIMARY_COLOR),
         value: value,
         onChanged: onChanged,
       ),
