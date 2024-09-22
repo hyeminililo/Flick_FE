@@ -13,67 +13,6 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
   final TextEditingController _nameController = TextEditingController();
   String selectedPurpose = "";
 
-  // void _showPurposeSelection() {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     shape: const RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
-  //     ),
-  //     builder: (BuildContext context) {
-  //       return SizedBox(
-  //         height: MediaQuery.of(context).size.height * 0.17, // 원하는 높이로 설정
-  //         child: Column(
-  //           children: [
-  //             SizedBox(
-  //               height: MediaQuery.of(context).size.height * 0.02,
-  //             ),
-  //             ListTile(
-  //               leading: Icon(
-  //                 selectedPurpose == "일반유저 목적으로 사용"
-  //                     ? Icons.check_circle
-  //                     : Icons.circle_outlined,
-  //                 color: selectedPurpose == "일반유저 목적으로 사용"
-  //                     ? PRIMARY_COLOR
-  //                     : Colors.grey,
-  //               ),
-  //               title: const Text('일반유저 목적으로 사용'),
-  //               onTap: () {
-  //                 setState(() {
-  //                   selectedPurpose = "일반유저 목적으로 사용";
-  //                 });
-  //                 Navigator.pop(context);
-  //               },
-  //             ),
-  //             ListTile(
-  //               leading: Icon(
-  //                 selectedPurpose == "학교 학생 목적으로 사용"
-  //                     ? Icons.check_circle
-  //                     : Icons.circle_outlined,
-  //                 color: selectedPurpose == "학교 학생 목적으로 사용"
-  //                     ? STUDENT_BUTTON_COLOR
-  //                     : Colors.grey,
-  //               ),
-  //               title: Text(
-  //                 '학교 학생 목적으로 사용',
-  //                 style: TextStyle(
-  //                   color: selectedPurpose == "학교 학생 목적으로 사용"
-  //                       ? STUDENT_BUTTON_COLOR
-  //                       : Colors.black,
-  //                 ),
-  //               ),
-  //               onTap: () {
-  //                 setState(() {
-  //                   selectedPurpose = "학교 학생 목적으로 사용";
-  //                 });
-  //                 Navigator.pop(context);
-  //               },
-  //             ),
-  //           ],
-  //         ),
-  //       );
-  //     },
-  //   );
-  // }
   void _showPurposeSelection() {
     showModalBottomSheet(
       context: context,
