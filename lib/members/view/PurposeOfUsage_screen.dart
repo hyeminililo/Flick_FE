@@ -1,7 +1,7 @@
 import 'package:flick_frontend/common/const/colors.dart';
+import 'package:flick_frontend/common/const/layout.dart';
 import 'package:flick_frontend/common/provider/dio_provider.dart';
 import 'package:flick_frontend/members/model/members_model.dart';
-import 'package:flick_frontend/members/repository/membersOnboarding_repository.dart';
 import 'package:flick_frontend/members/view/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,6 +12,8 @@ final selectedPurposeProvider = StateProvider<String>((ref) {
 });
 // TextEditingController를 관리하는 Provider -> ㅇ게 뭔지 모르겠음
 final nameControllerProvider = Provider((ref) => TextEditingController());
+final schoolControllerProvider = Provider((ref) => TextEditingController());
+final gradeControllerProvider = Provider((ref) => TextEditingController());
 
 class PurposeOfUsageScreen extends ConsumerWidget {
   const PurposeOfUsageScreen({super.key});
@@ -43,21 +45,54 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                     ),
                   ),
                 ),
-                ListTile(
-                  title: const Text('일반유저 목적으로 사용'),
-                  onTap: () {
-                    ref.read(selectedPurposeProvider.notifier).state =
-                        "일반유저 목적으로 사용"; // 수정
-                    Navigator.pop(context);
-                  },
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25), // 모서리 둥글게
+                    border: Border.all(
+                      color: selectedPurpose == "일반유저 목적으로 사용"
+                          ? PRIMARY_COLOR
+                          : Colors.grey, // 선택된 항목 테두리 색상
+                    ),
+                    color: Colors.white, // 각 항목의 배경색도 흰색으로 설정
+                  ),
+                  child: ListTile(
+                    title: const Text(
+                      '일반유저 목적으로 사용',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        // 비선택 시 검은색
+                      ),
+                    ),
+                    onTap: () {
+                      ref.read(selectedPurposeProvider.notifier).state =
+                          "일반유저 목적으로 사용"; // 수정
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
-                ListTile(
-                  title: const Text('학교 학생 목적으로 사용'),
-                  onTap: () {
-                    ref.read(selectedPurposeProvider.notifier).state =
-                        "학교 학생 목적으로 사용"; // 수정
-                    Navigator.pop(context);
-                  },
+                Container(
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25), // 모서리 둥글게
+                    border: Border.all(
+                      color: selectedPurpose == "일반유저 목적으로 사용"
+                          ? PRIMARY_COLOR
+                          : Colors.grey, // 선택된 항목 테두리 색상
+                    ),
+                    color: Colors.white, // 각 항목의 배경색도 흰색으로 설정
+                  ),
+                  child: ListTile(
+                    title: const Text('학교 학생 목적으로 사용'),
+                    onTap: () {
+                      ref.read(selectedPurposeProvider.notifier).state =
+                          "학교 학생 목적으로 사용"; // 수정
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
               ],
             ),
@@ -71,6 +106,8 @@ class PurposeOfUsageScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final nameController = ref.watch(nameControllerProvider);
     final selectedPurpose = ref.watch(selectedPurposeProvider); // .state 제거
+    final schoolController = ref.watch(schoolControllerProvider);
+    final gradeController = ref.watch(gradeControllerProvider);
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -83,15 +120,7 @@ class PurposeOfUsageScreen extends ConsumerWidget {
               children: [
                 SizedBox(height: MediaQuery.of(context).size.height * 0.06),
                 const Center(
-                  child: Text(
-                    "앱 사용 목적 선택",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: "Pretendard",
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: Text("앱 사용 목적 선택", style: defaultTextStyle),
                 ),
                 SizedBox(height: MediaQuery.of(context).size.height * 0.1),
                 const Text(
@@ -174,6 +203,10 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                         try {
                           await membersonboardingRepository.postMembers(member);
                           print('회원 정보 전송 성공');
+                          print("type: ${member.type}");
+                          print("nickname: ${member.nickname}");
+                          print("gradeClass : ${member.gradeClass}");
+                          print("school: ${member.school}");
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -208,6 +241,7 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8.0),
                   TextField(
+                    controller: schoolController,
                     decoration: InputDecoration(
                       hintText: '예) 집현중학교',
                       border: OutlineInputBorder(
@@ -222,6 +256,7 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                   ),
                   const SizedBox(height: 8.0),
                   TextField(
+                    controller: gradeController,
                     decoration: InputDecoration(
                       hintText: '예) 3-1',
                       border: OutlineInputBorder(
@@ -248,12 +283,15 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                   Center(
                     child: ElevatedButton(
                       onPressed: () async {
+                        UserType userType = UserType.STUDENT;
                         String userName = nameController.text;
+                        String school = schoolController.text;
+                        String gradeClass = gradeController.text;
                         final member = Members(
-                            type: UserType.STUDENT,
+                            type: userType,
                             nickname: userName,
-                            school: '',
-                            gradeClass: '');
+                            school: school,
+                            gradeClass: gradeClass);
 
                         final membersonboardingRepository =
                             ref.watch(membersRepositoryProvider);
@@ -261,6 +299,11 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                         try {
                           await membersonboardingRepository.postMembers(member);
                           print('회원 정보 전송 성공');
+                          print('회원 정보 전송 성공');
+                          print("type: ${member.type}");
+                          print("nickname: ${member.nickname}");
+                          print("gradeClass : ${member.gradeClass}");
+                          print("school: ${member.school}");
                           Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -270,6 +313,12 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                           );
                         } catch (e) {
                           print('회원 정보 전송 실패: $e');
+                          print('회원 정보 전송 성공');
+                          print("type: ${member.type}");
+                          print("nickname: ${member.nickname}");
+                          print("gradeClass : ${member.gradeClass}");
+                          print("school: ${member.school}");
+                          print("==============");
                         }
                       },
                       style: ElevatedButton.styleFrom(
