@@ -3,20 +3,10 @@ import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/const/layout.dart';
 import 'package:flick_frontend/common/provider/dio_provider.dart';
 import 'package:flick_frontend/members/model/members_model.dart';
+import 'package:flick_frontend/members/provider/purpose_provider.dart';
 import 'package:flick_frontend/members/view/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-final selectedPurposeProvider = StateProvider<String>((ref) {
-  return "";
-});
-final isNameEmptyProvider = StateProvider<bool>((ref) => true); // 초기에 빈 값으로 설정
-
-// TextEditingController를 관리하는 Provider -> ㅇ게 뭔지 모르겠음
-final nameControllerProvider = Provider((ref) => TextEditingController());
-final schoolControllerProvider = Provider((ref) => TextEditingController());
-final gradeControllerProvider = Provider((ref) => TextEditingController());
-Color defaultColor = Colors.black;
 
 class PurposeOfUsageScreen extends ConsumerWidget {
   const PurposeOfUsageScreen({super.key});
@@ -28,8 +18,7 @@ class PurposeOfUsageScreen extends ConsumerWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
       ),
       builder: (BuildContext context) {
-        String selectedPurpose =
-            ref.watch(selectedPurposeProvider); // .state 제거
+        String selectedPurpose = ref.watch(selectedPurposeProvider);
 
         return Container(
           color: Colors.white,
@@ -45,13 +34,13 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25), // 모서리 둥글게
+                    borderRadius: BorderRadius.circular(25),
                     border: Border.all(
                       color: selectedPurpose == "일반유저 목적으로 사용"
                           ? PRIMARY_COLOR
-                          : Colors.grey, // 선택된 항목 테두리 색상
+                          : Colors.grey,
                     ),
-                    color: Colors.white, // 각 항목의 배경색도 흰색으로 설정
+                    color: Colors.white,
                   ),
                   child: ListTile(
                     title: const Text(
@@ -59,13 +48,11 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        // 비선택 시 검은색
                       ),
                     ),
                     onTap: () {
                       ref.read(selectedPurposeProvider.notifier).state =
-                          "일반유저 목적으로 사용"; // 수정
-                      defaultColor = PRIMARY_COLOR;
+                          "일반유저 목적으로 사용";
                       Navigator.pop(context);
                     },
                     trailing: Icon(
@@ -83,13 +70,13 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                   margin:
                       const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25), // 모서리 둥글게
+                    borderRadius: BorderRadius.circular(25),
                     border: Border.all(
                       color: selectedPurpose == "학교 학생 목적으로 사용"
                           ? STUDENT_BUTTON_COLOR
-                          : Colors.grey, // 선택된 항목 테두리 색상
+                          : Colors.grey,
                     ),
-                    color: Colors.white, // 각 항목의 배경색도 흰색으로 설정
+                    color: Colors.white,
                   ),
                   child: ListTile(
                     title: const Text(
@@ -97,13 +84,11 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
-                        // 비선택 시 검은색
                       ),
                     ),
                     onTap: () {
                       ref.read(selectedPurposeProvider.notifier).state =
-                          "학교 학생 목적으로 사용"; // 수정
-                      defaultColor = STUDENT_BUTTON_COLOR;
+                          "학교 학생 목적으로 사용";
                       Navigator.pop(context);
                     },
                     trailing: Icon(
@@ -113,7 +98,7 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                       color: selectedPurpose == "학교 학생 목적으로 사용"
                           ? STUDENT_BUTTON_COLOR
                           : Colors.grey,
-                      size: 30, // 아이콘 크기 조정
+                      size: 30,
                     ),
                   ),
                 ),
@@ -128,7 +113,7 @@ class PurposeOfUsageScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final nameController = ref.watch(nameControllerProvider);
-    final selectedPurpose = ref.watch(selectedPurposeProvider); // .state 제거
+    final selectedPurpose = ref.watch(selectedPurposeProvider);
     final schoolController = ref.watch(schoolControllerProvider);
     final gradeController = ref.watch(gradeControllerProvider);
 
