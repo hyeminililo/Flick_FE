@@ -1,113 +1,77 @@
+import 'package:flick_frontend/common/const/colors.dart';
+import 'package:flick_frontend/common/provider/dio_provider.dart';
+import 'package:flick_frontend/members/model/members_model.dart';
+import 'package:flick_frontend/members/repository/membersOnboarding_repository.dart';
 import 'package:flick_frontend/members/view/success_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
-import 'package:flick_frontend/members/model/members_model.dart';
-import 'package:flick_frontend/members/repository/members_repository.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class PurposeOfUsageScreen extends StatefulWidget {
+// 선택된 목적을 관리하는 StateProvider
+final selectedPurposeProvider = StateProvider<String>((ref) {
+  return "";
+});
+// TextEditingController를 관리하는 Provider -> ㅇ게 뭔지 모르겠음
+final nameControllerProvider = Provider((ref) => TextEditingController());
+
+class PurposeOfUsageScreen extends ConsumerWidget {
   const PurposeOfUsageScreen({super.key});
 
-  @override
-  State<PurposeOfUsageScreen> createState() => _PurposeOfUsageScreenState();
-}
-
-class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _schoolController = TextEditingController();
-  final TextEditingController _gradeClassController = TextEditingController();
-  String selectedPurpose = "";
-  final Dio dio = Dio(); // Dio 인스턴스 생성
-  late MembersRepository membersRepository;
-
-  @override
-  void initState() {
-    super.initState();
-    final dio = Dio();
-    membersRepository = MembersRepository(dio); // MembersRepository 초기화
-  }
-
-  // 서버에 데이터 전송하는 메서드
-  Future<void> sendDataToServer() async {
-    // Members 객체 생성
-    Members member = Members(
-      type: selectedPurpose == "학교 학생 목적으로 사용"
-          ? UserType.STUDENT
-          : UserType.GENERAL,
-      nickname: _nameController.text,
-      school: _schoolController.text,
-      gradeClass: _gradeClassController.text,
-    );
-
-    try {
-      // final response = await membersRepository
-      //    .postMembers(member.toJson()); // JSON으로 변환하여 전송
-      final response = await membersRepository.postMembers(member);
-      print(member.toJson());
-      // 응답 처리
-      print('서버에 데이터 전송 성공: $response');
-    } catch (error) {
-      print('서버에 데이터 전송 실패: $error');
-    }
-  }
-
-  @override
-  void dispose() {
-    _nameController.dispose();
-    _schoolController.dispose();
-    _gradeClassController.dispose();
-    super.dispose();
-  }
-
-  // 목적 선택 모달
-  void _showPurposeSelection() {
+  void _showPurposeSelection(BuildContext context, WidgetRef ref) {
     showModalBottomSheet(
       context: context,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
       ),
       builder: (BuildContext context) {
-        return Wrap(
-          children: [
-            ListTile(
-              leading: Icon(
-                selectedPurpose == "일반유저 목적으로 사용"
-                    ? Icons.check_circle
-                    : Icons.circle_outlined,
-                color: selectedPurpose == "일반유저 목적으로 사용"
-                    ? Colors.green
-                    : Colors.grey,
-              ),
-              title: const Text('일반유저 목적으로 사용'),
-              onTap: () {
-                setState(() {
-                  selectedPurpose = "일반유저 목적으로 사용";
-                });
-                Navigator.pop(context);
-              },
+        String selectedPurpose =
+            ref.watch(selectedPurposeProvider); // .state 제거
+
+        return Container(
+          color: Colors.white,
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height * 0.25,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+                  child: Text(
+                    '앱 사용 목적',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                ListTile(
+                  title: const Text('일반유저 목적으로 사용'),
+                  onTap: () {
+                    ref.read(selectedPurposeProvider.notifier).state =
+                        "일반유저 목적으로 사용"; // 수정
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: const Text('학교 학생 목적으로 사용'),
+                  onTap: () {
+                    ref.read(selectedPurposeProvider.notifier).state =
+                        "학교 학생 목적으로 사용"; // 수정
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
             ),
-            ListTile(
-              leading: Icon(
-                selectedPurpose == "학교 학생 목적으로 사용"
-                    ? Icons.check_circle
-                    : Icons.circle_outlined,
-                color: selectedPurpose.isEmpty ? Colors.grey : Colors.blue,
-              ),
-              title: const Text('학교 학생 목적으로 사용'),
-              onTap: () {
-                setState(() {
-                  selectedPurpose = "학교 학생 목적으로 사용";
-                });
-                Navigator.pop(context);
-              },
-            ),
-          ],
+          ),
         );
       },
     );
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final nameController = ref.watch(nameControllerProvider);
+    final selectedPurpose = ref.watch(selectedPurposeProvider); // .state 제거
+
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -133,21 +97,22 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                 const Text(
                   "앱 사용 목적",
                   textAlign: TextAlign.left,
-                  style: TextStyle(fontSize: 14, color: Colors.black),
+                  style: TextStyle(fontSize: 14, color: MAIN_TEXT_COLOR),
                 ),
                 const SizedBox(height: 8.0),
                 InkWell(
-                  onTap: _showPurposeSelection,
+                  onTap: () => _showPurposeSelection(context, ref),
                   child: Container(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12.0, vertical: 16.0),
                     decoration: BoxDecoration(
                       border: Border.all(
-                          color: selectedPurpose.isEmpty
-                              ? Colors.grey
-                              : selectedPurpose == "일반유저 목적으로 사용"
-                                  ? Colors.green
-                                  : Colors.blue),
+                        color: selectedPurpose.isEmpty
+                            ? Colors.grey
+                            : selectedPurpose == "일반유저 목적으로 사용"
+                                ? PRIMARY_COLOR
+                                : STUDENT_BUTTON_COLOR,
+                      ),
                       borderRadius: BorderRadius.circular(24.0),
                     ),
                     child: Row(
@@ -161,8 +126,8 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                               color: selectedPurpose.isEmpty
                                   ? Colors.grey
                                   : selectedPurpose == "일반유저 목적으로 사용"
-                                      ? Colors.green
-                                      : Colors.blue,
+                                      ? PRIMARY_COLOR
+                                      : STUDENT_BUTTON_COLOR,
                               fontSize: 16,
                             ),
                           ),
@@ -184,7 +149,7 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                   ),
                   const SizedBox(height: 8.0),
                   TextField(
-                    controller: _nameController,
+                    controller: nameController,
                     decoration: InputDecoration(
                       hintText: '예) 홍길동',
                       border: OutlineInputBorder(
@@ -195,16 +160,29 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                   const SizedBox(height: 20),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {
-                        if (_nameController.text.isNotEmpty) {
-                          sendDataToServer(); // 서버에 데이터 전송
+                      onPressed: () async {
+                        String userName = nameController.text;
+                        final member = Members(
+                            type: UserType.GENERAL,
+                            nickname: userName,
+                            school: '',
+                            gradeClass: '');
+
+                        final membersonboardingRepository =
+                            ref.watch(membersRepositoryProvider);
+
+                        try {
+                          await membersonboardingRepository.postMembers(member);
+                          print('회원 정보 전송 성공');
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  SuccessScreen(userName: _nameController.text),
+                                  SuccessScreen(userName: userName),
                             ),
                           );
+                        } catch (e) {
+                          print('회원 정보 전송 실패: $e');
                         }
                       },
                       style: ElevatedButton.styleFrom(
@@ -225,27 +203,11 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                 if (selectedPurpose == "학교 학생 목적으로 사용") ...[
                   const SizedBox(height: 20),
                   const Text(
-                    "닉네임을 입력해주세요",
-                    style: TextStyle(fontSize: 14, color: Colors.black),
-                  ),
-                  const SizedBox(height: 8.0),
-                  TextField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      hintText: '예) 홍길동',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
                     "재학중인 학교 이름을 입력해주세요",
                     style: TextStyle(fontSize: 14, color: Colors.black),
                   ),
                   const SizedBox(height: 8.0),
                   TextField(
-                    controller: _schoolController,
                     decoration: InputDecoration(
                       hintText: '예) 집현중학교',
                       border: OutlineInputBorder(
@@ -260,7 +222,6 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                   ),
                   const SizedBox(height: 8.0),
                   TextField(
-                    controller: _gradeClassController,
                     decoration: InputDecoration(
                       hintText: '예) 3-1',
                       border: OutlineInputBorder(
@@ -269,22 +230,50 @@ class _PurposeOfUsageScreenState extends State<PurposeOfUsageScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
+                  const Text(
+                    "이름을 입력해주세요",
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
+                  const SizedBox(height: 8.0),
+                  TextField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      hintText: '예) 홍길동',
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(24.0),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
                   Center(
                     child: ElevatedButton(
-                      onPressed: () {
-                        if (_nameController.text.isNotEmpty) {
-                          sendDataToServer(); // 서버에 데이터 전송
+                      onPressed: () async {
+                        String userName = nameController.text;
+                        final member = Members(
+                            type: UserType.STUDENT,
+                            nickname: userName,
+                            school: '',
+                            gradeClass: '');
+
+                        final membersonboardingRepository =
+                            ref.watch(membersRepositoryProvider);
+
+                        try {
+                          await membersonboardingRepository.postMembers(member);
+                          print('회원 정보 전송 성공');
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) =>
-                                  SuccessScreen(userName: _nameController.text),
+                                  SuccessScreen(userName: userName),
                             ),
                           );
+                        } catch (e) {
+                          print('회원 정보 전송 실패: $e');
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.blue,
+                        backgroundColor: STUDENT_BUTTON_COLOR,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24.0),
                         ),

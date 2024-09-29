@@ -34,6 +34,7 @@ migrate_working_dir/
 lib/env.dart
 lib/env.g.dart
 lib/const/uri.dart
+lib/members/provider/temp.txt
 # Symbolication related
 app.*.symbols
 

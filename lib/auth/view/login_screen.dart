@@ -52,6 +52,7 @@ class LoginScreen extends ConsumerWidget {
                 try {
                   if (loginResult) {
                     Navigator.of(context).push(MaterialPageRoute(
+                      //   builder: (context) => const PurposeOfUsageScreen(),
                       builder: (context) => const PurposeOfUsageScreen(),
                     ));
                   }
@@ -112,6 +113,11 @@ class LoginScreen extends ConsumerWidget {
                 try {
                   // if (!mounted) return; // 위젯이 여전히 존재하는지 확인
 
+                  // if (loginResult) {
+                  //   Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => const PurposeOfUsageScreen(),
+                  //   ));
+                  // }
                   if (loginResult) {
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => const PurposeOfUsageScreen(),

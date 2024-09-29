@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' hide Headers;
 import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:flick_frontend/members/model/isLogin_model.dart';
 import 'package:flick_frontend/members/model/members_model.dart';
@@ -11,8 +11,13 @@ abstract class MembersRepository {
   factory MembersRepository(Dio dio, {String baseUrl}) = _MembersRepository;
   // to do
   //1. 소셜 로그인 후 온보딩
+  // @Headers({
+  //   'accept': '*/*',
+  //   'Content-Type': 'application/json',
+  // })
   @POST('/onboarding')
-  Future<Members> postMembers(@Body() Members member);
+  Future<void> postMembers(@Body() Members member,
+      {@Header('Authorization') String? authorization});
 
   //2. 첫 로그인 유무
   @GET('/first/login')

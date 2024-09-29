@@ -19,8 +19,3 @@ class AuthProvider extends StateNotifier<AuthState> {
 final authProvider = StateNotifierProvider<AuthProvider, AuthState>((ref) {
   return AuthProvider();
 });
-
-final authRepositoryProvider = Provider<AuthRepository>((ref) {
-  final dio = ref.watch(dioProvider); // Dio 인스턴스를 가져옴
-  return AuthRepository(dio); // AuthRepository 인스턴스 생성
-});

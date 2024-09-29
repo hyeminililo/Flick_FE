@@ -27,8 +27,12 @@ void main() async {
         path: '/login',
         builder: (context, state) => const LoginScreen(),
       ),
+      // GoRoute(
+      //   path: '/purpose',
+      //   builder: (context, state) => const PurposeOfUsageScreen(),
+      // ),
       GoRoute(
-        path: '/purpose',
+        path: '/ne',
         builder: (context, state) => const PurposeOfUsageScreen(),
       ),
       GoRoute(
