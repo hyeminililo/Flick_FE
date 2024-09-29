@@ -1,3 +1,4 @@
+// 선택된 목적을 관리하는 StateProvider
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/const/layout.dart';
 import 'package:flick_frontend/common/provider/dio_provider.dart';
@@ -6,14 +7,16 @@ import 'package:flick_frontend/members/view/success_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// 선택된 목적을 관리하는 StateProvider
 final selectedPurposeProvider = StateProvider<String>((ref) {
   return "";
 });
+final isNameEmptyProvider = StateProvider<bool>((ref) => true); // 초기에 빈 값으로 설정
+
 // TextEditingController를 관리하는 Provider -> ㅇ게 뭔지 모르겠음
 final nameControllerProvider = Provider((ref) => TextEditingController());
 final schoolControllerProvider = Provider((ref) => TextEditingController());
 final gradeControllerProvider = Provider((ref) => TextEditingController());
+Color defaultColor = Colors.black;
 
 class PurposeOfUsageScreen extends ConsumerWidget {
   const PurposeOfUsageScreen({super.key});
@@ -37,13 +40,6 @@ class PurposeOfUsageScreen extends ConsumerWidget {
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-                  child: Text(
-                    '앱 사용 목적',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
                 ),
                 Container(
                   margin:
@@ -69,8 +65,18 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                     onTap: () {
                       ref.read(selectedPurposeProvider.notifier).state =
                           "일반유저 목적으로 사용"; // 수정
+                      defaultColor = PRIMARY_COLOR;
                       Navigator.pop(context);
                     },
+                    trailing: Icon(
+                      selectedPurpose == "일반유저 목적으로 사용"
+                          ? Icons.check_circle
+                          : Icons.circle_outlined,
+                      color: selectedPurpose == "일반유저 목적으로 사용"
+                          ? PRIMARY_COLOR
+                          : Colors.grey,
+                      size: 30,
+                    ),
                   ),
                 ),
                 Container(
@@ -79,19 +85,36 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25), // 모서리 둥글게
                     border: Border.all(
-                      color: selectedPurpose == "일반유저 목적으로 사용"
-                          ? PRIMARY_COLOR
+                      color: selectedPurpose == "학교 학생 목적으로 사용"
+                          ? STUDENT_BUTTON_COLOR
                           : Colors.grey, // 선택된 항목 테두리 색상
                     ),
                     color: Colors.white, // 각 항목의 배경색도 흰색으로 설정
                   ),
                   child: ListTile(
-                    title: const Text('학교 학생 목적으로 사용'),
+                    title: const Text(
+                      '학교 학생 목적으로 사용',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        // 비선택 시 검은색
+                      ),
+                    ),
                     onTap: () {
                       ref.read(selectedPurposeProvider.notifier).state =
                           "학교 학생 목적으로 사용"; // 수정
+                      defaultColor = STUDENT_BUTTON_COLOR;
                       Navigator.pop(context);
                     },
+                    trailing: Icon(
+                      selectedPurpose == "학교 학생 목적으로 사용"
+                          ? Icons.check_circle
+                          : Icons.circle_outlined,
+                      color: selectedPurpose == "학교 학생 목적으로 사용"
+                          ? STUDENT_BUTTON_COLOR
+                          : Colors.grey,
+                      size: 30, // 아이콘 크기 조정
+                    ),
                   ),
                 ),
               ],
@@ -180,11 +203,11 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                   TextField(
                     controller: nameController,
                     decoration: InputDecoration(
-                      hintText: '예) 홍길동',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                    ),
+                        hintText: '예) 홍길동',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24.0),
+                        ),
+                        focusedBorder: generalButtonStyle),
                   ),
                   const SizedBox(height: 20),
                   Center(
@@ -243,11 +266,12 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                   TextField(
                     controller: schoolController,
                     decoration: InputDecoration(
-                      hintText: '예) 집현중학교',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                    ),
+                        focusColor: STUDENT_BUTTON_COLOR,
+                        hintText: '예) 집현중학교',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24.0),
+                        ),
+                        focusedBorder: studentButtonStyle),
                   ),
                   const SizedBox(height: 20),
                   const Text(
@@ -258,11 +282,11 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                   TextField(
                     controller: gradeController,
                     decoration: InputDecoration(
-                      hintText: '예) 3-1',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                    ),
+                        hintText: '예) 3-1',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24.0),
+                        ),
+                        focusedBorder: studentButtonStyle),
                   ),
                   const SizedBox(height: 20),
                   const Text(
@@ -273,11 +297,11 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                   TextField(
                     controller: nameController,
                     decoration: InputDecoration(
-                      hintText: '예) 홍길동',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(24.0),
-                      ),
-                    ),
+                        hintText: '예) 홍길동',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(24.0),
+                        ),
+                        focusedBorder: studentButtonStyle),
                   ),
                   const SizedBox(height: 20),
                   Center(
