@@ -55,10 +55,12 @@ class _MembersRepository implements MembersRepository {
   }
 
   @override
-  Future<IsLoginResponse> checkFirstLogin() async {
+  Future<IsLoginResponse> checkFirstLogin({String? authorization}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': authorization};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<IsLoginResponse>(Options(
       method: 'GET',

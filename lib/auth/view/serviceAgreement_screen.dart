@@ -9,8 +9,8 @@ class Serviceagreement extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
-        backgroundColor: Colors.green, // 원하는 색상으로 변경 가능
+        title: const Text("서비스 이용약관 동의"),
+        backgroundColor: Colors.white,
       ),
       body: const Padding(
         padding: EdgeInsets.all(20.0),

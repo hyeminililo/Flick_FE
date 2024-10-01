@@ -21,5 +21,6 @@ abstract class MembersRepository {
 
   //2. 첫 로그인 유무
   @GET('/first/login')
-  Future<IsLoginResponse> checkFirstLogin();
+  Future<IsLoginResponse> checkFirstLogin(
+      {@Header('Authorization') String? authorization});
 }

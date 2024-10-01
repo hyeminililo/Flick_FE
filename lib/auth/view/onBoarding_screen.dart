@@ -1,4 +1,5 @@
 import 'package:flick_frontend/auth/view/login_screen.dart';
+import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -62,7 +63,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       margin: const EdgeInsets.symmetric(horizontal: 4.0),
                       decoration: BoxDecoration(
                         color: (index == _currentPage)
-                            ? Colors.green
+                            ? PRIMARY_COLOR
                             : Colors.grey,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
@@ -79,7 +80,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   },
                   child: const Text(
                     '건너뛰기',
-                    style: TextStyle(color: Colors.green, fontSize: 16.0),
+                    style: TextStyle(color: PRIMARY_COLOR, fontSize: 16.0),
                   ),
                 ),
               ],
@@ -91,7 +92,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             right: 20.0,
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
+                backgroundColor: PRIMARY_COLOR,
                 padding: const EdgeInsets.symmetric(vertical: 15.0),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),

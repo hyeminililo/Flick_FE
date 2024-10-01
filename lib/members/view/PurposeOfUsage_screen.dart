@@ -227,7 +227,7 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                         }
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
+                        backgroundColor: PRIMARY_COLOR,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(24.0),
                         ),

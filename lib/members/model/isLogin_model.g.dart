@@ -8,10 +8,14 @@ part of 'isLogin_model.dart';
 
 IsLoginResponse _$IsLoginResponseFromJson(Map<String, dynamic> json) =>
     IsLoginResponse(
-      isFirstLoginData: json['isFirstLoginData'] as bool,
+      statusCode: (json['statusCode'] as num).toInt(),
+      message: json['message'] as String,
+      data: json['data'] as bool,
     );
 
 Map<String, dynamic> _$IsLoginResponseToJson(IsLoginResponse instance) =>
     <String, dynamic>{
-      'isFirstLoginData': instance.isFirstLoginData,
+      'statusCode': instance.statusCode,
+      'message': instance.message,
+      'data': instance.data,
     };
