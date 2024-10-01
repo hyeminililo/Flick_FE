@@ -8,6 +8,8 @@ PODS:
   - Flutter (1.0.0)
   - flutter_config (0.0.1):
     - Flutter
+  - flutter_native_splash (0.0.1):
+    - Flutter
   - flutter_secure_storage (3.3.1):
     - Flutter
   - google_sign_in_ios (0.0.1):
@@ -37,6 +39,7 @@ PODS:
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_config (from `.symlinks/plugins/flutter_config/ios`)
+  - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - kakao_flutter_sdk_common (from `.symlinks/plugins/kakao_flutter_sdk_common/ios`)
@@ -54,6 +57,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_config:
     :path: ".symlinks/plugins/flutter_config/ios"
+  flutter_native_splash:
+    :path: ".symlinks/plugins/flutter_native_splash/ios"
   flutter_secure_storage:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   google_sign_in_ios:
@@ -67,6 +72,7 @@ SPEC CHECKSUMS:
   AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_config: f48f0d47a284f1791aacce2687eabb3309ba7a41
+  flutter_native_splash: edf599c81f74d093a4daf8e17bd7a018854bc778
   flutter_secure_storage: 7953c38a04c3fdbb00571bcd87d8e3b5ceb9daec
   google_sign_in_ios: 07375bfbf2620bc93a602c0e27160d6afc6ead38
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
