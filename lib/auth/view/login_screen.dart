@@ -4,6 +4,7 @@ import 'package:flick_frontend/auth/repository/google_login_repository.dart';
 import 'package:flick_frontend/auth/repository/kakao_login_repository.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
+import 'package:flick_frontend/common/view/error/view/notUseService_error_screen.dart';
 import 'package:flick_frontend/members/view/purposeOfUsage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,7 +58,11 @@ class LoginScreen extends ConsumerWidget {
                     ));
                   }
                 } catch (err) {
-                  // 오류 화면 출력
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const NotUseServiceErrorScreen()));
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -125,6 +130,11 @@ class LoginScreen extends ConsumerWidget {
                   }
                 } catch (err) {
                   // 오류 화면 출력
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              const NotUseServiceErrorScreen()));
                 }
               },
               style: ElevatedButton.styleFrom(

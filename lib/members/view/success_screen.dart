@@ -1,4 +1,5 @@
 import 'package:flick_frontend/common/const/colors.dart';
+import 'package:flick_frontend/members/view/myPage_screen.dart';
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatefulWidget {
@@ -105,11 +106,8 @@ Future<dynamic> _alertSignUp(
       actions: [
         Center(
           child: ElevatedButton(
-            onPressed: () =>
-                Navigator.of(context).popAndPushNamed('/homeScreen'),
-            // onPressed: () {
-            //   GoRouter.of(context).go('homeScreen');
-            // },
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const MypageScreen())),
             style: ElevatedButton.styleFrom(
               alignment: Alignment.center,
               backgroundColor: PRIMARY_COLOR,
