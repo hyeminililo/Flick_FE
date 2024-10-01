@@ -9,8 +9,10 @@ part 'news_repository.g.dart';
 abstract class NewsRepository {
   factory NewsRepository(Dio dio, {String baseUrl}) = _NewsRepository;
   @GET('/')
-  Future<NewsResponse> fetchNews();
+  Future<NewsResponse> fetchNews(
+      {@Header('Authorization') String? authorization});
 
   @GET('/{newsId}')
-  Future<NewsResponse> fetchNewsDetails(@Path("newsId") int newsId);
+  Future<NewsResponse> fetchNewsDetails(@Path("newsId") int newsId,
+      {@Header('Authorization') String? authorization});
 }

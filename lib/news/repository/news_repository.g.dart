@@ -24,10 +24,12 @@ class _NewsRepository implements NewsRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<NewsResponse> fetchNews() async {
+  Future<NewsResponse> fetchNews({String? authorization}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': authorization};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<NewsResponse>(Options(
       method: 'GET',
@@ -57,10 +59,15 @@ class _NewsRepository implements NewsRepository {
   }
 
   @override
-  Future<NewsResponse> fetchNewsDetails(int newsId) async {
+  Future<NewsResponse> fetchNewsDetails(
+    int newsId, {
+    String? authorization,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': authorization};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<NewsResponse>(Options(
       method: 'GET',
