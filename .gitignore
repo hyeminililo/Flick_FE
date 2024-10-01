@@ -34,8 +34,6 @@ migrate_working_dir/
 lib/env.dart
 lib/env.g.dart
 lib/const/uri.dart
-# seung 로그인 브랜치에는 로그인 코드만 넣기 위해서 news 부분 ignore하고 푸쉬
-# lib/news
 # Symbolication related
 app.*.symbols
 

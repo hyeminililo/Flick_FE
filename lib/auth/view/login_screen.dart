@@ -4,7 +4,9 @@ import 'package:flick_frontend/auth/repository/google_login_repository.dart';
 import 'package:flick_frontend/auth/repository/kakao_login_repository.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
+import 'package:flick_frontend/common/provider/dio_provider.dart';
 import 'package:flick_frontend/common/view/error/view/notUseService_error_screen.dart';
+import 'package:flick_frontend/common/view/splash_screen.dart';
 import 'package:flick_frontend/members/view/purposeOfUsage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -47,14 +49,34 @@ class LoginScreen extends ConsumerWidget {
             ElevatedButton(
               //to do : 1.카카오 로그인 메소드 병합
               onPressed: () async {
-                final kakaoLgoinRe = KakaoLoginRepository(
+                final kakaoLgoinRepo = KakaoLoginRepository(
                     AuthRepository(Dio(), baseUrl: BASE_URl));
-                bool loginResult = await kakaoLgoinRe.login(ref);
+                bool loginResult = await kakaoLgoinRepo.login(ref);
                 try {
                   if (loginResult) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PurposeOfUsageScreen(),
-                    ));
+                    //to do : 로그인 경험 있는지 없는지
+                    final membersonboardingRepository =
+                        ref.watch(membersRepositoryProvider);
+
+                    try {
+                      final isLogined =
+                          await membersonboardingRepository.checkLogined();
+                      if (isLogined!) {
+                        print("isLogiend $isLogined");
+                        await Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: (context) => const PurposeOfUsageScreen(),
+                          builder: (context) => const SplashScreen(),
+                        ));
+                      } else {
+                        print("isLogiend $isLogined");
+                        await Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: (context) => const PurposeOfUsageScreen(),
+                          builder: (context) => const PurposeOfUsageScreen(),
+                        ));
+                      }
+                    } catch (e) {
+                      print('err : islogined error');
+                    }
                   }
                 } catch (err) {
                   Navigator.push(
@@ -117,10 +139,34 @@ class LoginScreen extends ConsumerWidget {
                 try {
                   // if (!mounted) return; // 위젯이 여전히 존재하는지 확인
 
+                  // if (loginResult) {
+                  //   Navigator.of(context).push(MaterialPageRoute(
+                  //     builder: (context) => const PurposeOfUsageScreen(),
+                  //   ));
+                  // }
                   if (loginResult) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => const PurposeOfUsageScreen(),
-                    ));
+                    final membersonboardingRepository =
+                        ref.watch(membersRepositoryProvider);
+
+                    try {
+                      final isLogined =
+                          await membersonboardingRepository.checkLogined();
+                      if (isLogined!) {
+                        print("isLogiend $isLogined");
+                        await Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: (context) => const PurposeOfUsageScreen(),
+                          builder: (context) => const SplashScreen(),
+                        ));
+                      } else {
+                        print("isLogiend $isLogined");
+                        await Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: (context) => const PurposeOfUsageScreen(),
+                          builder: (context) => const PurposeOfUsageScreen(),
+                        ));
+                      }
+                    } catch (e) {
+                      print('err : islogined error');
+                    }
                   }
                 } catch (err) {
                   // 오류 화면 출력

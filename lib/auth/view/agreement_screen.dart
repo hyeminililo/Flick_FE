@@ -238,13 +238,14 @@
 //     });
 //   }
 // }
-import 'package:flick_frontend/members/view/onBoarding_screen.dart';
+
+import 'package:flick_frontend/auth/view/communityAgreement_screen.dart';
+import 'package:flick_frontend/auth/view/onBoarding_screen.dart';
+import 'package:flick_frontend/auth/view/personalInfoAgreement_screen.dart';
+import 'package:flick_frontend/auth/view/serviceAgreement_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flick_frontend/common/const/colors.dart';
-import 'package:flick_frontend/members/view/communityAgreement_screen.dart';
-import 'package:flick_frontend/members/view/personalInfoAgreement_screen.dart';
-import 'package:flick_frontend/members/view/serviceAgreement_screen.dart';
 
 class AgreementScreen extends StatefulWidget {
   const AgreementScreen({super.key});

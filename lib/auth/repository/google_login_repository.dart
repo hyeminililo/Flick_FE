@@ -3,11 +3,14 @@ import 'package:flick_frontend/auth/model/token_model.dart';
 import 'package:flick_frontend/auth/provider/auth_provider.dart';
 import 'package:flick_frontend/auth/repository/auth_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleLoginRepository implements SocialLogin {
   final _googleSignIn = GoogleSignIn();
   final AuthRepository authRepository;
+  final FlutterSecureStorage storage =
+      const FlutterSecureStorage(); // Secure Storage 인스턴스
 
   GoogleLoginRepository(this.authRepository);
 
@@ -32,6 +35,8 @@ class GoogleLoginRepository implements SocialLogin {
   @override
   Future<bool> logout() async {
     await _googleSignIn.signOut();
+    await storage.delete(key: 'ACCESS_TOKEN_KEY');
+    await storage.delete(key: 'REFRESH_TOKEN_KEY');
     return false;
   }
 
@@ -42,6 +47,9 @@ class GoogleLoginRepository implements SocialLogin {
 
       final accessToken = response.data.accessToken;
       final refreshToken = response.data.refreshToken;
+
+      await storage.write(key: 'ACCESS_TOKEN_KEY', value: accessToken);
+      await storage.write(key: 'REFRESH_TOKEN_KEY', value: refreshToken);
 
       ref.read(authProvider.notifier).updateToken(TokenData(
             accessToken: accessToken,

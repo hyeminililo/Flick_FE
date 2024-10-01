@@ -8,8 +8,8 @@ enum UserType { STUDENT, GENERAL }
 class Members {
   UserType type;
   String nickname;
-  String school;
-  String gradeClass;
+  String? school;
+  String? gradeClass;
 
   Members(
       {required this.type,
@@ -21,4 +21,18 @@ class Members {
       _$MembersFromJson(json);
 
   Map<String, dynamic> toJson() => _$MembersToJson(this);
+
+  Members copyWith({
+    UserType? type,
+    String? nickname,
+    String? school,
+    String? gradeClass,
+  }) {
+    return Members(
+      type: type ?? this.type,
+      nickname: nickname ?? this.nickname,
+      school: school ?? this.school,
+      gradeClass: gradeClass ?? this.gradeClass,
+    );
+  }
 }

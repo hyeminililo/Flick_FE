@@ -4,9 +4,16 @@ part 'isLogin_model.g.dart';
 
 @JsonSerializable()
 class IsLoginResponse {
-  final bool isFirstLoginData;
+  final int statusCode; // 상태 코드
+  final String message; // 메시지
+  final bool data; // 첫 로그인 여부
 
-  IsLoginResponse({required this.isFirstLoginData});
+  IsLoginResponse({
+    required this.statusCode,
+    required this.message,
+    required this.data,
+  });
+
   factory IsLoginResponse.fromJson(Map<String, dynamic> json) =>
       _$IsLoginResponseFromJson(json);
 

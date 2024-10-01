@@ -6,12 +6,15 @@ import 'package:flick_frontend/auth/provider/auth_provider.dart';
 import 'package:flick_frontend/auth/repository/auth_repository.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class KakaoLoginRepository implements SocialLogin {
   final AuthRepository authRepository;
   bool isLogined = false;
   User? user;
+  final FlutterSecureStorage storage =
+      const FlutterSecureStorage(); // Secure Storage 인스턴스
 
   KakaoLoginRepository(this.authRepository);
 
@@ -52,6 +55,11 @@ class KakaoLoginRepository implements SocialLogin {
   Future<bool> logout() async {
     try {
       await UserApi.instance.unlink();
+      await storage.delete(
+          key: 'ACCESS_TOKEN_KEY'); // Secure Storage에서 accessToken 삭제
+      await storage.delete(
+          key: 'REFRESH_TOKEN_KEY'); // Secure Storage에서 refreshToken 삭제
+
       print('Successful to logout, Delete token');
       isLogined = false;
       return isLogined;
@@ -67,6 +75,9 @@ class KakaoLoginRepository implements SocialLogin {
           await authRepository.requestAuthToken('kakao', {'idToken': idToken});
       final accessToken = response.data.accessToken;
       final refreshToken = response.data.refreshToken;
+      await storage.write(key: 'ACCESS_TOKEN_KEY', value: accessToken);
+      await storage.write(key: 'REFRESH_TOKEN_KEY', value: refreshToken);
+
       ref.read(authProvider.notifier).updateToken(
           TokenData(accessToken: accessToken, refreshToken: refreshToken));
       print('AccessToken: $accessToken');
