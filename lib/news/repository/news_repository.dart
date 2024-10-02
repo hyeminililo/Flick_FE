@@ -5,17 +5,14 @@ import 'package:retrofit/retrofit.dart';
 
 part 'news_repository.g.dart';
 
-@RestApi(baseUrl: '{$BASE_URl}/news')
+@RestApi(baseUrl: '$BASE_URl/news')
 abstract class NewsRepository {
   factory NewsRepository(Dio dio, {String baseUrl}) = _NewsRepository;
-  @GET('/')
+  @GET('')
   Future<NewsResponse> fetchNews(
       {@Header('Authorization') String? authorization});
 
   @GET('/{newsId}')
   Future<NewsResponse> fetchNewsDetails(@Path("newsId") int newsId,
       {@Header('Authorization') String? authorization});
-
-  @GET('/{newsId}')
-  Future<NewsResponse> fetchNewsDetailseee(@Path("newsId") int newsId);
 }

@@ -8,6 +8,7 @@ import 'package:flick_frontend/common/provider/dio_provider.dart';
 import 'package:flick_frontend/common/view/error/view/notUseService_error_screen.dart';
 import 'package:flick_frontend/common/view/splash_screen.dart';
 import 'package:flick_frontend/members/view/purposeOfUsage_screen.dart';
+import 'package:flick_frontend/news/view/ecology_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -65,7 +66,7 @@ class LoginScreen extends ConsumerWidget {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
                           //   builder: (context) => const PurposeOfUsageScreen(),
-                          builder: (context) => const SplashScreen(),
+                          builder: (context) => const EcologyScreen(),
                         ));
                       } else {
                         print("isLogiend $isLogined");
@@ -155,7 +156,7 @@ class LoginScreen extends ConsumerWidget {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
                           //   builder: (context) => const PurposeOfUsageScreen(),
-                          builder: (context) => const SplashScreen(),
+                          builder: (context) => const EcologyScreen(),
                         ));
                       } else {
                         print("isLogiend $isLogined");

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'newsInfo_model.g.dart';
@@ -12,9 +14,9 @@ class NewsInfo {
   final String contents;
   final String? url;
   final String? picture;
-  final int? viewCount;
-  final int? likeCount;
-  final bool? isLike;
+  final int viewCount;
+  final int likeCount;
+  final bool isLike;
 
   NewsInfo({
     required this.newsId,
@@ -24,9 +26,9 @@ class NewsInfo {
     required this.contents,
     this.url,
     this.picture,
-    this.viewCount,
-    this.likeCount,
-    this.isLike,
+    required this.viewCount,
+    required this.likeCount,
+    required this.isLike,
   });
 
   factory NewsInfo.fromJson(Map<String, dynamic> json) =>

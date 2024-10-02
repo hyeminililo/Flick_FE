@@ -14,7 +14,7 @@ class _NewsRepository implements NewsRepository {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= '{https://flick-api.shop/api}/news';
+    baseUrl ??= 'https://flick-api.shop/api/news';
   }
 
   final Dio _dio;
@@ -38,7 +38,7 @@ class _NewsRepository implements NewsRepository {
     )
         .compose(
           _dio.options,
-          '/',
+          '',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -68,39 +68,6 @@ class _NewsRepository implements NewsRepository {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'Authorization': authorization};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<NewsResponse>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/${newsId}',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late NewsResponse _value;
-    try {
-      _value = NewsResponse.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
-
-  @override
-  Future<NewsResponse> fetchNewsDetailseee(int newsId) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<NewsResponse>(Options(
       method: 'GET',
