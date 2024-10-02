@@ -15,4 +15,7 @@ abstract class NewsRepository {
   @GET('/{newsId}')
   Future<NewsResponse> fetchNewsDetails(@Path("newsId") int newsId,
       {@Header('Authorization') String? authorization});
+
+  @GET('/{newsId}')
+  Future<NewsResponse> fetchNewsDetailseee(@Path("newsId") int newsId);
 }

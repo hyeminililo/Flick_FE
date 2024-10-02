@@ -101,7 +101,11 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
     newsRepository = NewsRepository(dio); // 리포지토리 생성
 
     // newsRepository를 사용하여 fetchNewsDetails 호출
-    futureNews = newsRepository.fetchNewsDetails(widget.newsId);
+    // final token =
+
+    // futureNews =
+    //     newsRepository.fetchNewsDetails(widget.newsId, authorization: token);
+    // futureNews = newsRepository.fetchNewsDetailseee(widget.newsId);
   }
 
   @override
