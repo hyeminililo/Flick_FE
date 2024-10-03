@@ -1,7 +1,5 @@
 import 'package:flick_frontend/common/const/colors.dart';
-import 'package:flick_frontend/news/model/newsResponse_model.dart';
 import 'package:flick_frontend/news/provider/news_provider.dart';
-import 'package:flick_frontend/news/repository/news_service.dart';
 import 'package:flick_frontend/news/view/newsDetail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
