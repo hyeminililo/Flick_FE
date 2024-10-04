@@ -2,6 +2,8 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'studentResponse_model.g.dart';
 
+//이거 안 필요할듯?
+
 @JsonSerializable()
 class StudentRankingResponse {
   final int statusCode;
