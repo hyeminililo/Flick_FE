@@ -64,13 +64,11 @@ class LoginScreen extends ConsumerWidget {
                       if (isLogined!) {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (context) => const PurposeOfUsageScreen(),
                           builder: (context) => const SplashScreen(),
                         ));
                       } else {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (context) => const PurposeOfUsageScreen(),
                           builder: (context) => const PurposeOfUsageScreen(),
                         ));
                       }
@@ -137,13 +135,6 @@ class LoginScreen extends ConsumerWidget {
                     AuthRepository(Dio(), baseUrl: BASE_URl));
                 bool loginResult = await googleLoginRepo.login(ref);
                 try {
-                  // if (!mounted) return; // 위젯이 여전히 존재하는지 확인
-
-                  // if (loginResult) {
-                  //   Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => const PurposeOfUsageScreen(),
-                  //   ));
-                  // }
                   if (loginResult) {
                     final membersonboardingRepository =
                         ref.watch(membersRepositoryProvider);
@@ -154,13 +145,11 @@ class LoginScreen extends ConsumerWidget {
                       if (isLogined!) {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (context) => const PurposeOfUsageScreen(),
                           builder: (context) => const SplashScreen(),
                         ));
                       } else {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
-                          //   builder: (context) => const PurposeOfUsageScreen(),
                           builder: (context) => const PurposeOfUsageScreen(),
                         ));
                       }

@@ -9,8 +9,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 class GoogleLoginRepository implements SocialLogin {
   final _googleSignIn = GoogleSignIn();
   final AuthRepository authRepository;
-  final FlutterSecureStorage storage =
-      const FlutterSecureStorage(); // Secure Storage 인스턴스
+  final FlutterSecureStorage storage = const FlutterSecureStorage();
 
   GoogleLoginRepository(this.authRepository);
 

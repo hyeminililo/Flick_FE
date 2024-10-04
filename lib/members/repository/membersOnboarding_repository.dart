@@ -25,10 +25,8 @@ class MembersonboardingRepository {
       if (response.statusCode == 200) {
         if (response.data.toString() == "true") {
           print('statusCode :200 ');
-          // 서버 응답에서 데이터 추출
-          return true; // 'data' 값 반환
+          return true;
         } else {
-          // 오류 처리: 필요한 경우 false 반환 또는 예외 던지기
           return false;
         }
       }
