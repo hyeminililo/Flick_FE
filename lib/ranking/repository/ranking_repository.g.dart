@@ -75,7 +75,7 @@ class _RankingRepository implements RankingRepository {
     )
         .compose(
           _dio.options,
-          '/student',
+          '/general',
           queryParameters: queryParameters,
           data: _data,
         )
