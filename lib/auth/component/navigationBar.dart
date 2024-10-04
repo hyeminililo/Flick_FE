@@ -31,7 +31,7 @@ class _CustomNavigationBarState extends State<CustomNavigationBar> {
         unselectedLabelColor: Colors.grey,
         onTap: (int index) {
           widget.onIndexChanged(index);
-        }, // 탭 클릭 시 호출되는 함tn
+        }, // 탭 클릭 시 호출되는 함수
         tabs: <Widget>[
           Tab(
             icon: Icon(
