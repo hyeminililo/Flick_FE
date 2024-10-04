@@ -9,9 +9,9 @@ part of 'newsResponse_model.dart';
 NewsResponse _$NewsResponseFromJson(Map<String, dynamic> json) => NewsResponse(
       statusCode: (json['statusCode'] as num).toInt(),
       message: json['message'] as String,
-      data: (json['data'] as List<dynamic>?)
-          ?.map((e) => NewsInfo.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      data: json['data'] == null
+          ? null
+          : NewsInfoResDtos.fromJson(json['data'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$NewsResponseToJson(NewsResponse instance) =>

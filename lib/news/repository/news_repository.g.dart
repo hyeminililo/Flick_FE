@@ -14,7 +14,7 @@ class _NewsRepository implements NewsRepository {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= '{https://flick-api.shop/api}/news';
+    baseUrl ??= 'https://flick-api.shop/api/news';
   }
 
   final Dio _dio;
@@ -24,10 +24,12 @@ class _NewsRepository implements NewsRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<NewsResponse> fetchNews() async {
+  Future<NewsResponse> fetchNews({String? authorization}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': authorization};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<NewsResponse>(Options(
       method: 'GET',
@@ -36,7 +38,7 @@ class _NewsRepository implements NewsRepository {
     )
         .compose(
           _dio.options,
-          '/',
+          '',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -57,12 +59,17 @@ class _NewsRepository implements NewsRepository {
   }
 
   @override
-  Future<NewsResponse> fetchNewsDetails(int newsId) async {
+  Future<NewsDetailsResponse> fetchNewsDetails(
+    int newsId, {
+    String? authorization,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': authorization};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<NewsResponse>(Options(
+    final _options = _setStreamType<NewsDetailsResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -79,9 +86,9 @@ class _NewsRepository implements NewsRepository {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late NewsResponse _value;
+    late NewsDetailsResponse _value;
     try {
-      _value = NewsResponse.fromJson(_result.data!);
+      _value = NewsDetailsResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

@@ -14,9 +14,9 @@ NewsInfo _$NewsInfoFromJson(Map<String, dynamic> json) => NewsInfo(
       contents: json['contents'] as String,
       url: json['url'] as String?,
       picture: json['picture'] as String?,
-      viewCount: (json['viewCount'] as num?)?.toInt(),
-      likeCount: (json['likeCount'] as num?)?.toInt(),
-      isLike: json['isLike'] as bool?,
+      viewCount: (json['viewCount'] as num).toInt(),
+      likeCount: (json['likeCount'] as num).toInt(),
+      isLike: json['isLike'] as bool,
     );
 
 Map<String, dynamic> _$NewsInfoToJson(NewsInfo instance) => <String, dynamic>{
