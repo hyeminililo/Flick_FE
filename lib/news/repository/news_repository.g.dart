@@ -59,7 +59,7 @@ class _NewsRepository implements NewsRepository {
   }
 
   @override
-  Future<NewsResponse> fetchNewsDetails(
+  Future<NewsDetailsResponse> fetchNewsDetails(
     int newsId, {
     String? authorization,
   }) async {
@@ -69,7 +69,7 @@ class _NewsRepository implements NewsRepository {
     final _headers = <String, dynamic>{r'Authorization': authorization};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<NewsResponse>(Options(
+    final _options = _setStreamType<NewsDetailsResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -86,9 +86,9 @@ class _NewsRepository implements NewsRepository {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late NewsResponse _value;
+    late NewsDetailsResponse _value;
     try {
-      _value = NewsResponse.fromJson(_result.data!);
+      _value = NewsDetailsResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

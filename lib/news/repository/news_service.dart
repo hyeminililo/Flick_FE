@@ -54,8 +54,50 @@ class NewsService {
     }
   }
 
-  // 뉴스 상세 구현
-  Future<List<NewsInfo>> fetchNewsDatailsList(int newsId) async {
+//   // 뉴스 상세 구현
+//   Future<List<NewsInfo>> fetchNewsDatailsList(int newsId) async {
+//     try {
+//       // 저장소에서 토큰을 읽어옴
+//       final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
+
+//       // 토큰이 null인 경우 처리
+//       if (token == null) {
+//         print("[Error]: Token is null");
+//         return []; // 빈 뉴스 리스트 반환
+//       }
+
+//       // 뉴스 상세 정보를 API에서 가져옴
+//       final response = await newsRepository.fetchNewsDetails(
+//         newsId,
+//         authorization: 'Bearer $token',
+//       );
+
+//       print('NewsDetails Api : ${response.statusCode}');
+
+//       // 응답 코드가 200이 아닌 경우 에러 처리
+//       if (response.statusCode != 200) {
+//         print(
+//             "[Error]: Failed to fetch newsDetails. StatusCode: ${response.statusCode}");
+//         return []; // 빈 뉴스 리스트 반환
+//       }
+
+//       // 응답 데이터를 NewsInfoResDtos로 파싱
+//       final NewsInfo newsDetails = response.data;
+//       print(response.data);
+//       print(newsDetails);
+
+//       // null이 아닌 뉴스 리스트 반환
+//       final newsList = newsDetails;
+//       return newsList ?? []; // newsList가 null일 경우 빈 리스트 반환
+//     } catch (e) {
+//       // 예외 처리 (네트워크 오류, 파싱 오류 등)
+//       print("[Error]: $e");
+//       return []; // 오류 발생 시 빈 뉴스 리스트 반환
+//     }
+//   }
+// }
+// 뉴스 상세 구현
+  Future<NewsInfo?> fetchNewsDatails(int newsId) async {
     try {
       // 저장소에서 토큰을 읽어옴
       final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
@@ -63,7 +105,7 @@ class NewsService {
       // 토큰이 null인 경우 처리
       if (token == null) {
         print("[Error]: Token is null");
-        return []; // 빈 뉴스 리스트 반환
+        return null; // null 반환
       }
 
       // 뉴스 상세 정보를 API에서 가져옴
@@ -78,31 +120,18 @@ class NewsService {
       if (response.statusCode != 200) {
         print(
             "[Error]: Failed to fetch newsDetails. StatusCode: ${response.statusCode}");
-        return []; // 빈 뉴스 리스트 반환
+        return null; // null 반환
       }
 
-      // 데이터가 null인 경우 처리
-      if (response.data == null) {
-        print("[Error]: Response data is null");
-        return []; // 빈 뉴스 리스트 반환
-      }
+      // 응답 데이터를 NewsInfo로 파싱
+      final NewsInfo newsDetails = response.data;
 
-      // 응답 데이터를 NewsInfoResDtos로 파싱
-      final NewsInfoResDtos newsDtos = response.data!;
-
-      // NewsInfoResDtos의 newsInfoResDtos 리스트가 null인 경우 처리
-      if (newsDtos.newsInfoResDtos == null) {
-        print("[Error]: News Details Data list is null.");
-        return []; // 빈 뉴스 리스트 반환
-      }
-
-      // null이 아닌 뉴스 리스트 반환
-      final newsList = newsDtos.newsInfoResDtos;
-      return newsList ?? []; // newsList가 null일 경우 빈 리스트 반환
+      // null이 아닌 뉴스 상세 정보를 반환
+      return newsDetails; // 단일 뉴스 정보 반환
     } catch (e) {
       // 예외 처리 (네트워크 오류, 파싱 오류 등)
       print("[Error]: $e");
-      return []; // 오류 발생 시 빈 뉴스 리스트 반환
+      return null; // 오류 발생 시 null 반환
     }
   }
 }

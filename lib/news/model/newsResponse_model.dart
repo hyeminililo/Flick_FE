@@ -35,7 +35,7 @@ class NewsResponse {
   final String message;
   // 이 부분이 list<NewsInfo>로 받아도 되는지 모르겠다
 
-  // final NewsInfo? data;
+  // // final NewsInfo? data;
   final NewsInfoResDtos? data;
 
   NewsResponse({
