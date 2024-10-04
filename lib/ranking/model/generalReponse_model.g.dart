@@ -9,15 +9,16 @@ part of 'generalReponse_model.dart';
 GeneralRankingResponse _$GeneralRankingResponseFromJson(
         Map<String, dynamic> json) =>
     GeneralRankingResponse(
-      statusCode: (json['statusCode'] as num).toInt(),
-      message: json['message'] as String,
-      data: json['data'],
+      memberInfoResDtos: (json['memberInfoResDtos'] as List<dynamic>)
+          .map((e) => MemberInfo.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      pageInfoResDto:
+          PageInfo.fromJson(json['pageInfoResDto'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$GeneralRankingResponseToJson(
         GeneralRankingResponse instance) =>
     <String, dynamic>{
-      'statusCode': instance.statusCode,
-      'message': instance.message,
-      'data': instance.data,
+      'memberInfoResDtos': instance.memberInfoResDtos,
+      'pageInfoResDto': instance.pageInfoResDto,
     };

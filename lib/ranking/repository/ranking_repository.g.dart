@@ -24,7 +24,7 @@ class _RankingRepository implements RankingRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<StudentRankingResponse> fetchStudentRanking(
+  Future<ApiResponse<StudentRanking>> fetchStudentRanking(
       {String? authorization}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -32,7 +32,7 @@ class _RankingRepository implements RankingRepository {
     final _headers = <String, dynamic>{r'Authorization': authorization};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<StudentRankingResponse>(Options(
+    final _options = _setStreamType<ApiResponse<StudentRanking>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -49,9 +49,12 @@ class _RankingRepository implements RankingRepository {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late StudentRankingResponse _value;
+    late ApiResponse<StudentRanking> _value;
     try {
-      _value = StudentRankingResponse.fromJson(_result.data!);
+      _value = ApiResponse<StudentRanking>.fromJson(
+        _result.data!,
+        (json) => StudentRanking.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -60,34 +63,44 @@ class _RankingRepository implements RankingRepository {
   }
 
   @override
-  Future<StudentRankingResponse> fetchGeneralRanking(
-      {String? authorization}) async {
+  Future<ApiResponse<GeneralRankingResponse>> fetchGeneralRanking(
+    int page,
+    int size, {
+    String? authorization,
+  }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'page': page,
+      r'size': size,
+    };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'Authorization': authorization};
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<StudentRankingResponse>(Options(
+    final _options =
+        _setStreamType<ApiResponse<GeneralRankingResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/general',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
+            .compose(
+              _dio.options,
+              '/general',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late StudentRankingResponse _value;
+    late ApiResponse<GeneralRankingResponse> _value;
     try {
-      _value = StudentRankingResponse.fromJson(_result.data!);
+      _value = ApiResponse<GeneralRankingResponse>.fromJson(
+        _result.data!,
+        (json) => GeneralRankingResponse.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

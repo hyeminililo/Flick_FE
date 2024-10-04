@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
+import 'package:flick_frontend/common/dio/apiResponse_model.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
+import 'package:flick_frontend/ranking/model/generalReponse_model.dart';
+import 'package:flick_frontend/ranking/model/studentRanking_model.dart';
 import 'package:flick_frontend/ranking/model/studentResponse_model.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -10,10 +13,11 @@ abstract class RankingRepository {
   factory RankingRepository(Dio dio, {String baseUrl}) = _RankingRepository;
 
   @GET('/student')
-  Future<StudentRankingResponse> fetchStudentRanking(
+  Future<ApiResponse<StudentRanking>> fetchStudentRanking(
       {@Header('Authorization') String? authorization});
 
   @GET('/general')
-  Future<StudentRankingResponse> fetchGeneralRanking(
+  Future<ApiResponse<GeneralRankingResponse>> fetchGeneralRanking(
+      @Query("page") int page, @Query("size") int size,
       {@Header('Authorization') String? authorization});
 }
