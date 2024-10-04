@@ -63,7 +63,6 @@ class Serviceagreement extends StatelessWidget {
                   fontSize: 16.0,
                 ),
               ),
-              // 필요에 따라 추가적인 조항을 여기에 삽입
             ],
           ),
         ),

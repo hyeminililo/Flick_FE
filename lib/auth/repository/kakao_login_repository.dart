@@ -1,10 +1,7 @@
 import 'package:flick_frontend/auth/component/social_login.dart';
-import 'package:flick_frontend/auth/model/tokenResponse_model.dart';
 import 'package:flick_frontend/auth/model/token_model.dart';
-
 import 'package:flick_frontend/auth/provider/auth_provider.dart';
 import 'package:flick_frontend/auth/repository/auth_repository.dart';
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
@@ -82,20 +79,6 @@ class KakaoLoginRepository implements SocialLogin {
           TokenData(accessToken: accessToken, refreshToken: refreshToken));
       print('AccessToken: $accessToken');
       print('RefreshToken: $refreshToken');
-      // final refreshResponse = await authRepository
-      //     .requestRefrechToken('kakao', {'idToken': idToken});
-      // final accessResponse = await authRepository
-      //     .requestAccessToken('kakao', {'idToken': idToken});
-
-      // final refreshTokenResponse =
-      //     TokenResponseModel.fromJson(refreshResponse.toJson());
-      // final accessTokenResponse =
-      //     TokenResponseModel.fromJson(accessResponse.toJson());
-
-      // null 체크 추가
-      // final tokenData = accessTokenResponse.data;
-      // ref.read(authProvider.notifier).updateToken(tokenData);
-
       print("==========");
       print('AccessToken: $accessToken');
       print('RefreshToken: $refreshToken');

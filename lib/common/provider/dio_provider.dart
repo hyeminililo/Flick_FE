@@ -1,17 +1,3 @@
-// import 'package:dio/dio.dart';
-// import 'package:flick_frontend/common/dio/dio.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
-// final dioProvider = Provider<Dio>((ref) {
-//   const storage = FlutterSecureStorage();
-//   final dio = Dio();
-
-//   // CustomInterceptor 추가
-//   dio.interceptors.add(CustomInterceptor(storage: storage, ref: ref));
-
-//   return dio;
-// });
 import 'package:dio/dio.dart';
 import 'package:flick_frontend/members/repository/membersOnboarding_repository.dart';
 import 'package:flick_frontend/members/repository/members_repository.dart';
