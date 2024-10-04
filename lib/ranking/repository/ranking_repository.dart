@@ -12,4 +12,8 @@ abstract class RankingRepository {
   @GET('/student')
   Future<StudentRankingResponse> fetchStudentRanking(
       {@Header('Authorization') String? authorization});
+
+  @GET('/general')
+  Future<StudentRankingResponse> fetchGeneralRanking(
+      {@Header('Authorization') String? authorization});
 }
