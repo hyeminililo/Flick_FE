@@ -23,6 +23,17 @@ if (flutterVersionName == null) {
     flutterVersionName = "1.0"
 }
 
+def dartEnvironmentVariables = [:]
+
+if(project.hasProperty('flutterEnvPath')) {
+    def envFile = file("${project.rootDir}/${project.flutterEnvPath}")
+    if (envFile.exists()) {
+        envFile.readLines().each {line ->
+            def (key, value) = line.trim().split('=')
+            dartEnvironmentVariables[key] = value}
+    }
+}
+
 android {
     namespace = "com.example.flick_frontend"
     compileSdk = flutter.compileSdkVersion
@@ -38,10 +49,13 @@ android {
         applicationId = "com.example.flick_frontend"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdk = flutter.minSdkVersion
+        minSdk = 21
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
+
+        resValue "string", "kakao_native_app_key", dartEnvironmentVariables.KAKAO_NATIVE_APP_KEY_ANDROID ?: ""
+        
     }
 
     buildTypes {
