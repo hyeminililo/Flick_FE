@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  const EditProfileScreen({super.key});
+  final String profileImage;
+  const EditProfileScreen({super.key, required this.profileImage});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +46,7 @@ class EditProfileScreen extends StatelessWidget {
                     ),
                     child: ClipOval(
                       child: Image.asset(
-                        "assets/images/profile_placeholder.png", // 기본 프로필 사진
+                        profileImage, // 기본 프로필 사진
                         fit: BoxFit.cover,
                       ),
                     ),

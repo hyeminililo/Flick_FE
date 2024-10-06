@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'badgeWidget.dart';
 import 'allBadgePage.dart';
+import 'editMyProfile.dart'; // EditMyProfile 페이지 import
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
@@ -10,7 +11,7 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // 프로바이더에서 프로필 데이터 가져오기
-    final profileData = ref.watch(profileProvider); // 수정된 부분
+    final profileData = ref.watch(profileProvider);
 
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
@@ -23,10 +24,25 @@ class ProfileScreen extends ConsumerWidget {
           children: [
             SizedBox(height: screenHeight * 0.05),
             // 프로필 이미지와 이름
-            const CircleAvatar(
-              radius: 80,
-              backgroundImage:
-                  AssetImage('assets/images/google.png'), // 테스트용 asset 이미지 경로
+            GestureDetector(
+              onTap: () {
+                // 아바타 클릭 시 EditMyProfile 페이지로 이동
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditMyProfile(
+                      profileImage: profileData.profileImage,
+                    ),
+                  ),
+                );
+              },
+              child: CircleAvatar(
+                radius: 80,
+                backgroundImage: profileData.profileImage.isNotEmpty
+                    ? AssetImage(profileData.profileImage)
+                    : const AssetImage(
+                        "assets/images/flick.png"), // null일 경우 기본 이미지나 다른 처리
+              ),
             ),
             SizedBox(height: screenHeight * 0.02),
             Text(
