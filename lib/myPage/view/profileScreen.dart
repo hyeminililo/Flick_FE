@@ -2,7 +2,6 @@ import '../provider/profile_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'badgeWidget.dart';
-import 'allBadgePage.dart';
 import 'editMyProfile.dart'; // EditMyProfile 페이지 import
 
 class ProfileScreen extends ConsumerWidget {
@@ -38,6 +37,7 @@ class ProfileScreen extends ConsumerWidget {
               },
               child: CircleAvatar(
                 radius: 80,
+                // 에러를 처리하기 위한.
                 backgroundImage: profileData.profileImage.isNotEmpty
                     ? AssetImage(profileData.profileImage)
                     : const AssetImage(
