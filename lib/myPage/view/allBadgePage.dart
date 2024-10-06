@@ -8,7 +8,7 @@ class AllBadgesPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
 
     // 전체 뱃지를 보여줌
     List<Widget> allBadges = (badgeCounts / 30).floor() > 0
@@ -19,8 +19,8 @@ class AllBadgesPage extends ConsumerWidget {
                 _showBadgeDetails(context, index + 1); // 뱃지 클릭 시 상세 설명 표시
               },
               child: Container(
-                width: 80,
-                height: 80,
+                width: screenWidth * 0.2, // 전체 너비의 20%로 설정
+                height: screenWidth * 0.2, // 전체 너비의 20%로 설정
                 padding: const EdgeInsets.all(16),
                 margin: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
@@ -42,7 +42,7 @@ class AllBadgesPage extends ConsumerWidget {
         title: const Text("전체 뱃지"),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16),
+        padding: EdgeInsets.all(screenWidth * 0.04), // 화면 너비의 4% 패딩
         child: GridView.count(
           crossAxisCount: 3, // 한 줄에 3개의 뱃지씩 배치
           children: allBadges,
@@ -60,15 +60,15 @@ class AllBadgesPage extends ConsumerWidget {
       context: context,
       builder: (BuildContext context) {
         return Container(
-          padding: const EdgeInsets.all(16),
+          padding: EdgeInsets.all(screenWidth * 0.05), // 화면 너비의 5% 패딩
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height: screenHeight * 0.02),
               Image.asset(
                 "assets/images/badge$badgeIndex.png",
-                width: 60.0,
-                height: 60.0,
+                width: screenWidth * 0.15, // 화면 너비의 15%로 설정
+                height: screenWidth * 0.15, // 화면 너비의 15%로 설정
               ),
               Text(
                 '${badgeIndex * 30} p 뱃지',
@@ -88,8 +88,8 @@ class AllBadgesPage extends ConsumerWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.green,
                   padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.345,
-                    vertical: screenHeight * 0.02,
+                    horizontal: screenWidth * 0.2, // 화면 너비의 20% 패딩
+                    vertical: screenHeight * 0.02, // 화면 높이의 2% 패딩
                   ),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),

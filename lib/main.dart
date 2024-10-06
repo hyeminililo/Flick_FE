@@ -1,4 +1,3 @@
-import 'package:flick_frontend/auth/view/agreement_screen.dart';
 import 'myPage/view/profileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flick_frontend/env.dart';

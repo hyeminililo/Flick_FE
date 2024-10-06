@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'allBadgePage.dart';
 
 class BadgeWidget extends StatelessWidget {
