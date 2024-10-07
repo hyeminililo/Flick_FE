@@ -1,4 +1,6 @@
 import 'package:flick_frontend/auth/view/agreement_screen.dart';
+import 'package:flick_frontend/auth/view/login_screen.dart';
+import 'package:flick_frontend/members/view/myProfile.dart';
 import 'package:flutter/material.dart';
 import 'package:flick_frontend/env.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,7 +20,7 @@ void main() async {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const AgreementScreen(),
+        home: const LoginScreen(),
       ),
     ),
   );

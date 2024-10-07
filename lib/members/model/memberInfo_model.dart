@@ -11,24 +11,25 @@ class MemberInfoModel {
   final String nickname;
   final String? school;
   final String? gradeClass;
-  final UserType type;
+  final UserType? type; // nullable로 수정
   final int? score;
   final int? ecoLifeDuration;
   final String? recentChallengeTitle;
   final int? totalActionCount;
 
-  MemberInfoModel(
-      {required this.id,
-      required this.email,
-      this.picture,
-      required this.nickname,
-      this.school,
-      this.gradeClass,
-      required this.type,
-      this.score,
-      this.ecoLifeDuration,
-      this.recentChallengeTitle,
-      this.totalActionCount});
+  MemberInfoModel({
+    required this.id,
+    required this.email,
+    this.picture,
+    required this.nickname,
+    this.school,
+    this.gradeClass,
+    this.type,
+    this.score,
+    this.ecoLifeDuration,
+    this.recentChallengeTitle,
+    this.totalActionCount,
+  });
 
   factory MemberInfoModel.fromJson(Map<String, dynamic> json) =>
       _$MemberInfoModelFromJson(json);
