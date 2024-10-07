@@ -8,7 +8,7 @@ part 'challenge_model.g.dart';
 @JsonSerializable()
 class Challenge {
   final UserType type;
-  final ChallengeInfo challengeInfo;
+  final List<ChallengeInfo> challengeInfo;
 
   Challenge({required this.type, required this.challengeInfo});
 

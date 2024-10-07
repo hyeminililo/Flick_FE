@@ -8,8 +8,9 @@ part of 'challenge_model.dart';
 
 Challenge _$ChallengeFromJson(Map<String, dynamic> json) => Challenge(
       type: $enumDecode(_$UserTypeEnumMap, json['type']),
-      challengeInfo:
-          ChallengeInfo.fromJson(json['challengeInfo'] as Map<String, dynamic>),
+      challengeInfo: (json['challengeInfo'] as List<dynamic>)
+          .map((e) => ChallengeInfo.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ChallengeToJson(Challenge instance) => <String, dynamic>{

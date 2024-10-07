@@ -20,4 +20,9 @@ class ChallengeInfo {
     required this.imageUrl,
     required this.joinMembersCount,
   });
+
+  factory ChallengeInfo.fromJson(Map<String, dynamic> json) =>
+      _$ChallengeInfoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ChallengeInfoToJson(this);
 }
