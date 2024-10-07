@@ -38,8 +38,11 @@ abstract class MembersRepository {
   @GET('/info')
   Future<ApiResponse<MemberInfoModel>> fetchMemberInfo(
       {@Header('Authorization') String? authorization});
-  @PUT('/info')
+
+  @PATCH('/profile')
+  @MultiPart()
   Future<ApiResponse<MemberInfoModel>> updateMemberInfo(
-      @Body() MemberInfoModel memberInfo,
-      {@Header('Authorization') String? authorization});
+      {@Part(name: 'nickname') required String? nickname,
+      @Part(name: 'multipartFile') required List<MultipartFile>? multipartFile,
+      @Header('Authorization') String? authorization});
 }

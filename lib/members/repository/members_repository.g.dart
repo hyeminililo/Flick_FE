@@ -129,8 +129,9 @@ class _MembersRepository implements MembersRepository {
   }
 
   @override
-  Future<ApiResponse<MemberInfoModel>> updateMemberInfo(
-    MemberInfoModel memberInfo, {
+  Future<ApiResponse<MemberInfoModel>> updateMemberInfo({
+    String? nickname,
+    List<MultipartFile>? multipartFile,
     String? authorization,
   }) async {
     final _extra = <String, dynamic>{};
@@ -138,16 +139,26 @@ class _MembersRepository implements MembersRepository {
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{r'Authorization': authorization};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(memberInfo.toJson());
+    final _data = FormData();
+    if (nickname != null) {
+      _data.fields.add(MapEntry(
+        'nickname',
+        nickname,
+      ));
+    }
+    if (multipartFile != null) {
+      _data.files
+          .addAll(multipartFile.map((i) => MapEntry('multipartFile', i)));
+    }
     final _options = _setStreamType<ApiResponse<MemberInfoModel>>(Options(
-      method: 'PUT',
+      method: 'PATCH',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
         .compose(
           _dio.options,
-          '/info',
+          '/profile',
           queryParameters: queryParameters,
           data: _data,
         )

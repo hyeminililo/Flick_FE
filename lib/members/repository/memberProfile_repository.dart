@@ -114,23 +114,27 @@ class MembersProfileRepository {
       print("[Error]: Token is null");
       throw Exception("토큰이 존재하지 않습니다.");
     }
-
+// 요청 전송 전에 데이터 확인
+    print('업데이트할 데이터:');
+    print('닉네임: ${updatedInfo.nickname}');
     try {
       final apiResponse = await membersRepository.updateMemberInfo(
-        updatedInfo,
+        nickname: updatedInfo.nickname,
+        multipartFile: [],
         authorization: 'Bearer $token',
       );
       print('Update MemberInfo Status Code: ${apiResponse.statusCode}');
+      print(apiResponse.data.nickname);
 
       if (apiResponse.statusCode == 200) {
         memberInfo = apiResponse.data;
-        print('Updated MemberInfo: $memberInfo');
+        print('Updated MemberInfo: ${memberInfo?.nickname}');
       } else {
         print('[Warning]: Unexpected status code ${apiResponse.statusCode}');
         throw Exception("예상치 못한 응답 코드: ${apiResponse.statusCode}");
       }
     } catch (e) {
-      print('[ERR]: 멤버 정보를 업데이트하는 과정에서 오류가 발생했습니다: $e');
+      print('[ERR]: update 멤버 정보를 업데이트하는 과정에서 오류가 발생했습니다: $e');
       throw Exception("멤버 정보 업데이트 실패: $e");
     }
   }

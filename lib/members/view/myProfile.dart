@@ -173,6 +173,7 @@
 // //   }
 // // }
 import 'package:flick_frontend/members/model/memberInfo_model.dart';
+import 'package:flick_frontend/members/model/members_model.dart';
 import 'package:flick_frontend/members/provider/member_state.dart';
 import 'package:flick_frontend/members/provider/members_provider.dart';
 import 'package:flutter/material.dart';
@@ -300,12 +301,12 @@ class MyProfilePage extends ConsumerWidget {
           final updatedInfo = MemberInfoModel(
             id: 1,
             email: 'newemail@example.com',
-            nickname: 'NewNickname',
+            nickname: '안녕',
             // 기타 필드 초기화
             picture: null,
             school: null,
             gradeClass: null,
-            type: null,
+            type: UserType.GENERAL,
             score: null,
             ecoLifeDuration: null,
             recentChallengeTitle: null,
