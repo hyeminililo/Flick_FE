@@ -45,4 +45,16 @@ abstract class ChallengeRepository {
     @Query('day') required int day,
     @Header('Authorization') String? authorization,
   });
+
+  @POST('/leave/{challengeId}')
+  Future<void> leaveChallenge({
+    @Path('challengeId') required int challengeId,
+    @Header('Authorization') String? authorization,
+  });
+
+  @POST('/join/{challengeId}')
+  Future<void> joinChallenge({
+    @Path('challengeId') required int challengeId,
+    @Header('Authorization') String? authorization,
+  });
 }
