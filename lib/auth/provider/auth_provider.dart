@@ -4,7 +4,6 @@ import 'package:flick_frontend/auth/model/token_model.dart';
 import 'package:flick_frontend/auth/repository/auth_repository.dart';
 import 'package:flick_frontend/auth/repository/google_login_repository.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
-import 'package:flick_frontend/common/provider/dio_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../repository/kakao_login_repository.dart';
