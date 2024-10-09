@@ -52,6 +52,7 @@ class MembersProfileNotifier extends StateNotifier<MemberProfileState> {
     state = const MemberProfileState.loading();
     try {
       await repository.fetchMemberInfo();
+
       final memberInfo = repository.memberInfo;
       if (memberInfo != null) {
         state = MemberProfileState.loaded(memberInfo);

@@ -96,7 +96,7 @@ class MembersProfileRepository {
       if (apiResponse.statusCode == 200) {
         // apiResponse.data는 MemberInfoModel
         memberInfo = apiResponse.data;
-        print('Fetched MemberInfo: $memberInfo');
+        print('Fetched MemberInfo: ${memberInfo!.email}');
       } else {
         print('[Warning]: Unexpected status code ${apiResponse.statusCode}');
         throw Exception("예상치 못한 응답 코드: ${apiResponse.statusCode}");
