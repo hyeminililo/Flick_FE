@@ -1,12 +1,16 @@
+import 'package:flick_frontend/auth/provider/auth_provider.dart';
+import 'package:flick_frontend/auth/view/login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // 추가된 import
 import 'editProfileScreen.dart'; // EditProfileScreen 페이지 import
 
-class EditMyProfile extends StatelessWidget {
+class EditMyProfile extends ConsumerWidget {
+  // ConsumerWidget으로 변경
   final String profileImage;
   const EditMyProfile({super.key, required this.profileImage});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -85,6 +89,13 @@ class EditMyProfile extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: () {
                   // 로그아웃 버튼 클릭 시 행동
+                  ref.read(authProvider.notifier).logout();
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const LoginScreen(),
+                    ),
+                  );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey[300], // 배경색
