@@ -5,10 +5,9 @@ import 'package:flick_frontend/auth/repository/kakao_login_repository.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:flick_frontend/common/view/error/view/notUseService_error_screen.dart';
-import 'package:flick_frontend/common/view/splash_screen.dart';
 import 'package:flick_frontend/members/provider/members_provider.dart';
-import 'package:flick_frontend/members/view/myProfile.dart';
-import 'package:flick_frontend/members/view/purposeOfUsage_screen.dart';
+import 'package:flick_frontend/members/view/myPage/profileScreen.dart';
+import 'package:flick_frontend/members/view/onBoarding/PurposeOfUsage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -65,7 +64,7 @@ class LoginScreen extends ConsumerWidget {
                       if (isLogined!) {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MyProfilePage(),
+                          builder: (context) => const MyPageScreen2(),
                         ));
                       } else {
                         print("isLogiend $isLogined");
@@ -146,7 +145,7 @@ class LoginScreen extends ConsumerWidget {
                       if (isLogined!) {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const MyProfilePage(),
+                          builder: (context) => const MyPageScreen2(),
                         ));
                       } else {
                         print("isLogiend $isLogined");

@@ -1,47 +1,13 @@
+import 'dart:io';
+
 import 'package:flick_frontend/members/model/memberInfo_model.dart';
 import 'package:flick_frontend/members/provider/member_state.dart';
+import 'package:flick_frontend/members/provider/members_provider.dart';
 import 'package:flick_frontend/members/repository/memberProfile_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-// class MembersProfileNotifier extends StateNotifier<MemberProfileState> {
-//   final MembersProfileRepository repository;
-
-//   MembersProfileNotifier(this.repository)
-//       : super(const MemberProfileState.initial());
-
-//   Future<void> fetchMemberInfo() async {
-//     state = const MemberProfileState.loading();
-//     try {
-//       await repository.fetchMemberInfo();
-//       final memberInfo = repository.memberInfo;
-//       if (memberInfo != null) {
-//         state = MemberProfileState.loaded(memberInfo);
-//       } else {
-//         state = const MemberProfileState.error("사용자 정보를 가져올 수 없습니다.");
-//       }
-//     } catch (e) {
-//       state = MemberProfileState.error(e.toString());
-//     }
-//   }
-
-//   Future<void> updateMemberInfo(MemberInfoModel updatedInfo) async {
-//     state = const MemberProfileState.loading();
-//     try {
-//       await repository.updateMemberInfo(updatedInfo);
-//       final memberInfo = repository.memberInfo;
-//       if (memberInfo != null) {
-//         state = MemberProfileState.loaded(memberInfo);
-//       } else {
-//         state = const MemberProfileState.error("사용자 정보를 업데이트할 수 없습니다.");
-//       }
-//     } catch (e) {
-//       state = MemberProfileState.error(e.toString());
-//     }
-//   }
-// }
 class MembersProfileNotifier extends StateNotifier<MemberProfileState> {
   final MembersProfileRepository repository;
-
   MembersProfileNotifier(this.repository)
       : super(const MemberProfileState.initial());
 
@@ -51,7 +17,9 @@ class MembersProfileNotifier extends StateNotifier<MemberProfileState> {
 
     state = const MemberProfileState.loading();
     try {
+      // memberProfileRp의 페치 불러옴
       await repository.fetchMemberInfo();
+// 거기서 업데이트 한 멤버 정보를 받아서 저장 함.
       final memberInfo = repository.memberInfo;
       if (memberInfo != null) {
         state = MemberProfileState.loaded(memberInfo);
@@ -63,17 +31,33 @@ class MembersProfileNotifier extends StateNotifier<MemberProfileState> {
     }
   }
 
-  Future<void> updateMemberInfo(MemberInfoModel updatedInfo) async {
+  // 멤버 정보 업데이트 (닉네임과 프로필 사진만 업데이트)
+  Future<void> updateMemberInfo(String nickname, File? newProfileImage) async {
     if (state is MemberProfileLoading) return; // 중복 업데이트 방지
+
     state = const MemberProfileState.loading();
+
     try {
-      await repository.updateMemberInfo(updatedInfo);
-      final memberInfo = repository.memberInfo;
-      if (memberInfo != null) {
-        state = MemberProfileState.loaded(memberInfo);
-      } else {
-        state = const MemberProfileState.error("사용자 정보를 업데이트할 수 없습니다.");
+      // 현재 멤버 정보 가져오기
+      final currentMemberInfo = repository.memberInfo;
+      if (currentMemberInfo == null) {
+        throw Exception("멤버 정보를 찾을 수 없습니다.");
       }
+
+      // 닉네임 및 사진 수정 (copyWith 사용)
+      final updatedMemberInfo = currentMemberInfo.copyWith(
+        nickname: nickname, // 새로운 닉네임으로 수정
+        picture: newProfileImage != null
+            ? newProfileImage.path
+            : currentMemberInfo.picture, // 프로필 사진 수정, 없으면 기존 사진 유지
+      );
+
+      // 서버에 업데이트 요청
+      await repository.updateMemberInfo(updatedMemberInfo, newProfileImage);
+      await repository.fetchMemberInfo();
+      // 업데이트 후 새로운 상태 반영
+      final updatedInfo = repository.memberInfo;
+      state = MemberProfileState.loaded(updatedInfo!);
     } catch (e) {
       state = const MemberProfileState.error("사용자 정보 업데이트 중 오류가 발생했습니다.");
     }

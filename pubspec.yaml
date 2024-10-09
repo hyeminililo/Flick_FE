@@ -54,6 +54,8 @@ dependencies:
   flutter_secure_storage: ^4.2.1
   flutter_native_splash: ^2.4.1
   freezed: ^2.5.7
+  image_picker: ^1.1.2
+  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:

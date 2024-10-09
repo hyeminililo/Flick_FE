@@ -3,23 +3,6 @@
 part of 'memberInfo_model.dart';
 
 // **************************************************************************
-// JsonSerializableGenerator
-// **************************************************************************
-
-MemberInfoModel _$MemberInfoModelFromJson(Map<String, dynamic> json) =>
-    MemberInfoModel(
-      id: (json['id'] as num).toInt(),
-      email: json['email'] as String,
-      picture: json['picture'] as String?,
-      nickname: json['nickname'] as String,
-      school: json['school'] as String?,
-      gradeClass: json['gradeClass'] as String?,
-      type: $enumDecodeNullable(_$UserTypeEnumMap, json['type']),
-      score: (json['score'] as num?)?.toInt(),
-      ecoLifeDuration: (json['ecoLifeDuration'] as num?)?.toInt(),
-      recentChallengeTitle: json['recentChallengeTitle'] as String?,
-      totalActionCount: (json['totalActionCount'] as num?)?.toInt(),
-    );
 
 Map<String, dynamic> _$MemberInfoModelToJson(MemberInfoModel instance) =>
     <String, dynamic>{

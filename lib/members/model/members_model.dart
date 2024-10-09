@@ -4,6 +4,18 @@ part 'members_model.g.dart';
 
 enum UserType { STUDENT, GENERAL }
 
+UserType userTypeFromJson(String? type) {
+  switch (type) {
+    case 'STUDENT':
+      return UserType.STUDENT;
+    case 'GENERAL':
+      return UserType.GENERAL;
+
+    default:
+      return UserType.GENERAL; // 기본값 설정
+  }
+}
+
 @JsonSerializable()
 class Members {
   UserType type;
