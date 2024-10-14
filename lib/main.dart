@@ -2,6 +2,9 @@ import 'package:flick_frontend/auth/view/agreement_screen.dart';
 import 'package:flick_frontend/auth/view/communityAgreement_screen.dart';
 import 'package:flick_frontend/auth/view/personalInfoAgreement_screen.dart';
 import 'package:flick_frontend/auth/view/serviceAgreement_screen.dart';
+import 'package:flick_frontend/challenge/view/challenge_screen.dart';
+import 'package:flick_frontend/challenge/view/myChallenge.dart';
+import 'package:flick_frontend/challenge/view/openChallenge.dart';
 import 'package:flick_frontend/members/view/purposeOfUsage_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -75,7 +78,7 @@ void main() async {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const AgreementScreen(),
+        home: const ChallengeScreen(),
       ),
     ),
   );
