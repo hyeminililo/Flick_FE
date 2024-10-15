@@ -128,59 +128,6 @@ class _MembersRepository implements MembersRepository {
     return _value;
   }
 
-  @override
-  Future<ApiResponse<MemberInfoModel>> updateMemberInfo({
-    String? nickname,
-    List<MultipartFile>? multipartFile,
-    String? authorization,
-  }) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
-    final _headers = <String, dynamic>{r'Authorization': authorization};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = FormData();
-    if (nickname != null) {
-      _data.fields.add(MapEntry(
-        'nickname',
-        nickname,
-      ));
-    }
-    if (multipartFile != null) {
-      _data.files
-          .addAll(multipartFile.map((i) => MapEntry('multipartFile', i)));
-    }
-    final _options = _setStreamType<ApiResponse<MemberInfoModel>>(Options(
-      method: 'PATCH',
-      headers: _headers,
-      extra: _extra,
-      contentType: 'multipart/form-data',
-    )
-        .compose(
-          _dio.options,
-          '/profile',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<MemberInfoModel> _value;
-    try {
-      _value = ApiResponse<MemberInfoModel>.fromJson(
-        _result.data!,
-        (json) => MemberInfoModel.fromJson(json as Map<String, dynamic>),
-      );
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
-
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

@@ -35,4 +35,33 @@ class MemberInfoModel {
       _$MemberInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$MemberInfoModelToJson(this);
+
+  // copyWith 메서드 추가
+  MemberInfoModel copyWith({
+    int? id,
+    String? email,
+    String? picture,
+    String? nickname,
+    String? school,
+    String? gradeClass,
+    UserType? type,
+    int? score,
+    int? ecoLifeDuration,
+    String? recentChallengeTitle,
+    int? totalActionCount,
+  }) {
+    return MemberInfoModel(
+      id: id ?? this.id,
+      email: email ?? this.email,
+      picture: picture ?? this.picture,
+      nickname: nickname ?? this.nickname,
+      school: school ?? this.school,
+      gradeClass: gradeClass ?? this.gradeClass,
+      type: type ?? this.type,
+      score: score ?? this.score,
+      ecoLifeDuration: ecoLifeDuration ?? this.ecoLifeDuration,
+      recentChallengeTitle: recentChallengeTitle ?? this.recentChallengeTitle,
+      totalActionCount: totalActionCount ?? this.totalActionCount,
+    );
+  }
 }

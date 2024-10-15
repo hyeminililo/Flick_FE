@@ -1,140 +1,78 @@
-// import 'package:flick_frontend/members/model/memberInfo_model.dart';
-// import 'package:flick_frontend/members/repository/members_repository.dart';
-// import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-// import 'package:flick_frontend/common/dio/apiResponse_model.dart';
-
-// class MembersProfileRepository {
-//   final MembersRepository membersRepository;
-//   final FlutterSecureStorage storage;
-
-//   MemberInfoModel? memberInfo;
-
-//   MembersProfileRepository(this.membersRepository, this.storage);
-
-//   Future<void> fetchMemberInfo() async {
-//     final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
-
-//     if (token == null) {
-//       print("[Error]: Token is null");
-//       return;
-//     }
-
-//     try {
-//       final apiResponse = await membersRepository.fetchMemberInfo(
-//         authorization: 'Bearer $token',
-//       );
-//       print('MemberInfo Status Code: ${apiResponse.statusCode}');
-
-//       if (apiResponse.statusCode == 200) {
-//         // apiResponse.data는 MemberInfoModel
-//         memberInfo = apiResponse.data;
-//         print('Fetched MemberInfo: $memberInfo');
-//       } else {
-//         print('[Warning]: Unexpected status code ${apiResponse.statusCode}');
-
-//         throw Exception("예상치 못한 응답 코드: ${apiResponse.statusCode}");
-//       }
-//     } catch (e) {
-//       print('[ERR]: 멤버 정보를 가져오는 과정에서 오류가 발생했습니다: $e');
-//       throw Exception("멤버 정보 가져오기 실패: $e");
-//     }
-//   }
-
-//   // Future<void> updateMemberInfo(MemberInfoModel updatedInfo) async {
-//   //   final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
-
-//   //   if (token == null) {
-//   //     print("[Error]: Token is null");
-//   //     return;
-//   //   }
-
-//   //   try {
-//   //     final apiResponse = await membersRepository.updateMemberInfo(
-//   //       updatedInfo,
-//   //       authorization: 'Bearer $token',
-//   //     );
-//   //     print('Update MemberInfo Status Code: ${apiResponse.statusCode}');
-
-//   //     if (apiResponse.statusCode == 200) {
-//   //       memberInfo = apiResponse.data;
-//   //       print('Updated MemberInfo: $memberInfo');
-//   //     } else {
-//   //       print('[Warning]: Unexpected status code ${apiResponse.statusCode}');
-//   //     }
-//   //   } catch (e) {
-//   //     print('[ERR]: 멤버 정보를 업데이트하는 과정에서 오류가 발생했습니다: $e');
-//   //   }
-//   // }
-// }
+import 'dart:convert'; // JSON 인코딩을 위해 필요
+import 'package:dio/dio.dart' as prefix;
+import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:flick_frontend/members/model/memberInfo_model.dart';
 import 'package:flick_frontend/members/repository/members_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flick_frontend/common/dio/apiResponse_model.dart';
 
 class MembersProfileRepository {
   final MembersRepository membersRepository;
   final FlutterSecureStorage storage;
-
+  final dio = prefix.Dio();
   MemberInfoModel? memberInfo;
 
   MembersProfileRepository(this.membersRepository, this.storage);
 
-  Future<void> fetchMemberInfo() async {
+  // 토큰 가져오는 메서드 분리
+  Future<String> _getToken() async {
     final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
-
     if (token == null) {
-      print("[Error]: Token is null");
       throw Exception("토큰이 존재하지 않습니다.");
     }
+    return token;
+  }
+
+  Future<void> fetchMemberInfo() async {
+    final token = await _getToken();
 
     try {
+      //api 연결 및 통신으로 정보 받기
       final apiResponse = await membersRepository.fetchMemberInfo(
-        authorization: 'Bearer $token',
-      );
-      print('MemberInfo Status Code: ${apiResponse.statusCode}');
-
+          authorization: 'Bearer $token');
       if (apiResponse.statusCode == 200) {
-        // apiResponse.data는 MemberInfoModel
         memberInfo = apiResponse.data;
-        print('Fetched MemberInfo: ${memberInfo!.email}');
       } else {
-        print('[Warning]: Unexpected status code ${apiResponse.statusCode}');
         throw Exception("예상치 못한 응답 코드: ${apiResponse.statusCode}");
       }
     } catch (e) {
-      print('[ERR]: 멤버 정보를 가져오는 과정에서 오류가 발생했습니다: $e');
       throw Exception("멤버 정보 가져오기 실패: $e");
     }
   }
 
-  Future<void> updateMemberInfo(MemberInfoModel updatedInfo) async {
-    final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
+  Future<void> updateMemberInfo(
+      {required String nickname, String? imagePath}) async {
+    final token = await _getToken();
 
-    if (token == null) {
-      print("[Error]: Token is null");
-      throw Exception("토큰이 존재하지 않습니다.");
-    }
-// 요청 전송 전에 데이터 확인
-    print('업데이트할 데이터:');
-    print('닉네임: ${updatedInfo.nickname}');
     try {
-      final apiResponse = await membersRepository.updateMemberInfo(
-        nickname: updatedInfo.nickname,
-        multipartFile: [],
-        authorization: 'Bearer $token',
-      );
-      print('Update MemberInfo Status Code: ${apiResponse.statusCode}');
-      print(apiResponse.data.nickname);
+      final formData = prefix.FormData.fromMap({
+        "memberInfoUpdateReqDto": jsonEncode({"nickname": nickname}),
+        if (imagePath != null)
+          "multipartFile": await prefix.MultipartFile.fromFile(imagePath),
+      });
+      print('서버에 프로필 업데이트 요청을 보냅니다...');
+      final apiResponse = await dio.patch("$BASE_URl/members/profile",
+          data: formData,
+          options: prefix.Options(headers: {
+            'Authorization': 'Bearer $token',
+          }));
 
       if (apiResponse.statusCode == 200) {
-        memberInfo = apiResponse.data;
-        print('Updated MemberInfo: ${memberInfo?.nickname}');
+        print('프로필이 성공적으로 업데이트되었습니다.');
+        print("응답 메시지: ${apiResponse.data}");
       } else {
-        print('[Warning]: Unexpected status code ${apiResponse.statusCode}');
-        throw Exception("예상치 못한 응답 코드: ${apiResponse.statusCode}");
+        print('[Error_Member Update]: ${apiResponse.statusMessage}');
+        print('응답 데이터: ${apiResponse.data}');
+        throw Exception("프로필 업데이트 실패: ${apiResponse.statusMessage}");
       }
     } catch (e) {
-      print('[ERR]: update 멤버 정보를 업데이트하는 과정에서 오류가 발생했습니다: $e');
+      if (e is prefix.DioException) {
+        print('에러 응답 데이터: ${e.response?.data}');
+        print('에러 메시지: ${e.message}');
+        if (e.response?.statusCode == 401) {
+          // 토큰 만료 등의 인증 문제일 경우 추가 처리 (예: 로그아웃 처리 등)
+          print('인증 오류: 다시 로그인해야 합니다.');
+        }
+      }
       throw Exception("멤버 정보 업데이트 실패: $e");
     }
   }
