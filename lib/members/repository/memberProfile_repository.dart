@@ -7,25 +7,29 @@ import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:flick_frontend/members/model/memberInfo_model.dart';
 import 'package:flick_frontend/members/repository/members_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flick_frontend/common/dio/apiResponse_model.dart';
 
 class MembersProfileRepository {
   final MembersRepository membersRepository;
   final FlutterSecureStorage storage;
-
+  final dio = prefix.Dio();
   MemberInfoModel? memberInfo;
 
   MembersProfileRepository(this.membersRepository, this.storage);
 
-  Future<void> fetchMemberInfo() async {
+  // 토큰 가져오는 메서드 분리
+  Future<String> _getToken() async {
     final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
-
     if (token == null) {
-      print("[Error]: Token is null");
       throw Exception("토큰이 존재하지 않습니다.");
     }
+    return token;
+  }
+
+  Future<void> fetchMemberInfo() async {
+    final token = await _getToken();
 
     try {
+      //api 연결 및 통신으로 정보 받기
       final apiResponse = await membersRepository.fetchMemberInfo(
         authorization: 'Bearer $token',
       );
@@ -33,11 +37,9 @@ class MembersProfileRepository {
       if (apiResponse.statusCode == 200) {
         memberInfo = apiResponse.data;
       } else {
-        print('[Warning]: Unexpected status code ${apiResponse.statusCode}');
         throw Exception("예상치 못한 응답 코드: ${apiResponse.statusCode}");
       }
     } catch (e) {
-      print('[ERR]: 멤버 정보를 가져오는 과정에서 오류가 발생했습니다: $e');
       throw Exception("멤버 정보 가져오기 실패: $e");
     }
   }
