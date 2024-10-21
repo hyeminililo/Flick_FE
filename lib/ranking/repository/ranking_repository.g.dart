@@ -63,9 +63,9 @@ class _RankingRepository implements RankingRepository {
   }
 
   @override
-  Future<ApiResponse<GeneralRankingResponse>> fetchGeneralRanking(
-    int page,
-    int size, {
+  Future<ApiResponse<GeneralRankingInfoResDto>> fetchGeneralRanking({
+    int page = 0,
+    int size = 10,
     String? authorization,
   }) async {
     final _extra = <String, dynamic>{};
@@ -78,7 +78,7 @@ class _RankingRepository implements RankingRepository {
     _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options =
-        _setStreamType<ApiResponse<GeneralRankingResponse>>(Options(
+        _setStreamType<ApiResponse<GeneralRankingInfoResDto>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -95,11 +95,12 @@ class _RankingRepository implements RankingRepository {
               baseUrl,
             )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late ApiResponse<GeneralRankingResponse> _value;
+    late ApiResponse<GeneralRankingInfoResDto> _value;
     try {
-      _value = ApiResponse<GeneralRankingResponse>.fromJson(
+      _value = ApiResponse<GeneralRankingInfoResDto>.fromJson(
         _result.data!,
-        (json) => GeneralRankingResponse.fromJson(json as Map<String, dynamic>),
+        (json) =>
+            GeneralRankingInfoResDto.fromJson(json as Map<String, dynamic>),
       );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);

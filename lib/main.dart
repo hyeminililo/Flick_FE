@@ -1,4 +1,6 @@
-import 'package:flick_frontend/common/view/rank/view/rank_screen.dart';
+import 'package:flick_frontend/auth/view/login_screen.dart';
+import 'package:flick_frontend/members/view/myPage/profileScreen.dart';
+import 'package:flick_frontend/ranking/view/studentRank_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flick_frontend/env.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,7 +21,7 @@ void main() async {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const RankScreen(),
+        home: const LoginScreen(),
       ),
     ),
   );
