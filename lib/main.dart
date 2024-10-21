@@ -1,3 +1,10 @@
+import 'package:flick_frontend/auth/view/agreement_screen.dart';
+import 'package:flick_frontend/auth/view/communityAgreement_screen.dart';
+import 'package:flick_frontend/auth/view/personalInfoAgreement_screen.dart';
+import 'package:flick_frontend/auth/view/serviceAgreement_screen.dart';
+
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flick_frontend/auth/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flick_frontend/env.dart';
