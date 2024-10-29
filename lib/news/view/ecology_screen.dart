@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/news/model/newsResponse_model.dart';
 import 'package:flick_frontend/news/repository/news_repository.dart';
@@ -46,36 +47,53 @@ class _EcologyScreenState extends State<EcologyScreen> {
               if (snapshot.hasData) {
                 final randomNews =
                     (snapshot.data!.data!..shuffle()).take(4).toList();
-                return SizedBox(
-                  height: 200, // 원하는 높이
-                  child: PageView.builder(
-                    // 하단의 다이얼로그?
-                    itemCount: randomNews.length,
-                    itemBuilder: (context, index) {
-                      final newsItem = randomNews[index];
+                return Column(
+                  children: [
+                    // PageView 부분
+                    SizedBox(
+                      height: 150, // 원하는 높이 설정
+                      child: PageView.builder(
+                        itemCount: randomNews.length,
+                        itemBuilder: (context, index) {
+                          final newsItem = randomNews[index];
 
-                      return Container(
-                        padding: const EdgeInsets.all(8),
-                        color: PRIMARY_COLOR, // 배경 색상
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              newsItem.title,
-                              style: const TextStyle(
-                                  fontSize: 18, fontWeight: FontWeight.bold),
+                          return Container(
+                            padding: const EdgeInsets.all(8),
+                            // 배경 색상을 제거하여 인디케이터와 충돌 방지
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  newsItem.title,
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(newsItem.contents),
+                              ],
                             ),
-                            Text(newsItem.contents),
-                          ],
+                          );
+                        },
+                      ),
+                    ),
+                    // 페이지 인디케이터 추가
+                    SizedBox(
+                      height: 20,
+                      child: Center(
+                        child: DotsIndicator(
+                          dotsCount: randomNews.length,
+                          decorator: const DotsDecorator(
+                            color: Colors.grey, // 비활성화된 점 색상
+                            activeColor: PRIMARY_COLOR, // 활성화된 점 색상
+                          ),
                         ),
-                      );
-                    },
-                  ),
+                      ),
+                    ),
+                  ],
                 );
               } else if (snapshot.hasError) {
                 return Text('Error: ${snapshot.error}');
-              } else if (snapshot.hasData == false) {
-                // 로딩 페이지로 이동하는 로직.
               }
               return const CircularProgressIndicator();
             },

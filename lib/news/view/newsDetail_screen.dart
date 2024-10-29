@@ -74,13 +74,112 @@
 //   }
 // }
 
+// 10-18수정
+// import 'package:dio/dio.dart';
+// import 'package:flick_frontend/news/model/newsInfo_model.dart'; // NewsInfo 모델 사용
+// import 'package:flick_frontend/news/repository/news_repository.dart';
+// import 'package:flutter/material.dart';
+
+// class NewsDetailScreen extends StatefulWidget {
+//   // 뉴스의 id
+//   final int newsId;
+
+//   const NewsDetailScreen({super.key, required this.newsId});
+
+//   @override
+//   State<NewsDetailScreen> createState() => _NewsDetailScreenState();
+// }
+
+// class _NewsDetailScreenState extends State<NewsDetailScreen> {
+//   late Future<NewsInfo> futureNews; // 수정: NewsInfo 타입으로 변경
+//   late NewsRepository newsRepository; // NewsRepository 선언
+
+//   @override
+//   void initState() {
+//     super.initState();
+//     // Dio 인스턴스를 생성하고 NewsRepository에 주입
+//     Dio dio = Dio();
+//     newsRepository = NewsRepository(dio); // 리포지토리 생성
+
+//     // newsRepository를 사용하여 fetchNewsDetails 호출
+//     futureNews = newsRepository.fetchNewsDetails(widget.newsId);
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: const Text('뉴스 상세보기'),
+//       ),
+//       body: FutureBuilder<NewsInfo>(
+//         future: futureNews,
+//         builder: (context, snapshot) {
+//           if (snapshot.hasData) {
+//             final news = snapshot.data!;
+//             return Padding(
+//               padding: const EdgeInsets.all(16.0),
+//               child: SingleChildScrollView(
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     // 뉴스 이미지
+//                     if (news.picture != null)
+//                       Image.network(
+//                         news.picture!,
+//                         width: double.infinity,
+//                         height: 200,
+//                         fit: BoxFit.cover,
+//                       ),
+//                     const SizedBox(height: 16),
+//                     // 뉴스 제목
+//                     Text(
+//                       news.title,
+//                       style: const TextStyle(
+//                           fontSize: 24, fontWeight: FontWeight.bold),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     // 뉴스 본문
+//                     Text(
+//                       news.contents,
+//                       style: const TextStyle(fontSize: 16),
+//                     ),
+//                     const SizedBox(height: 16),
+//                     // 조회수 및 기타 정보
+//                     Row(
+//                       children: [
+//                         const Icon(Icons.visibility),
+//                         const SizedBox(width: 5),
+//                         Text('${news.viewCount ?? 0} views'),
+//                       ],
+//                     ),
+//                     const SizedBox(height: 16),
+//                     Row(
+//                       children: [
+//                         const Icon(Icons.thumb_up),
+//                         const SizedBox(width: 5),
+//                         Text('${news.likeCount ?? 0} likes'),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             );
+//           } else if (snapshot.hasError) {
+//             return Center(child: Text('Error: ${snapshot.error}'));
+//           }
+//           return const Center(child: CircularProgressIndicator());
+//         },
+//       ),
+//     );
+//   }
+// }
+
 import 'package:dio/dio.dart';
-import 'package:flick_frontend/news/model/newsInfo_model.dart'; // NewsInfo 모델 사용
+import 'package:flick_frontend/news/model/newsInfo_model.dart';
 import 'package:flick_frontend/news/repository/news_repository.dart';
 import 'package:flutter/material.dart';
 
 class NewsDetailScreen extends StatefulWidget {
-  // 뉴스의 id
   final int newsId;
 
   const NewsDetailScreen({super.key, required this.newsId});
@@ -90,22 +189,25 @@ class NewsDetailScreen extends StatefulWidget {
 }
 
 class _NewsDetailScreenState extends State<NewsDetailScreen> {
-  late Future<NewsInfo> futureNews; // 수정: NewsInfo 타입으로 변경
-  late NewsRepository newsRepository; // NewsRepository 선언
+  late Future<NewsInfo> futureNews;
+  late NewsRepository newsRepository;
 
   @override
   void initState() {
     super.initState();
-    // Dio 인스턴스를 생성하고 NewsRepository에 주입
     Dio dio = Dio();
-    newsRepository = NewsRepository(dio); // 리포지토리 생성
-
-    // newsRepository를 사용하여 fetchNewsDetails 호출
+    newsRepository = NewsRepository(dio);
     futureNews = newsRepository.fetchNewsDetails(widget.newsId);
   }
 
   @override
   Widget build(BuildContext context) {
+    // 화면의 너비와 높이를 가져옵니다.
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+    // 화면의 텍스트 스케일 팩터를 가져옵니다.
+    final double textScale = MediaQuery.of(context).textScaleFactor;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('뉴스 상세보기'),
@@ -116,51 +218,54 @@ class _NewsDetailScreenState extends State<NewsDetailScreen> {
           if (snapshot.hasData) {
             final news = snapshot.data!;
             return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // 뉴스 이미지
-                    if (news.picture != null)
-                      Image.network(
-                        news.picture!,
-                        width: double.infinity,
-                        height: 200,
-                        fit: BoxFit.cover,
+              padding: EdgeInsets.all(screenWidth * 0.04), // 화면 너비의 4%를 패딩으로 설정
+              child: ListView(
+                children: [
+                  if (news.picture != null)
+                    Image.network(
+                      news.picture!,
+                      width: screenWidth,
+                      height: screenHeight * 0.25, // 화면 높이의 25%로 이미지 높이 설정
+                      fit: BoxFit.cover,
+                    ),
+                  SizedBox(height: screenHeight * 0.02), // 화면 높이의 2%만큼 간격 설정
+                  Text(
+                    news.title,
+                    style: TextStyle(
+                      fontSize: 24 * textScale, // 폰트 크기를 텍스트 스케일 팩터와 함께 조절
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  Text(
+                    news.contents,
+                    style: TextStyle(
+                      fontSize: 16 * textScale,
+                    ),
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  Row(
+                    children: [
+                      const Icon(Icons.visibility),
+                      SizedBox(width: screenWidth * 0.02),
+                      Text(
+                        '${news.viewCount ?? 0} views',
+                        style: TextStyle(fontSize: 14 * textScale),
                       ),
-                    const SizedBox(height: 16),
-                    // 뉴스 제목
-                    Text(
-                      news.title,
-                      style: const TextStyle(
-                          fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 16),
-                    // 뉴스 본문
-                    Text(
-                      news.contents,
-                      style: const TextStyle(fontSize: 16),
-                    ),
-                    const SizedBox(height: 16),
-                    // 조회수 및 기타 정보
-                    Row(
-                      children: [
-                        const Icon(Icons.visibility),
-                        const SizedBox(width: 5),
-                        Text('${news.viewCount ?? 0} views'),
-                      ],
-                    ),
-                    const SizedBox(height: 16),
-                    Row(
-                      children: [
-                        const Icon(Icons.thumb_up),
-                        const SizedBox(width: 5),
-                        Text('${news.likeCount ?? 0} likes'),
-                      ],
-                    ),
-                  ],
-                ),
+                    ],
+                  ),
+                  SizedBox(height: screenHeight * 0.02),
+                  Row(
+                    children: [
+                      const Icon(Icons.thumb_up),
+                      SizedBox(width: screenWidth * 0.02),
+                      Text(
+                        '${news.likeCount ?? 0} likes',
+                        style: TextStyle(fontSize: 14 * textScale),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             );
           } else if (snapshot.hasError) {
