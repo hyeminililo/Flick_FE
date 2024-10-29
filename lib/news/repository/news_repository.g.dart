@@ -14,8 +14,6 @@ class _NewsRepository implements NewsRepository {
     this.baseUrl,
     this.errorLogger,
   }) {
-    //http 부터 api까지 중괄호 쳐져 있었음
-    // '{https://flick-api.shop/api}/news'
     baseUrl ??= 'https://flick-api.shop/api/news';
   }
 
@@ -26,10 +24,12 @@ class _NewsRepository implements NewsRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<NewsResponse> fetchNews() async {
+  Future<NewsResponse> fetchNews({String? authorization}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': authorization};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
     final _options = _setStreamType<NewsResponse>(Options(
       method: 'GET',
@@ -38,7 +38,7 @@ class _NewsRepository implements NewsRepository {
     )
         .compose(
           _dio.options,
-          '/',
+          '',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -58,54 +58,25 @@ class _NewsRepository implements NewsRepository {
     return _value;
   }
 
-  // @override
-  // Future<NewsResponse> fetchNewsDetails(int newsId) async {
-  //   final _extra = <String, dynamic>{};
-  //   final queryParameters = <String, dynamic>{};
-  //   final _headers = <String, dynamic>{};
-  //   const Map<String, dynamic>? _data = null;
-  //   final _options = _setStreamType<NewsResponse>(Options(
-  //     method: 'GET',
-  //     headers: _headers,
-  //     extra: _extra,
-  //   )
-  //       .compose(
-  //         _dio.options,
-  //         '/${newsId}',
-  //         queryParameters: queryParameters,
-  //         data: _data,
-  //       )
-  //       .copyWith(
-  //           baseUrl: _combineBaseUrls(
-  //         _dio.options.baseUrl,
-  //         baseUrl,
-  //       )));
-  //   final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-  //   late NewsResponse _value;
-  //   try {
-  //     _value = NewsResponse.fromJson(_result.data!);
-  //   } on Object catch (e, s) {
-  //     errorLogger?.logError(e, s, _options);
-  //     rethrow;
-  //   }
-  //   return _value;
-  // }
-
-  // 추후 문제 발생하면 수정하자
   @override
-  Future<NewsInfo> fetchNewsDetails(int newsId) async {
+  Future<NewsDetailsResponse> fetchNewsDetails(
+    int newsId, {
+    String? authorization,
+  }) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': authorization};
+    _headers.removeWhere((k, v) => v == null);
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<NewsResponse>(Options(
+    final _options = _setStreamType<NewsDetailsResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          '/${newsId}', // 해당 뉴스 ID로 요청
+          '/${newsId}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -114,27 +85,15 @@ class _NewsRepository implements NewsRepository {
           _dio.options.baseUrl,
           baseUrl,
         )));
-
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late NewsResponse _response;
+    late NewsDetailsResponse _value;
     try {
-      _response = NewsResponse.fromJson(_result.data!); // NewsResponse로 파싱
+      _value = NewsDetailsResponse.fromJson(_result.data!);
     } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options); // 오류 처리
+      errorLogger?.logError(e, s, _options);
       rethrow;
     }
-
-    // `NewsResponse`의 `data`는 `List<NewsInfo>`이므로, `newsId`로 해당 뉴스 항목을 찾아 반환
-    final newsItem = _response.data?.firstWhere(
-      (news) => news.newsId == newsId, // newsId에 맞는 뉴스 찾기
-      orElse: () => throw Exception("News not found"), // 없을 경우 예외 처리
-    );
-
-    if (newsItem != null) {
-      return newsItem; // 찾은 뉴스 반환
-    } else {
-      throw Exception('News not found'); // 뉴스가 없을 경우 예외 처리
-    }
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
