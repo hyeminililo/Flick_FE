@@ -161,7 +161,7 @@ class _AgreementScreenState extends State<AgreementScreen> {
                 },
               ),
               SizedBox(
-                height: screenHeight * 0.35,
+                height: screenHeight * 0.30,
               ),
               Padding(
                 padding: EdgeInsets.only(top: screenHeight * 0.05),

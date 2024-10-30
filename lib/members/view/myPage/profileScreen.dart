@@ -51,62 +51,65 @@ class MyPageScreen2 extends ConsumerWidget {
       },
       loading: () => const CircularProgressIndicator(),
       loaded: (memberInfo) {
-        return Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              SizedBox(height: screenHeight * 0.05),
-              GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => EditProfileScreen(
-                        profileImage:
-                            memberInfo.picture ?? "assets/images/flick.png",
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SizedBox(height: screenHeight * 0.05),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => EditProfileScreen(
+                          profileImage:
+                              memberInfo.picture ?? "assets/images/flick.png",
+                        ),
                       ),
-                    ),
-                  );
-                },
-                child: CircleAvatar(
-                  radius: 80,
-                  backgroundImage: memberInfo.picture != null
-                      ? NetworkImage(memberInfo.picture!)
-                      : const AssetImage("assets/images/flick.png"),
+                    );
+                  },
+                  child: CircleAvatar(
+                    radius: 80,
+                    backgroundImage: memberInfo.picture != null
+                        ? NetworkImage(memberInfo.picture!)
+                        : const AssetImage("assets/images/flick.png"),
+                  ),
                 ),
-              ),
-              SizedBox(height: screenHeight * 0.02),
-              Text(
-                memberInfo.nickname,
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
+                SizedBox(height: screenHeight * 0.02),
+                Text(
+                  memberInfo.nickname,
+                  style: const TextStyle(
+                    fontSize: 28,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              SizedBox(height: screenHeight * 0.04),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _buildStatCard(
-                      Icons.calendar_today,
-                      '${memberInfo.ecoLifeDuration.toString()}일째',
-                      '진행중',
-                      screenWidth),
-                  _buildStatCard(
-                      Icons.event_available,
-                      memberInfo.recentChallengeTitle ?? '없음',
-                      '최근 실천 챌린지',
-                      screenWidth),
-                  _buildStatCard(
-                      Icons.access_time,
-                      "${memberInfo.totalActionCount}번",
-                      '누적 실천 횟수',
-                      screenWidth),
-                ],
-              ),
-              const SizedBox(height: 20),
-              BadgeWidget(count: memberInfo.score),
-            ],
+                SizedBox(height: screenHeight * 0.04),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    _buildStatCard(
+                        Icons.calendar_today,
+                        '${memberInfo.ecoLifeDuration.toString()}일째',
+                        '진행중',
+                        screenWidth),
+                    _buildStatCard(
+                        Icons.event_available,
+                        memberInfo.recentChallengeTitle ?? '없음',
+                        '최근 실천 챌린지',
+                        screenWidth),
+                    _buildStatCard(
+                        Icons.access_time,
+                        "${memberInfo.totalActionCount}번",
+                        '누적 실천 횟수',
+                        screenWidth),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                BadgeWidget(count: memberInfo.score),
+              ],
+            ),
           ),
         );
       },
