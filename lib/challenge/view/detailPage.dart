@@ -1,11 +1,11 @@
-import 'package:camera/camera.dart';
 import 'package:flick_frontend/challenge/camera/takePictureScreen.dart';
 import 'package:flick_frontend/challenge/view/challenge_screen.dart';
-import 'package:flick_frontend/challenge/view/openChallenge.dart';
 import 'package:flick_frontend/common/const/colors.dart';
+import 'package:flick_frontend/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DetailPage extends StatelessWidget {
+class DetailPage extends ConsumerWidget {
   final int challengeId;
   final String title;
   final List<String> hashtags;
@@ -24,7 +24,7 @@ class DetailPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -44,13 +44,13 @@ class DetailPage extends StatelessWidget {
             Row(
               children: hashtags.map((hashtag) {
                 return Container(
-                  margin: const EdgeInsets.only(right: 8.0), // 해시태그 간격 조정
+                  margin: const EdgeInsets.only(right: 8.0),
                   decoration: BoxDecoration(
                     border: Border.all(color: PRIMARY_COLOR),
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                   padding: const EdgeInsets.symmetric(
-                      horizontal: 8.0, vertical: 4.0), // 패딩 추가
+                      horizontal: 8.0, vertical: 4.0),
                   child: Text(
                     hashtag,
                     style: const TextStyle(
@@ -73,7 +73,6 @@ class DetailPage extends StatelessWidget {
               title,
               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
-            //
             const SizedBox(height: 16.0),
             Row(
               children: [
@@ -81,9 +80,7 @@ class DetailPage extends StatelessWidget {
                   "assets/images/challengeMembers.png",
                   width: 50,
                 ),
-                const SizedBox(
-                  width: 10.0,
-                ),
+                const SizedBox(width: 10.0),
                 Text(
                   '$participants명 참가',
                   style: const TextStyle(color: Colors.black, fontSize: 16.0),
@@ -95,27 +92,27 @@ class DetailPage extends StatelessWidget {
               contents,
               style: const TextStyle(color: Colors.grey, fontSize: 20.0),
             ),
-            SizedBox(
-              height: screenHeight * 0.28,
-            ),
+            SizedBox(height: screenHeight * 0.20),
             Row(
               children: [
                 ElevatedButton(
                   onPressed: () {
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ChallengeScreen()));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ChallengeScreen(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     side: const BorderSide(color: PRIMARY_COLOR),
                     backgroundColor: Colors.white,
                     padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.135, // 버튼 가로 크기를 동적으로 설정
-                      vertical: screenHeight * 0.023, // 버튼 세로 크기를 동적으로 설정
+                      horizontal: screenWidth * 0.125,
+                      vertical: screenHeight * 0.023,
                     ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15), // 버튼 모서리 둥글기 설정
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                   child: const Text(
@@ -123,28 +120,33 @@ class DetailPage extends StatelessWidget {
                     style: TextStyle(color: PRIMARY_COLOR),
                   ),
                 ),
-                SizedBox(
-                  width: screenWidth * 0.03,
-                ),
+                SizedBox(width: screenWidth * 0.03),
                 ElevatedButton(
                   onPressed: () {
+                    // 카메라 컨트롤러를 가져옵니다.
+                    final cameraController = ref.read(cameraProvider);
+
+                    // TakePictureScreen으로 이동합니다.
                     Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => TakePictureScreen(
-                                  title: title,
-                                  challengeId: challengeId,
-                                )));
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TakePictureScreen(
+                          title: title,
+                          challengeId: challengeId,
+                          cameraController: cameraController,
+                        ),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     side: const BorderSide(color: PRIMARY_COLOR),
                     backgroundColor: PRIMARY_COLOR,
                     padding: EdgeInsets.symmetric(
-                      horizontal: screenWidth * 0.19, // 버튼 가로 크기를 동적으로 설정
-                      vertical: screenHeight * 0.023, // 버튼 세로 크기를 동적으로 설정
+                      horizontal: screenWidth * 0.19,
+                      vertical: screenHeight * 0.023,
                     ),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15), // 버튼 모서리 둥글기 설정
+                      borderRadius: BorderRadius.circular(15),
                     ),
                   ),
                   child: const Text(
@@ -153,7 +155,7 @@ class DetailPage extends StatelessWidget {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

@@ -15,21 +15,17 @@ class ParticipantsAvatarsWidget extends StatelessWidget {
     final screenHeight = MediaQuery.of(context).size.height; // 화면 높이
     final screenWidth = MediaQuery.of(context).size.width; // 화면 너비
 
-    return Positioned(
-      bottom: screenHeight * 0.3, // 화면 높이의 30%로 위치 조정
-      right: screenWidth * 0.05, // 화면 너비의 5%로 위치 조정
-      child: Column(
-        children: displayUrls.map((url) {
-          return Padding(
-            padding: EdgeInsets.only(
-                bottom: screenHeight * 0.02), // 이미지 간격을 화면 높이에 비례하여 설정
-            child: CircleAvatar(
-              radius: screenWidth * 0.05, // 원형 아바타 크기를 화면 너비의 10%로 설정
-              backgroundImage: NetworkImage(url), // 이미지 URL로 배경 설정
-            ),
-          );
-        }).toList(),
-      ),
+    return Column(
+      children: displayUrls.map((url) {
+        return Padding(
+          padding: EdgeInsets.only(
+              bottom: screenHeight * 0.02), // 이미지 간격을 화면 높이에 비례하여 설정
+          child: CircleAvatar(
+            radius: screenWidth * 0.05, // 원형 아바타 크기를 화면 너비의 10%로 설정
+            backgroundImage: NetworkImage(url), // 이미지 URL로 배경 설정
+          ),
+        );
+      }).toList(),
     );
   }
 }
