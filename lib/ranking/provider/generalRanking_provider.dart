@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flick_frontend/members/model/memberInfo_model.dart';
+import 'package:flick_frontend/ranking/model/studentRanking_model.dart';
 import 'package:flick_frontend/ranking/repository/ranking_repository.dart';
 import 'package:flick_frontend/ranking/repository/ranking_service.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,4 +22,11 @@ final rankingListProvider = FutureProvider<List<MemberInfoModel>>((ref) async {
 // 랭킹 데이터를 API에서 가져오는 역할)
 final rankingRepositoryProvider = Provider<RankingRepository>((ref) {
   return RankingRepository(Dio());
+});
+
+// RankingService를 통해 학생 랭킹 데이터를 불러오는 Provider 생성
+final studentRankingProvider =
+    FutureProvider<List<StudentRanking>>((ref) async {
+  final rankingService = ref.watch(rankingServiceProvider);
+  return await rankingService.fetchStudentRankingList();
 });

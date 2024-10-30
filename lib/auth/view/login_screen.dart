@@ -7,7 +7,7 @@ import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:flick_frontend/common/view/error/view/notUseService_error_screen.dart';
 import 'package:flick_frontend/members/provider/members_provider.dart';
 import 'package:flick_frontend/members/view/onBoarding/PurposeOfUsage_screen.dart';
-import 'package:flick_frontend/ranking/view/GeneralRank_screen%20copy.dart';
+import 'package:flick_frontend/ranking/view/generalRank_screen.dart';
 import 'package:flick_frontend/ranking/view/studentRank_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

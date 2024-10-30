@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/members/model/memberInfo_model.dart';
 
-// 실제 화면 위젯 클래스
 class GeneralRankScreen extends ConsumerWidget {
   const GeneralRankScreen({super.key});
 
@@ -76,7 +75,10 @@ class GeneralRankScreen extends ConsumerWidget {
                               ),
                               SizedBox(width: screenWidth * 0.05),
                               CircleAvatar(
-                                backgroundImage: NetworkImage(member.picture!),
+                                backgroundImage: member.picture != null
+                                    ? NetworkImage(member.picture!)
+                                    : const AssetImage(
+                                        'assets/images/profile.png'),
                               ),
                               SizedBox(width: screenWidth * 0.05),
                               Expanded(
@@ -95,7 +97,7 @@ class GeneralRankScreen extends ConsumerWidget {
                                       ),
                                     ),
                                     Text(
-                                      '${member.score}점',
+                                      '${member.score}p',
                                       style: TextStyle(
                                         color: index == 0
                                             ? Colors.white
@@ -148,8 +150,10 @@ class GeneralRankScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CircleAvatar(
-                        backgroundImage: NetworkImage(member.picture!),
                         radius: size / 3,
+                        backgroundImage: member.picture != null
+                            ? NetworkImage(member.picture!)
+                            : const AssetImage('assets/images/profile.png'),
                       ),
                       const SizedBox(height: 5),
                       Text(member.nickname),

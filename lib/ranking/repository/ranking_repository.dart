@@ -10,10 +10,6 @@ part 'ranking_repository.g.dart';
 @RestApi(baseUrl: '$BASE_URl/ranking')
 abstract class RankingRepository {
   factory RankingRepository(Dio dio, {String baseUrl}) = _RankingRepository;
-
-  // @GET('/student')
-  // Future<ApiResponse<StudentRanking>> fetchStudentRanking(
-  //     {@Header('Authorization') String? authorization});
   @GET('/student')
   Future<ApiResponse<List<StudentRanking>>> fetchStudentRanking(
       {@Header('Authorization') String? authorization});
