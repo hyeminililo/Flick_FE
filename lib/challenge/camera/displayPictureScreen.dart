@@ -26,7 +26,11 @@ class DisplayPictureScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
         children: [
           Expanded(
-            child: Image.file(File(imagePath)), // 이미지 표시
+            child: Image.file(
+              File(imagePath),
+              fit: BoxFit.contain,
+              width: screenWidth,
+            ), // 이미지 표시
           ),
           SizedBox(height: screenHeight * 0.05), // 이미지와 버튼 사이의 간격
           ElevatedButton(
