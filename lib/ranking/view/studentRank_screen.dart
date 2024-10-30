@@ -306,7 +306,7 @@ class StudentRankScreen extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final student = students[index];
                     return Padding(
-                      padding: const EdgeInsets.only(bottom: 8.0),
+                      padding: const EdgeInsets.only(bottom: 5.0),
                       child: Container(
                         decoration: BoxDecoration(
                           color: index == 0 ? PRIMARY_COLOR : Colors.white,
@@ -332,10 +332,20 @@ class StudentRankScreen extends ConsumerWidget {
                                 ),
                               ),
                               SizedBox(width: screenWidth * 0.05),
+                              CircleAvatar(
+                                child: ClipOval(
+                                  child: Image.asset(
+                                    'assets/images/profile.png', // 파일 확장자도 포함해야 합니다.
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+
+                              SizedBox(width: screenWidth * 0.05),
                               // 학년 및 반 텍스트
                               Expanded(
                                 child: Text(
-                                  'Grade: ${student.grade}, Class: ${student.classNum}',
+                                  '${student.grade}-${student.classNum}반',
                                   style: TextStyle(
                                     color: index == 0
                                         ? Colors.white
@@ -346,7 +356,7 @@ class StudentRankScreen extends ConsumerWidget {
                               ),
                               // 점수 텍스트
                               Text(
-                                '${student.totalScore}점',
+                                '${student.totalScore}p',
                                 style: TextStyle(
                                   color:
                                       index == 0 ? Colors.white : Colors.black,
@@ -383,7 +393,7 @@ class StudentRankScreen extends ConsumerWidget {
               const SizedBox(height: 4.0),
               Container(
                 width: size * 1.2,
-                height: size * 1.7,
+                height: size * 1.5,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15),
@@ -396,9 +406,24 @@ class StudentRankScreen extends ConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const SizedBox(height: 5),
+                      CircleAvatar(
+                        child: ClipOval(
+                          child: Image.asset(
+                            'assets/images/profile.png', // 파일 확장자도 포함해야 합니다.
+                            fit: BoxFit.cover,
+                            width: 100,
+                            height: 100,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
                       Text(
-                        'Grade: ${student.grade}, Class: ${student.classNum}',
-                        style: const TextStyle(fontSize: 16),
+                        ' ${student.grade}-${student.classNum}반',
+                        style: const TextStyle(
+                          fontSize: 16,
+                          color: PRIMARY_COLOR,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 5),
                       Text(
