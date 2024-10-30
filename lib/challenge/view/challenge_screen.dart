@@ -7,7 +7,7 @@ import '../../common/const/colors.dart';
 
 class ChallengeScreen extends ConsumerWidget {
   const ChallengeScreen({super.key});
-
+// 여기서 나중에 해당 그걸로 이동하면 될듯?
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final state = ref.watch(challengeProvider);
