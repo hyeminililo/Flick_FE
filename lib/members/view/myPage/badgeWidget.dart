@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'allBadgePage.dart';
 
 class BadgeWidget extends StatelessWidget {
-  final int badgeCount; // badgeCount를 프로퍼티로 받을 것
-
-  const BadgeWidget({super.key, required this.badgeCount});
+  // final MemberInfoModel? memberInfo; // badgeCount를 프로퍼티로 받을 것
+  final int? count;
+  const BadgeWidget({super.key, required this.count});
 
   @override
   Widget build(BuildContext context) {
     // 화면에 최대 3개의 뱃지만 보여줄 수 있도록 설정
-    List<Widget> badges = _buildBadgeList(badgeCount, 3);
+    List<Widget> badges = _buildBadgeList(count!, 3);
 
     return Container(
       padding: const EdgeInsets.all(16),
@@ -37,7 +37,7 @@ class BadgeWidget extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                         builder: (context) => AllBadgesPage(
-                              badgeCounts: badgeCount,
+                              badgeCounts: count!,
                             ) // badgeCount 전달
                         ),
                   );

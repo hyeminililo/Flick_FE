@@ -1,10 +1,11 @@
 // 선택된 목적을 관리하는 StateProvider
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/const/layout.dart';
-import 'package:flick_frontend/common/provider/dio_provider.dart';
 import 'package:flick_frontend/members/model/members_model.dart';
+import 'package:flick_frontend/members/provider/members_provider.dart';
 import 'package:flick_frontend/members/provider/purpose_provider.dart';
-import 'package:flick_frontend/members/view/success_screen.dart';
+import 'package:flick_frontend/members/view/myPage/success_screen.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -206,7 +207,7 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                             gradeClass: '');
 
                         final membersonboardingRepository =
-                            ref.watch(membersRepositoryProvider);
+                            ref.watch(membersOnboardingRepositoryProvider);
 
                         try {
                           await membersonboardingRepository.postMembers(member);
@@ -303,7 +304,7 @@ class PurposeOfUsageScreen extends ConsumerWidget {
                             gradeClass: gradeClass);
 
                         final membersonboardingRepository =
-                            ref.watch(membersRepositoryProvider);
+                            ref.watch(membersOnboardingRepositoryProvider);
 
                         try {
                           await membersonboardingRepository.postMembers(member);
