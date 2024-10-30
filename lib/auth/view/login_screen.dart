@@ -8,6 +8,7 @@ import 'package:flick_frontend/common/view/error/view/notUseService_error_screen
 import 'package:flick_frontend/members/provider/members_provider.dart';
 import 'package:flick_frontend/members/view/onBoarding/PurposeOfUsage_screen.dart';
 import 'package:flick_frontend/ranking/view/GeneralRank_screen%20copy.dart';
+import 'package:flick_frontend/ranking/view/studentRank_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -145,7 +146,7 @@ class LoginScreen extends ConsumerWidget {
                       if (isLogined!) {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const GeneralRankScreen(),
+                          builder: (context) => const StudentRankScreen(),
                         ));
                       } else {
                         print("isLogiend $isLogined");

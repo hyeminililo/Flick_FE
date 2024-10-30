@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:flick_frontend/common/dio/apiResponse_model.dart';
 import 'package:http_parser/http_parser.dart'; // MediaType 사용을 위해 임포트
 import 'package:dio/dio.dart' as prefix;
 import 'package:dio/dio.dart';

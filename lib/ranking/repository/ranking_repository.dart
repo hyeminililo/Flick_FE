@@ -11,8 +11,11 @@ part 'ranking_repository.g.dart';
 abstract class RankingRepository {
   factory RankingRepository(Dio dio, {String baseUrl}) = _RankingRepository;
 
+  // @GET('/student')
+  // Future<ApiResponse<StudentRanking>> fetchStudentRanking(
+  //     {@Header('Authorization') String? authorization});
   @GET('/student')
-  Future<ApiResponse<StudentRanking>> fetchStudentRanking(
+  Future<ApiResponse<List<StudentRanking>>> fetchStudentRanking(
       {@Header('Authorization') String? authorization});
 
   @GET('/general') // 이거 바꾼거니 오류나면 이거 살피기,,

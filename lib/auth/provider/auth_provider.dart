@@ -28,21 +28,3 @@ final kakaoLgoinRepo =
     KakaoLoginRepository(AuthRepository(Dio(), baseUrl: BASE_URl));
 final googleLoginRepo =
     GoogleLoginRepository(AuthRepository(Dio(), baseUrl: BASE_URl));
-
-// // KakaoLoginRepository 제공
-// final kakaoLoginRepositoryProvider = Provider<KakaoLoginRepository>((ref) {
-//   final authRepository = ref.watch(authRepositoryProvider);
-//   return KakaoLoginRepository(authRepository);
-// });
-
-// // GoogleLoginRepository 제공
-// final googleLoginRepositoryProvider = Provider<GoogleLoginRepository>((ref) {
-//   final authRepository = ref.watch(authRepositoryProvider);
-//   return GoogleLoginRepository(authRepository);
-// });
-
-// // AuthRepository 제공
-// final authRepositoryProvider = Provider<AuthRepository>((ref) {
-//   final dio = ref.watch(dioProvider);
-//   return AuthRepository(dio, baseUrl: BASE_URl); // BASE_URL 정의 필요
-// });
