@@ -8,9 +8,14 @@ part 'challenge_model.g.dart';
 @JsonSerializable()
 class Challenge {
   final UserType type;
-  final List<ChallengeInfo> challengeInfo;
 
-  Challenge({required this.type, required this.challengeInfo});
+  @JsonKey(name: 'challengeInfoResDtos')
+  final List<ChallengeInfo> challengeInfoResDtos;
+
+  Challenge({
+    UserType? type,
+    required this.challengeInfoResDtos,
+  }) : type = type ?? UserType.GENERAL;
 
   factory Challenge.fromJson(Map<String, dynamic> json) =>
       _$ChallengeFromJson(json);

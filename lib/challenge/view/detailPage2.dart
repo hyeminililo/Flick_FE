@@ -4,29 +4,29 @@
 // import 'package:flick_frontend/main.dart';
 // import 'package:flutter/material.dart';
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:flick_frontend/challenge/provider/challengeDio_provider.dart';
 
 // class DetailPage extends ConsumerWidget {
 //   final int challengeId;
+//   final String title;
+//   final List<String> hashtags;
+//   final String contents;
+//   final String imageUrl;
+//   final int participants;
 
 //   const DetailPage({
 //     super.key,
 //     required this.challengeId,
+//     required this.title,
+//     required this.hashtags,
+//     required this.contents,
+//     required this.imageUrl,
+//     required this.participants,
 //   });
 
 //   @override
 //   Widget build(BuildContext context, WidgetRef ref) {
-//     final challengeState = ref.watch(challengeProvider);
-//     final challenge = challengeState.selectedChallenge;
-
 //     final screenHeight = MediaQuery.of(context).size.height;
 //     final screenWidth = MediaQuery.of(context).size.width;
-
-//     if (challenge == null) {
-//       // 상태가 비어 있을 때, 상세 데이터를 로드합니다.
-//       ref.read(challengeProvider.notifier).loadChallengeDetails(challengeId);
-//       return const Center(child: CircularProgressIndicator());
-//     }
 
 //     return Scaffold(
 //       body: Padding(
@@ -34,18 +34,15 @@
 //         child: Column(
 //           crossAxisAlignment: CrossAxisAlignment.start,
 //           children: [
-//             Image.network(
-//               challenge.imageUrl ?? '',
+//             Image.asset(
+//               imageUrl,
 //               fit: BoxFit.cover,
 //               width: double.infinity,
 //               height: 300,
-//               errorBuilder: (context, error, stackTrace) {
-//                 return const Icon(Icons.image_not_supported, size: 300);
-//               },
 //             ),
 //             const SizedBox(height: 20.0),
 //             Row(
-//               children: challenge.hashtag!.map((hashtag) {
+//               children: hashtags.map((hashtag) {
 //                 return Container(
 //                   margin: const EdgeInsets.only(right: 8.0),
 //                   decoration: BoxDecoration(
@@ -73,7 +70,7 @@
 //             ),
 //             const SizedBox(height: 12.0),
 //             Text(
-//               challenge.title,
+//               title,
 //               style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
 //             ),
 //             const SizedBox(height: 16.0),
@@ -85,14 +82,14 @@
 //                 ),
 //                 const SizedBox(width: 10.0),
 //                 Text(
-//                   '${challenge.joinMembersCount}명 참가',
+//                   '$participants명 참가',
 //                   style: const TextStyle(color: Colors.black, fontSize: 16.0),
 //                 ),
 //               ],
 //             ),
-//             const SizedBox(height: 8.0),
+//             //const SizedBox(height: 8.0),
 //             Text(
-//               challenge.contents ?? '',
+//               contents,
 //               style: const TextStyle(color: Colors.grey, fontSize: 20.0),
 //             ),
 //             SizedBox(height: screenHeight * 0.20),
@@ -123,16 +120,18 @@
 //                     style: TextStyle(color: PRIMARY_COLOR),
 //                   ),
 //                 ),
-//                 SizedBox(width: screenWidth * 0.03),
+//                 //  SizedBox(width: screenWidth * 0.03),
 //                 ElevatedButton(
 //                   onPressed: () {
+//                     // 카메라 컨트롤러를 가져옵니다.
 //                     final cameraController = ref.read(cameraProvider);
 
+//                     // TakePictureScreen으로 이동합니다.
 //                     Navigator.push(
 //                       context,
 //                       MaterialPageRoute(
 //                         builder: (context) => TakePictureScreen(
-//                           title: challenge.title,
+//                           title: title,
 //                           challengeId: challengeId,
 //                           cameraController: cameraController,
 //                         ),

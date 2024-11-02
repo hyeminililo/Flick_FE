@@ -19,11 +19,21 @@ Future<void> main() async {
   );
 
   final cameras = await availableCameras();
+  if (cameras.isEmpty) {
+    // 카메라가 없을 때의 처리
+    throw Exception('No cameras available');
+  }
+
   final cameraController = CameraController(
     cameras.first,
     ResolutionPreset.medium,
   );
-  await cameraController.initialize();
+  try {
+    await cameraController.initialize();
+  } catch (e) {
+    // 초기화 실패 시의 처리
+    print('Camera initialization error: $e');
+  }
 
   runApp(
     ProviderScope(
