@@ -1,5 +1,6 @@
 import 'package:flick_frontend/challenge/camera/takePictureScreen.dart';
 import 'package:flick_frontend/challenge/provider/challengeDetails_provider.dart';
+import 'package:flick_frontend/challenge/provider/challengeMain_provider_real.dart';
 import 'package:flick_frontend/challenge/view/challenge_screen2.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/main.dart';
@@ -124,7 +125,12 @@ class DetailPage extends ConsumerWidget {
                     ),
                     SizedBox(width: screenWidth * 0.03),
                     ElevatedButton(
-                      onPressed: () {
+                      onPressed: () async {
+                        final challengeService =
+                            ref.read(challengeServiceProvider);
+
+                        await challengeService.joinChallenge(challengeId);
+
                         final cameraController = ref.read(cameraProvider);
 
                         Navigator.push(

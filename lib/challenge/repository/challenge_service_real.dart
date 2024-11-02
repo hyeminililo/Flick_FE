@@ -109,6 +109,8 @@ class ChallengeService {
         challengeId: challengeId,
         authorization: 'Bearer $token',
       );
+      print(response.statusCode);
+
       if (response.statusCode == 200) {
         print("challenge 참여  성공");
       }
@@ -118,7 +120,7 @@ class ChallengeService {
     }
   }
 
-// 챌린지 탈퇴
+// 챌린지 탈퇴ㅋ
   Future<void> deleteChallenge(int challengeId) async {
     try {
       final token = await storage.read(key: 'ACCESS_TOKEN_KEY');

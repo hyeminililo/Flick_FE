@@ -9,6 +9,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 final challengeRepositoryProvider =
     Provider<ChallengeRepository>((ref) => ChallengeRepository(Dio()));
 
+// challengeService를 사용할 수 있는 provider
 final challengeServiceProvider = Provider<ChallengeService>((ref) {
   final challengeRepository = ref.watch(challengeRepositoryProvider);
   const storage = FlutterSecureStorage();
