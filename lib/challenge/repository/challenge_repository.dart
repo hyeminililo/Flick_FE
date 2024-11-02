@@ -47,13 +47,13 @@ abstract class ChallengeRepository {
   });
 
   @POST('/leave/{challengeId}')
-  Future<void> leaveChallenge({
+  Future<ApiResponse> leaveChallenge({
     @Path('challengeId') required int challengeId,
     @Header('Authorization') String? authorization,
   });
 
   @POST('/join/{challengeId}')
-  Future<void> joinChallenge({
+  Future<ApiResponse> joinChallenge({
     @Path('challengeId') required int challengeId,
     @Header('Authorization') String? authorization,
   });

@@ -53,6 +53,8 @@
 //   }
 // }
 import 'package:flick_frontend/challenge/provider/challengeMain_provider_real.dart';
+import 'package:flick_frontend/challenge/provider/challengeOpen_provider.dart';
+import 'package:flick_frontend/challenge/view/detailPage2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flick_frontend/common/const/colors.dart';
@@ -74,20 +76,14 @@ class OpenChallenge extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: GestureDetector(
                 onTap: () {
-                  // 클릭 시 상세 페이지로 이동하는 예시
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => DetailPage(
-                  //       challengeId: challenge.challengeId,
-                  //       title: challenge.title,
-                  //       hashtags: challenge.hashtag ?? [],
-                  //       contents: challenge.contents ?? '',
-                  //       imageUrl: challenge.imageUrl ?? '',
-                  //       participants: challenge.joinMembersCount ?? 0,
-                  //     ),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DetailPage(
+                        challengeId: challenge.challengeId,
+                      ),
+                    ),
+                  );
                 },
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
