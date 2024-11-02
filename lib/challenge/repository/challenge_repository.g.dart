@@ -24,7 +24,8 @@ class _ChallengeRepository implements ChallengeRepository {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<ApiResponse<Challenge>> fetchChallenge({String? authorization}) async {
+  Future<ApiResponse<Challenge>> fetchOpenChallenge(
+      {String? authorization}) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);

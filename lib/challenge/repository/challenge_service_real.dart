@@ -11,7 +11,7 @@ class ChallengeService {
 
   ChallengeService(this.challengeRepository, this.storage);
 // 오픈 챌린지 전체조회하는 것
-  Future<List<ChallengeInfo>> fetchChallengeList() async {
+  Future<List<ChallengeInfo>> fetchOpenChallengeList() async {
     try {
       final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
 
@@ -20,18 +20,46 @@ class ChallengeService {
         print("[Error]: Token is null");
         return [];
       }
-      final response = await challengeRepository.fetchChallenge(
+      final response = await challengeRepository.fetchOpenChallenge(
           authorization: 'Bearer $token');
-      print('challenge Api : ${response.statusCode} ');
+      print('openChallenge Api : ${response.statusCode} ');
       if (response.statusCode != 200) {
         print(
-            "[Error]: Failed to fetch news. StatusCode: ${response.statusCode}");
+            "[Error]: Failed to fetch challenge. StatusCode: ${response.statusCode}");
         return [];
       }
       // data 안에 type과 같이 있으니까 구별해야함 -> news는 null로 했는데
       final challenge = response.data;
       final challengeList = challenge.challengeInfoResDtos;
 
+      return challengeList ?? [];
+    } catch (e) {
+      // 예외 처리 (네트워크 오류 등)
+      print("[Error]: $e");
+      return []; // 오류 발생 시 빈 뉴스 리스트 반환
+    }
+  }
+
+// 나의 챌린지 조회
+  Future<List<ChallengeInfo>> fetchMyChallenge() async {
+    try {
+      final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
+
+      if (token == null) {
+        print("[Error]: Token is null");
+        return [];
+      }
+
+      final response = await challengeRepository.fetchMyChallenge(
+          authorization: 'Bearer $token');
+      print('MyChallenge Api : ${response.statusCode} ');
+      if (response.statusCode != 200) {
+        print(
+            "[Error]: Failed to fetch challenge. StatusCode: ${response.statusCode}");
+        return [];
+      }
+      final challenge = response.data;
+      final challengeList = challenge.challengeInfoResDtos;
       return challengeList ?? [];
     } catch (e) {
       // 예외 처리 (네트워크 오류 등)

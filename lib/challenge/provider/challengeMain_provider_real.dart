@@ -21,7 +21,11 @@ final challengeServiceProvider = Provider<ChallengeService>((ref) {
 final openChallengeListProvider =
     FutureProvider<List<ChallengeInfo>>((ref) async {
   final challengeService = ref.watch(challengeServiceProvider);
-  return await challengeService.fetchChallengeList();
+  return await challengeService.fetchOpenChallengeList();
 });
 
-//final mychallengeListProvider = 
+final mychallengeListProvider =
+    FutureProvider<List<ChallengeInfo>>((ref) async {
+  final challengeService = ref.watch(challengeServiceProvider);
+  return await challengeService.fetchMyChallenge();
+});

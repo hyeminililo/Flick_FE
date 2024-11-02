@@ -64,7 +64,7 @@ class MyChallenge extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final challengesAsyncValue = ref.watch(openChallengeListProvider);
+    final challengesAsyncValue = ref.watch(mychallengeListProvider);
 
     return challengesAsyncValue.when(
       data: (challenges) {

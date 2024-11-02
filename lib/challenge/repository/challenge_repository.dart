@@ -14,7 +14,7 @@ abstract class ChallengeRepository {
   factory ChallengeRepository(Dio dio, {String baseUrl}) = _ChallengeRepository;
 
   @GET('')
-  Future<ApiResponse<Challenge>> fetchChallenge(
+  Future<ApiResponse<Challenge>> fetchOpenChallenge(
       {@Header('Authorization') String? authorization});
 
   @GET('/{challengeId}')
