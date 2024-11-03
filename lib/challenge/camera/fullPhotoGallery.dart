@@ -1,4 +1,5 @@
 import 'package:flick_frontend/challenge/camera/provider/image_provider.dart';
+import 'package:flick_frontend/challenge/provider/challengeMain_provider_real.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -88,7 +89,11 @@ class _FullPhotoGalleryScreen extends ConsumerState<FullPhotoGalleryScreen> {
                       ),
                     ),
                     onPressed: () {
-                      // 신고 처리 로직 추가
+                       final challengeService =
+                            ref.read(challengeServiceProvider);
+
+                        await challengeService.challengeReportsRepo.reportsChallenge(imageId: imageId);
+
                       Navigator.pop(context); // 모달 닫기
                     },
                     child: const Text(
@@ -155,7 +160,7 @@ class _FullPhotoGalleryScreen extends ConsumerState<FullPhotoGalleryScreen> {
                             screenWidth * 0.02, // 화면 너비의 2%로 간격 조정
                         mainAxisSpacing: screenWidth * 0.02, // 화면 너비의 2%로 간격 조정
                       ),
-                      itemCount: imageUrls.length,
+                      itemCount: imageUrls.length, // 음 근데 이거 length면 길이로 url이 바뀌는거 아니야 ?
                       itemBuilder: (context, index) {
                         return Stack(
                           children: [
