@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
-import 'package:flick_frontend/challenge/repository/challengeDetails_service_real.dart';
-import 'package:flick_frontend/challenge/repository/challenge_repository.dart';
-import 'package:flick_frontend/challenge/repository/challenge_service_real.dart';
+import 'package:flick_frontend/challenge/repository/dio/challengeReports_repository.dart';
+import 'package:flick_frontend/challenge/repository/service/challengeDetails_service_real.dart';
+import 'package:flick_frontend/challenge/repository/dio/challenge_repository.dart';
+import 'package:flick_frontend/challenge/repository/service/challenge_service_real.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -13,8 +14,8 @@ final challengeRepositoryProvider =
 final challengeServiceProvider = Provider<ChallengeService>((ref) {
   final challengeRepository = ref.watch(challengeRepositoryProvider);
   const storage = FlutterSecureStorage();
-
-  return ChallengeService(challengeRepository, storage);
+  final challengeReportsRepo = ChallengeReportsRepository(Dio());
+  return ChallengeService(challengeRepository, storage, challengeReportsRepo);
 });
 
 final challengeDetailsServiceProvider =

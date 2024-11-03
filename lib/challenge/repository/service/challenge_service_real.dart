@@ -2,16 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:flick_frontend/challenge/model/challenge.dart';
 import 'package:flick_frontend/challenge/model/challengeInfo_model.dart';
 import 'package:flick_frontend/challenge/model/challenge_model.dart';
-import 'package:flick_frontend/challenge/repository/challenge_repository.dart';
+import 'package:flick_frontend/challenge/repository/dio/challengeReports_repository.dart';
+import 'package:flick_frontend/challenge/repository/dio/challenge_repository.dart';
 import 'package:flick_frontend/members/model/members_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // 오픈 챌린지에 대한 서비스 및 프로바이더 연관 아 오픈이 아니어도 적을까 ? 그건 약간 고민
 class ChallengeService {
   final ChallengeRepository challengeRepository;
+  final ChallengeReportsRepository challengeReportsRepo;
   final FlutterSecureStorage storage;
 
-  ChallengeService(this.challengeRepository, this.storage);
+  ChallengeService(
+      this.challengeRepository, this.storage, this.challengeReportsRepo);
 // 오픈 챌린지 전체조회하는 것
   Future<List<ChallengeInfo>> fetchOpenChallengeList() async {
     try {
@@ -120,7 +123,7 @@ class ChallengeService {
     }
   }
 
-// 챌린지 탈퇴ㅋ
+// 챌린지 탈퇴
   Future<void> deleteChallenge(int challengeId) async {
     try {
       final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
@@ -137,6 +140,26 @@ class ChallengeService {
       }
     } catch (e) {
       // 예외 처리 (네트워크 오류 등)
+      print("[Error]: $e");
+    }
+  }
+
+// 챌린지 신고
+  Future<void> reportsImage(int imageId) async {
+    try {
+      final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
+
+      if (token == null) {
+        print("[Error]: Token is null");
+      }
+      final response = await challengeReportsRepo.reportsChallenge(
+        imageId: imageId,
+        authorization: 'Bearer $token',
+      );
+      if (response.statusCode == 200) {
+        print("challenge 참여  성공");
+      }
+    } catch (e) {
       print("[Error]: $e");
     }
   }
