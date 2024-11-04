@@ -30,10 +30,9 @@ class DetailPage extends ConsumerWidget {
 
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+          padding: const EdgeInsets.all(16.0),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
             Image.asset(
               imageUrl,
               fit: BoxFit.cover,
@@ -92,6 +91,7 @@ class DetailPage extends ConsumerWidget {
               contents,
               style: const TextStyle(color: Colors.grey, fontSize: 20.0),
             ),
+            // SizedBox(height: screenHeight * 0.20),
             SizedBox(height: screenHeight * 0.20),
             Row(
               children: [
@@ -156,9 +156,7 @@ class DetailPage extends ConsumerWidget {
                 ),
               ],
             ),
-          ],
-        ),
-      ),
+          ])),
     );
   }
 }
