@@ -24,6 +24,7 @@ class ChallengeTile extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(width: screenWidth * 0.008), // 왼쪽 화면과 이미지 사이 공간 추가.
           ClipRRect(
             borderRadius: BorderRadius.circular(12.0), // 둥근 모서리 추가
             child: Image.asset(
