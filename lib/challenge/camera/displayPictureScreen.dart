@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flick_frontend/challenge/camera/fullPhotoGallery.dart'; // FullPhotoGallery 임포트
@@ -6,12 +7,13 @@ import 'package:flick_frontend/challenge/camera/fullPhotoGallery.dart'; // FullP
 class DisplayPictureScreen extends StatelessWidget {
   final String imagePath;
   final String title;
+  final int challengeId;
 
-  const DisplayPictureScreen({
-    super.key,
-    required this.imagePath,
-    required this.title,
-  });
+  const DisplayPictureScreen(
+      {super.key,
+      required this.imagePath,
+      required this.title,
+      required this.challengeId});
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +38,20 @@ class DisplayPictureScreen extends StatelessWidget {
           ElevatedButton(
             onPressed: () async {
               // 서버에 사진을 전송하는 로직이 있다고 가정합니다.
-              // await uploadImageToServer(imagePath); // 서버로 이미지 업로드
+              final challengeService =
+                  ref.read(challengeDetailsServiceProvider);
+
+              await challengeService.uploadChallengeImages(
+                challengeId: widget.challengeId, // widget.challengeId로 접근
+                imageFiles: [image],
+              );
+              await uploadImageToServer(imagePath); // 서버로 이미지 업로드
 
               // 사진 전송 완료 후 FullPhotoGallery로 이동
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => FullPhotoGalleryScreen(
+                    challengeId: challengeId,
                     title: title,
                   ),
                 ),

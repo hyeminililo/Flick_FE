@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flick_frontend/common/dio/apiResponse_model.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
+import 'package:retrofit/error_logger.dart';
 import 'package:retrofit/http.dart';
 
 part 'challengeReports_repository.g.dart';

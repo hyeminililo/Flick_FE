@@ -1,7 +1,7 @@
 import 'package:flick_frontend/challenge/model/challengeInfo_model.dart';
 import 'package:flick_frontend/challenge/model/picture/images_model.dart';
 import 'package:flick_frontend/challenge/model/picture/memberPictureUrls_model.dart';
-import 'package:flick_frontend/challenge/repository/challenge_repository.dart';
+import 'package:flick_frontend/challenge/repository/dio/challenge_repository.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ChallengeDetailsService {
