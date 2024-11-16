@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:flick_frontend/challenge/model/picture/images_model.dart';
+import 'package:flick_frontend/common/dio/apiResponse_model.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -9,10 +11,13 @@ abstract class ChallengeImageUploadRepository {
   factory ChallengeImageUploadRepository(Dio dio, {String baseUrl}) =
       _ChallengeImageUploadRepository;
 
-  // 챌린지 업로드 -> 추가적으로 mutipartFile를 만들어야할지.. 고민,,
   @POST('/upload/{challengeId}')
-  Future<void> uploadChallengeImages({
+  @MultiPart()
+  Future<ApiResponse<List<ImageUrls>>> uploadChallengeImages({
     @Path('challengeId') required int challengeId,
-    @Header('Authorization') String? authorization,
+    @Query('month') required int month,
+    @Query('day') required int day,
+    @Header('Authorization') required String authorization,
+    @Part(name: 'multipartFiles') required List<MultipartFile> files,
   });
 }

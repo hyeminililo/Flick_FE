@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:flick_frontend/challenge/model/challenge.dart';
 import 'package:flick_frontend/challenge/model/challengeInfo_model.dart';
 import 'package:flick_frontend/challenge/model/challenge_model.dart';
 import 'package:flick_frontend/challenge/repository/dio/challengeReports_repository.dart';

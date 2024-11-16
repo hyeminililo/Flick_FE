@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flick_frontend/challenge/repository/dio/challengeImageUpload_repository.dart';
 import 'package:flick_frontend/challenge/repository/dio/challengeReports_repository.dart';
 import 'package:flick_frontend/challenge/repository/service/challengeDetails_service_real.dart';
 import 'package:flick_frontend/challenge/repository/dio/challenge_repository.dart';
@@ -21,7 +22,9 @@ final challengeServiceProvider = Provider<ChallengeService>((ref) {
 final challengeDetailsServiceProvider =
     Provider<ChallengeDetailsService>((ref) {
   final challengeRepository = ref.watch(challengeRepositoryProvider);
-  const storage = FlutterSecureStorage();
 
-  return ChallengeDetailsService(challengeRepository, storage);
+  const storage = FlutterSecureStorage();
+  final challengeImageUploadRepo = ChallengeImageUploadRepository(Dio());
+  return ChallengeDetailsService(
+      challengeRepository, storage, challengeImageUploadRepo);
 });

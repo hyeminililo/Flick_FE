@@ -1,6 +1,6 @@
 import 'package:flick_frontend/challenge/camera/takePictureScreen.dart';
-import 'package:flick_frontend/challenge/provider/challengeDetails_provider.dart';
-import 'package:flick_frontend/challenge/provider/challengeMain_provider_real.dart';
+import 'package:flick_frontend/challenge/provider/provs/challengeDetails_provider.dart';
+import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
 import 'package:flick_frontend/challenge/view/challenge_screen2.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/main.dart';
@@ -128,7 +128,7 @@ class DetailPage extends ConsumerWidget {
                       onPressed: () async {
                         final challengeService =
                             ref.read(challengeServiceProvider);
-
+// 여기서 디테일 페이지가 오픈 챌린지라면 join없어도 될듯?
                         await challengeService.joinChallenge(challengeId);
 
                         final cameraController = ref.read(cameraProvider);

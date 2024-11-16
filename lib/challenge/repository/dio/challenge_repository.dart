@@ -38,7 +38,7 @@ abstract class ChallengeRepository {
     @Header('Authorization') String? authorization,
   });
 
-  @GET('image/{challengeId}')
+  @GET('/image/{challengeId}')
   Future<ApiResponse<ImageUrls>> fetchChallengeImages({
     @Path('challengeId') required int challengeId,
     @Query('month') required int month,

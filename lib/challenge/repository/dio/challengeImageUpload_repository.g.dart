@@ -25,20 +25,27 @@ class _ChallengeImageUploadRepository
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<void> uploadChallengeImages({
+  Future<ApiResponse<List<ImageUrls>>> uploadChallengeImages({
     required int challengeId,
-    String? authorization,
+    required int month,
+    required int day,
+    required String authorization,
+    required List<MultipartFile> files,
   }) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    queryParameters.removeWhere((k, v) => v == null);
+    final queryParameters = <String, dynamic>{
+      r'month': month,
+      r'day': day,
+    };
     final _headers = <String, dynamic>{r'Authorization': authorization};
     _headers.removeWhere((k, v) => v == null);
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<void>(Options(
+    final _data = FormData();
+    _data.files.addAll(files.map((i) => MapEntry('multipartFiles', i)));
+    final _options = _setStreamType<ApiResponse<List<ImageUrls>>>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
         .compose(
           _dio.options,
@@ -51,7 +58,23 @@ class _ChallengeImageUploadRepository
           _dio.options.baseUrl,
           baseUrl,
         )));
-    await _dio.fetch<void>(_options);
+    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
+    late ApiResponse<List<ImageUrls>> _value;
+    try {
+      _value = ApiResponse<List<ImageUrls>>.fromJson(
+        _result.data!,
+        (json) => json is List<dynamic>
+            ? json
+                .map<ImageUrls>(
+                    (i) => ImageUrls.fromJson(i as Map<String, dynamic>))
+                .toList()
+            : List.empty(),
+      );
+    } on Object catch (e, s) {
+      errorLogger?.logError(e, s, _options);
+      rethrow;
+    }
+    return _value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {

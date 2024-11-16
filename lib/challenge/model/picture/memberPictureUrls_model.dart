@@ -4,6 +4,8 @@ part 'memberPictureUrls_model.g.dart';
 
 @JsonSerializable()
 class MemberPictureUrls {
+  // 요기 부분 추가함
+
   final List<String> memberPictureUrls;
 
   MemberPictureUrls({required this.memberPictureUrls});

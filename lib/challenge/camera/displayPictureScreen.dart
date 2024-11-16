@@ -1,22 +1,26 @@
 import 'dart:io';
 import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
+import 'package:flick_frontend/challenge/provider/provs/challengeMy_provider.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flick_frontend/challenge/camera/fullPhotoGallery.dart'; // FullPhotoGallery 임포트
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flick_frontend/challenge/camera/fullPhotoGallery.dart';
+import 'package:image_picker/image_picker.dart'; // XFile 사용을 위해 import
 
-class DisplayPictureScreen extends StatelessWidget {
+class DisplayPictureScreen extends ConsumerWidget {
   final String imagePath;
   final String title;
   final int challengeId;
 
-  const DisplayPictureScreen(
-      {super.key,
-      required this.imagePath,
-      required this.title,
-      required this.challengeId});
+  const DisplayPictureScreen({
+    super.key,
+    required this.imagePath,
+    required this.title,
+    required this.challengeId,
+  });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -28,6 +32,8 @@ class DisplayPictureScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
         children: [
           Expanded(
+            // 이 이미지가 로컬에서 받아오는 거 같은데 어떻게 해야할지 모르겠어 -> 아 이게 인증한 사진 말하는거네
+
             child: Image.file(
               File(imagePath),
               fit: BoxFit.contain,
@@ -37,17 +43,26 @@ class DisplayPictureScreen extends StatelessWidget {
           SizedBox(height: screenHeight * 0.05), // 이미지와 버튼 사이의 간격
           ElevatedButton(
             onPressed: () async {
-              // 서버에 사진을 전송하는 로직이 있다고 가정합니다.
+              // Accessing the challengeServiceProvider with ref
               final challengeService =
                   ref.read(challengeDetailsServiceProvider);
-
-              await challengeService.uploadChallengeImages(
-                challengeId: widget.challengeId, // widget.challengeId로 접근
-                imageFiles: [image],
+              // now로 오늘 조회 날짜 같이 보내기
+// ChallengeImageParams 클래스를 활용해 month와 day 값을 설정하는 예시
+              final params = ChallengeImageParams(
+                challengeId: challengeId,
               );
-              await uploadImageToServer(imagePath); // 서버로 이미지 업로드
 
-              // 사진 전송 완료 후 FullPhotoGallery로 이동
+// 해당 위치에서 uploadChallengeImages를 호출하면서 month와 day를 전달
+              await challengeService.uploadChallengeImages(
+                challengeId: params.challengeId,
+                month: params.month, // ChallengeImageParams에서 가져온 month
+                day: params.day, // ChallengeImageParams에서 가져온 day
+                imageFiles: [
+                  XFile(imagePath), // XFile로 변환된 이미지 파일
+                ],
+              );
+
+              // Navigate to FullPhotoGalleryScreen after image upload
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => FullPhotoGalleryScreen(
@@ -57,7 +72,7 @@ class DisplayPictureScreen extends StatelessWidget {
                 ),
               );
 
-              // 인증 완료 메시지
+              // Show a confirmation message
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("인증 완료!")),
               );

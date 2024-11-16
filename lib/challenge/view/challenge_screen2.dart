@@ -1,10 +1,7 @@
-import 'package:flick_frontend/challenge/provider/challenge_state0.dart';
 import 'package:flick_frontend/challenge/view/myChallenge2.dart';
 import 'package:flick_frontend/challenge/view/openChallenge2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'myChallenge.dart';
-import 'openChallenge.dart';
 import '../../common/const/colors.dart';
 
 class ChallengeScreen extends ConsumerWidget {
