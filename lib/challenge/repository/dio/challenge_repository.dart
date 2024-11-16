@@ -30,7 +30,7 @@ abstract class ChallengeRepository {
   });
 
 // 만약 나중에 구현이 어려우면 그냥 2개의 모델로 선언가능
-  @GET('member/picture/{challengeId}')
+  @GET('/member/picture/{challengeId}')
   Future<ApiResponse<MemberPictureUrls>> fetchUserChallengeAuthImages({
     @Path('challengeId') required int challengeId,
     @Query('month') required int month,

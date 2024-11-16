@@ -74,7 +74,14 @@ class ChallengeImageParams {
         day = day ?? DateTime.now().day;
 }
 
-// 이거 ui에 바로 적용하기
+// // 이거 ui에 바로 적용하기
+// final challengeAuthImagesProvider =
+//     FutureProvider.family<MemberPictureUrls?, ChallengeImageParams>(
+//         (ref, params) async {
+//   final challengeDetailsService = ref.watch(challengeDetailsServiceProvider);
+//   return await challengeDetailsService.fetchUserChallengeAuthImages(
+//       params.challengeId, params.month, params.day);
+// });
 final challengeAuthImagesProvider =
     FutureProvider.family<MemberPictureUrls?, ChallengeImageParams>(
         (ref, params) async {

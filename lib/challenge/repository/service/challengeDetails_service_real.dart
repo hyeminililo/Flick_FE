@@ -48,24 +48,81 @@ class ChallengeDetailsService {
     return null;
   }
 
-// 이거 나중에 바꾸든지원래 <MemberPictureUrls>엿음
+// // 이거 나중에 바꾸든지원래 <MemberPictureUrls>엿음
+//   Future<MemberPictureUrls?> fetchUserChallengeAuthImages(
+//       int challengeId, int month, int day) async {
+//     try {
+//       final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
+
+//       if (token == null) {
+//         print("[Error]: Token is null");
+//       }
+
+//       final response = await challengeRepository.fetchUserChallengeAuthImages(
+//           challengeId: challengeId, month: month, day: day);
+//       final userTogetherImages = response.data;
+//       return userTogetherImages;
+//     } catch (e) {
+//       print(e);
+//     }
+//     return null;
+//   }
+  // Future<MemberPictureUrls?> fetchUserChallengeAuthImages(
+  //     int challengeId, int month, int day) async {
+  //   try {
+  //     final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
+  //     if (token == null) {
+  //       print("[Error]: Token is null");
+  //       return null;
+  //     }
+
+  //     final response = await challengeRepository.fetchUserChallengeAuthImages(
+  //       challengeId: challengeId,
+  //       month: month,
+  //       day: day,
+  //       authorization: 'Bearer $token',
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       // JSON 데이터를 MemberPictureUrls 객체로 변환
+  //       return MemberPictureUrls.fromJson(response.data);
+  //     } else {
+  //       print("[Error]: Unexpected status code ${response.statusCode}");
+  //       return null;
+  //     }
+  //   } catch (e) {
+  //     print("[Error]: $e");
+  //     return null;
+  //   }
+  // }
   Future<MemberPictureUrls?> fetchUserChallengeAuthImages(
       int challengeId, int month, int day) async {
     try {
       final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
-
       if (token == null) {
         print("[Error]: Token is null");
+        return null;
       }
 
+      // API 호출
       final response = await challengeRepository.fetchUserChallengeAuthImages(
-          challengeId: challengeId, month: month, day: day);
-      final userTogetherImages = response.data;
-      return userTogetherImages;
+        challengeId: challengeId,
+        month: month,
+        day: day,
+        authorization: 'Bearer $token',
+      );
+      print(response.data.memberPictureUrls);
+      if (response.statusCode == 200) {
+        // ApiResponse 구조에서 data 부분만 MemberPictureUrls로 변환-> 이렇게 하면 이미 바꾼게 또 그런거라 생기는 거였음
+        return response.data;
+      } else {
+        print("[Error]: Unexpected status code ${response.statusCode}");
+        return null;
+      }
     } catch (e) {
-      print(e);
+      print("[Error]: $e");
+      return null;
     }
-    return null;
   }
 
 // // ?이 안될수도 ~

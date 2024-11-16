@@ -165,7 +165,7 @@ class _ChallengeRepository implements ChallengeRepository {
     )
         .compose(
           _dio.options,
-          'member/picture/${challengeId}',
+          '/member/picture/${challengeId}',
           queryParameters: queryParameters,
           data: _data,
         )
