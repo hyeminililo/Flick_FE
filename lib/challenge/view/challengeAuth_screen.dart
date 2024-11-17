@@ -222,13 +222,21 @@ class _ChallengeAuthImagesScreenState
       _generateDateList();
     });
     // ref를 사용하여 provider 새로고침
-    ref.refresh(challengeAuthImagesProvider(
-      ChallengeImageParams(
-        challengeId: widget.challengeId,
-        month: selectedDate.month,
-        day: selectedDate.day,
-      ),
-    ));
+    // ref.refresh(challengeAuthImagesProvider(
+    //   ChallengeImageParams(
+    //     challengeId: widget.challengeId,
+    //     month: selectedDate.month,
+    //     day: selectedDate.day,
+    //   ),
+    // ));
+
+    // ref.invalidate(challengeAuthImagesProvider(
+    //   ChallengeImageParams(
+    //     challengeId: widget.challengeId,
+    //     month: selectedDate.month,
+    //     day: selectedDate.day,
+    //   ),
+    // ));
   }
 
   @override
@@ -246,7 +254,7 @@ class _ChallengeAuthImagesScreenState
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "${widget.title} 인증 사진",
+          widget.title,
           style: const TextStyle(color: Colors.white),
         ),
         backgroundColor: PRIMARY_COLOR,

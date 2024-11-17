@@ -72,6 +72,18 @@ class ChallengeImageParams {
     int? day,
   })  : month = month ?? DateTime.now().month,
         day = day ?? DateTime.now().day;
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is ChallengeImageParams &&
+        other.challengeId == challengeId &&
+        other.month == month &&
+        other.day == day;
+  }
+
+  @override
+  int get hashCode => challengeId.hashCode ^ month.hashCode ^ day.hashCode;
 }
 
 // // 이거 ui에 바로 적용하기
@@ -82,10 +94,14 @@ class ChallengeImageParams {
 //   return await challengeDetailsService.fetchUserChallengeAuthImages(
 //       params.challengeId, params.month, params.day);
 // });
+// 여기에 받은 정보가 없음 -> 아냐 들어와
 final challengeAuthImagesProvider =
     FutureProvider.family<MemberPictureUrls?, ChallengeImageParams>(
         (ref, params) async {
   final challengeDetailsService = ref.watch(challengeDetailsServiceProvider);
-  return await challengeDetailsService.fetchUserChallengeAuthImages(
-      params.challengeId, params.month, params.day);
+  final challengeAuthResult =
+      await challengeDetailsService.fetchUserChallengeAuthImages(
+          params.challengeId, params.month, params.day);
+  print("챌린지 Auth 리스트입니다 : ${challengeAuthResult!.memberPictureUrls}");
+  return challengeAuthResult;
 });
