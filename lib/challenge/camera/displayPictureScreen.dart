@@ -1,53 +1,73 @@
 import 'dart:io';
-import 'package:flick_frontend/common/const/colors.dart';
+import 'package:flick_frontend/challenge/camera/fullPhotoGallery.dart';
+import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
+import 'package:flick_frontend/challenge/provider/provs/challengeMy_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:flick_frontend/challenge/camera/fullPhotoGallery.dart'; // FullPhotoGallery 임포트
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flick_frontend/common/const/colors.dart';
+import 'package:image_picker/image_picker.dart';
 
-class DisplayPictureScreen extends StatelessWidget {
+class DisplayPictureScreen extends ConsumerWidget {
   final String imagePath;
   final String title;
+  final int challengeId;
 
   const DisplayPictureScreen({
     super.key,
     required this.imagePath,
     required this.title,
+    required this.challengeId,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
         title: Text("$title 사진 확인"),
+        backgroundColor: PRIMARY_COLOR,
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
             child: Image.file(
               File(imagePath),
               fit: BoxFit.contain,
               width: screenWidth,
-            ), // 이미지 표시
+            ),
           ),
-          SizedBox(height: screenHeight * 0.05), // 이미지와 버튼 사이의 간격
+          SizedBox(height: screenHeight * 0.05),
           ElevatedButton(
             onPressed: () async {
-              // 서버에 사진을 전송하는 로직이 있다고 가정합니다.
-              // await uploadImageToServer(imagePath); // 서버로 이미지 업로드
+              // 서버에 이미지 업로드
+              final challengeService =
+                  ref.read(challengeDetailsServiceProvider);
 
-              // 사진 전송 완료 후 FullPhotoGallery로 이동
+              final params = ChallengeImageParams(
+                challengeId: challengeId,
+                month: DateTime.now().month,
+                day: DateTime.now().day,
+              );
+
+              await challengeService.uploadChallengeImages(
+                challengeId: params.challengeId,
+                month: params.month,
+                day: params.day,
+                imageFiles: [XFile(imagePath)],
+              );
+
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => FullPhotoGalleryScreen(
+                    challengeId: challengeId,
                     title: title,
                   ),
                 ),
               );
 
-              // 인증 완료 메시지
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(content: Text("인증 완료!")),
               );
@@ -55,16 +75,16 @@ class DisplayPictureScreen extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: PRIMARY_COLOR,
               padding: EdgeInsets.symmetric(
-                horizontal: screenWidth * 0.345,
+                horizontal: screenWidth * 0.3,
                 vertical: screenHeight * 0.02,
               ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            child: const Text("인증하기"), // 버튼 텍스트
+            child: const Text("인증하기"),
           ),
-          SizedBox(height: screenHeight * 0.05), // 버튼 아래 간격
+          SizedBox(height: screenHeight * 0.05),
         ],
       ),
     );

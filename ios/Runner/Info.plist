@@ -75,5 +75,11 @@
 		</array>
 		<key>UIStatusBarHidden</key>
 		<false/>
+		<!-- <key>NSCameraUsageDescription</key>
+		<string>Explanation on why the camera access is needed.</string>
+		<key>NSMicrophoneUsageDescription</key>
+		<string>Explanation on why the microphone access is needed.</string> -->
+		<key>NSCameraUsageDescription</key>
+   		<string>사진 촬영을 위해 카메라를 사용 하겠습니다.</string>
 	</dict>
 </plist>
