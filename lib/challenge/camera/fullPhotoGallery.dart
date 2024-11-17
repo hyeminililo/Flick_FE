@@ -477,7 +477,9 @@
 // //     );
 // //   }
 // // }
+import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeMy_provider.dart';
+import 'package:flick_frontend/common/provider/click_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flick_frontend/challenge/camera/provider/image_provider.dart';
@@ -514,25 +516,58 @@ class _FullPhotoGalleryScreen extends ConsumerState<FullPhotoGalleryScreen> {
     }
   }
 
-  void _onDateSelected(int day) {
-    if (selectedDate.day != day) {
-      setState(() {
-        selectedDate = DateTime(selectedDate.year, selectedDate.month, day);
-        _generateDateList();
-      });
+  // void _onDateSelected(int day) {
+  //   if (selectedDate.day != day) {
+  //     setState(() {
+  //       selectedDate = DateTime(selectedDate.year, selectedDate.month, day);
+  //       _generateDateList();
+  //     });
 
-      // 날짜에 맞는 데이터를 다시 가져오기
-      ref.invalidate(challengeImagesProvider(
-        ChallengeImageParams(
-          challengeId: widget.challengeId,
-          month: selectedDate.month,
-          day: selectedDate.day,
-        ),
-      ));
+  //     // 날짜에 맞는 데이터를 다시 가져오기
+  //     ref.invalidate(challengeImagesProvider(
+  //       ChallengeImageParams(
+  //         challengeId: widget.challengeId,
+  //         month: selectedDate.month,
+  //         day: selectedDate.day,
+  //       ),
+  //     ));
+  //   }
+  // }
+  void _onDateSelected(int day, WidgetRef ref) async {
+    // 클릭 상태 확인
+    final isProcessing = ref.read(clickStateProvider);
+
+    // 이미 처리 중이면 리턴
+    if (isProcessing) return;
+
+    // 클릭 상태를 "처리 중"으로 설정
+    final clickNotifier = ref.read(clickStateProvider.notifier);
+    clickNotifier.startProcessing();
+
+    try {
+      if (selectedDate.day != day) {
+        // 날짜 변경 및 UI 갱신
+        setState(() {
+          selectedDate = DateTime(selectedDate.year, selectedDate.month, day);
+          _generateDateList();
+        });
+
+        // 날짜에 맞는 데이터를 다시 가져오기
+        ref.invalidate(challengeImagesProvider(
+          ChallengeImageParams(
+            challengeId: widget.challengeId,
+            month: selectedDate.month,
+            day: selectedDate.day,
+          ),
+        ));
+      }
+    } finally {
+      // 클릭 상태를 "처리 가능"으로 설정
+      clickNotifier.stopProcessing();
     }
   }
 
-  void _showReportModal(BuildContext context, String imageUrl) {
+  void _showReportModal(BuildContext context, int imageId) {
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -581,8 +616,12 @@ class _FullPhotoGalleryScreen extends ConsumerState<FullPhotoGalleryScreen> {
                         borderRadius: BorderRadius.circular(10.0),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       // 신고 로직 추가
+                      final challengeService =
+                          ref.read(challengeServiceProvider);
+
+                      await challengeService.reportsImage(imageId);
                       Navigator.pop(context);
                     },
                     child: const Text(
@@ -686,7 +725,7 @@ class _FullPhotoGalleryScreen extends ConsumerState<FullPhotoGalleryScreen> {
                                       color: Colors.white),
                                   onPressed: () {
                                     _showReportModal(
-                                        context, imageUrls.imageUrls[index]);
+                                        context, imageUrls.imageIds[index]);
                                   },
                                 ),
                               ),
@@ -724,7 +763,7 @@ class _FullPhotoGalleryScreen extends ConsumerState<FullPhotoGalleryScreen> {
                   mainAxisSize: MainAxisSize.min,
                   children: dateList.map((day) {
                     return GestureDetector(
-                      onTap: () => _onDateSelected(day),
+                      onTap: () => _onDateSelected(day, ref),
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 300),
                         padding: const EdgeInsets.symmetric(vertical: 8),

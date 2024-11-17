@@ -108,7 +108,7 @@ class DetailPage extends ConsumerWidget {
                         final challengeService =
                             ref.read(challengeServiceProvider);
 
-                        //   await challengeService.joinChallenge(challengeId);
+                        await challengeService.joinChallenge(challengeId);
 
                         final cameraController = ref.read(cameraProvider);
 
@@ -162,23 +162,23 @@ class DetailPage extends ConsumerWidget {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: PRIMARY_COLOR,
-      //   onPressed: () {
-      //     final DateTime selectedDate = DateTime.now();
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => ChallengeAuthImagesScreen(
-      //           title: '참여자 인증 사진',
-      //           challengeId: challengeId,
-      //           selectedDate: selectedDate,
-      //         ),
-      //       ),
-      //     );
-      //   },
-      //   child: const Icon(Icons.image), // 아이콘으로 변경 가능
-      // ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: PRIMARY_COLOR,
+        onPressed: () {
+          final DateTime selectedDate = DateTime.now();
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ChallengeAuthImagesScreen(
+                title: '참여자 인증 사진',
+                challengeId: challengeId,
+                selectedDate: selectedDate,
+              ),
+            ),
+          );
+        },
+        child: const Icon(Icons.image), // 아이콘으로 변경 가능
+      ),
     );
   }
 }

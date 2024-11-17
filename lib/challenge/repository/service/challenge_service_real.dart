@@ -156,7 +156,7 @@ class ChallengeService {
         authorization: 'Bearer $token',
       );
       if (response.statusCode == 200) {
-        print("challenge 참여  성공");
+        print("challenge 신고 성공");
       }
     } catch (e) {
       print("[Error]: $e");
