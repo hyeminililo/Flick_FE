@@ -1,5 +1,4 @@
 import 'package:flick_frontend/auth/view/agreement_screen.dart';
-import 'package:flick_frontend/auth/view/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flick_frontend/env.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
