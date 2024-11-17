@@ -18,20 +18,6 @@ final challengeTypeProvider = FutureProvider<UserType>((ref) async {
   return await challengeService.devideType() ?? UserType.GENERAL;
 });
 
-// // 챌린지 인증 이미지를 가져오는 프로바이더
-// final challengeImagesProvider =
-//     FutureProvider.family<ImageUrls?, ChallengeImageParams>(
-//         (ref, params) async {
-//   final challengeDetailsService = ref.watch(challengeDetailsServiceProvider);
-//   // 여기서 이미지가 data의 url로 바로 가서?
-//   final temp = await challengeDetailsService.fetchChallengeImages(
-//       params.challengeId, params.month, params.day);
-//   print(temp);
-//   // 오류 해결해야해
-//   return temp;
-//   // return await challengeDetailsService.fetchChallengeImages(
-//   //     params.challengeId, params.month, params.day);
-// });
 final challengeImagesProvider =
     FutureProvider.family<ImageUrls?, ChallengeImageParams>(
   (ref, params) async {
@@ -86,15 +72,6 @@ class ChallengeImageParams {
   int get hashCode => challengeId.hashCode ^ month.hashCode ^ day.hashCode;
 }
 
-// // 이거 ui에 바로 적용하기
-// final challengeAuthImagesProvider =
-//     FutureProvider.family<MemberPictureUrls?, ChallengeImageParams>(
-//         (ref, params) async {
-//   final challengeDetailsService = ref.watch(challengeDetailsServiceProvider);
-//   return await challengeDetailsService.fetchUserChallengeAuthImages(
-//       params.challengeId, params.month, params.day);
-// });
-// 여기에 받은 정보가 없음 -> 아냐 들어와
 final challengeAuthImagesProvider =
     FutureProvider.family<MemberPictureUrls?, ChallengeImageParams>(
         (ref, params) async {

@@ -1,8 +1,7 @@
 import 'package:flick_frontend/challenge/camera/takePictureScreen.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeDetails_provider.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
-import 'package:flick_frontend/challenge/view/%08challengeAuth_screen.dart';
-import 'package:flick_frontend/challenge/view/challenge_screen2.dart';
+import 'package:flick_frontend/challenge/view/challenge_screen.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/main.dart';
 import 'package:flutter/material.dart';
@@ -162,23 +161,6 @@ class DetailPage extends ConsumerWidget {
           ),
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: PRIMARY_COLOR,
-      //   onPressed: () {
-      //     final DateTime selectedDate = DateTime.now();
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => ChallengeAuthImagesScreen(
-      //           title: '참여자 인증 사진',
-      //           challengeId: challengeId,
-      //           selectedDate: selectedDate,
-      //         ),
-      //       ),
-      //     );
-      //   },
-      //   child: const Icon(Icons.image), // 아이콘으로 변경 가능
-      // ),
     );
   }
 }

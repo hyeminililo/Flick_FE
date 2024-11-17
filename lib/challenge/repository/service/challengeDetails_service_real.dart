@@ -1,18 +1,11 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:dio/dio.dart';
 import 'package:flick_frontend/challenge/model/challengeInfo_model.dart';
 import 'package:flick_frontend/challenge/model/picture/images_model.dart';
 import 'package:flick_frontend/challenge/model/picture/memberPictureUrls_model.dart';
-import 'package:flick_frontend/challenge/provider/provs/challengeDetails_provider.dart';
 import 'package:flick_frontend/challenge/repository/dio/challengeImageUpload_repository.dart';
 import 'package:flick_frontend/challenge/repository/dio/challenge_repository.dart';
-import 'package:flick_frontend/common/dio/apiResponse_model.dart';
-import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:http_parser/http_parser.dart';
 
 class ChallengeDetailsService {
   final ChallengeRepository challengeRepository;

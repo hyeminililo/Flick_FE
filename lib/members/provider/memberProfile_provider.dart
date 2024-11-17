@@ -1,8 +1,6 @@
 import 'dart:io';
 
-import 'package:flick_frontend/members/model/memberInfo_model.dart';
 import 'package:flick_frontend/members/provider/member_state.dart';
-import 'package:flick_frontend/members/provider/members_provider.dart';
 import 'package:flick_frontend/members/repository/memberProfile_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,9 +16,7 @@ class MembersProfileNotifier extends StateNotifier<MemberProfileState> {
     state = const MemberProfileState.loading();
     try {
       // memberProfileRp의 페치 불러옴
-      // memberProfileRp의 페치 불러옴
       await repository.fetchMemberInfo();
-// 거기서 업데이트 한 멤버 정보를 받아서 저장 함.
 // 거기서 업데이트 한 멤버 정보를 받아서 저장 함.
       final memberInfo = repository.memberInfo;
       if (memberInfo != null) {
