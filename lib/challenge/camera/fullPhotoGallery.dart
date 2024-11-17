@@ -3,7 +3,6 @@ import 'package:flick_frontend/challenge/provider/provs/challengeMy_provider.dar
 import 'package:flick_frontend/common/provider/click_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flick_frontend/challenge/camera/provider/image_provider.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 
 class FullPhotoGalleryScreen extends ConsumerStatefulWidget {

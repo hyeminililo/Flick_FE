@@ -1,5 +1,5 @@
 import 'package:flick_frontend/challenge/provider/provs/challengeOpen_provider.dart';
-import 'package:flick_frontend/challenge/view/detailPage.dart';
+import 'package:flick_frontend/challenge/view/detailPage_my.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flick_frontend/common/const/colors.dart';

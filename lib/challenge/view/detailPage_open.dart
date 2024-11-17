@@ -1,10 +1,10 @@
+import 'package:flick_frontend/challenge/camera/provider/cameraControllerNotifier.dart';
 import 'package:flick_frontend/challenge/camera/takePictureScreen.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeDetails_provider.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
 import 'package:flick_frontend/challenge/view/%08challengeAuth_screen.dart';
-import 'package:flick_frontend/challenge/view/challenge_screen2.dart';
+import 'package:flick_frontend/challenge/view/challenge_screen.dart';
 import 'package:flick_frontend/common/const/colors.dart';
-import 'package:flick_frontend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,6 +19,7 @@ class DetailPage extends ConsumerWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final challengeAsyncValue =
         ref.watch(challengeDetailsProvider(challengeId));
+    final cameraControllerState = ref.watch(cameraControllerNotifierProvider);
 
     return Scaffold(
       body: challengeAsyncValue.when(
@@ -110,18 +111,32 @@ class DetailPage extends ConsumerWidget {
 
                         await challengeService.joinChallenge(challengeId);
 
-                        final cameraController = ref.read(cameraProvider);
+                        // 카메라 초기화
+                        try {
+                          await ref
+                              .read(cameraControllerNotifierProvider.notifier)
+                              .initializeCamera();
 
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TakePictureScreen(
-                              title: challenge.title,
-                              challengeId: challengeId,
-                              cameraController: cameraController,
+                          final cameraController =
+                              ref.read(cameraControllerNotifierProvider);
+
+                          // 카메라 화면으로 이동
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TakePictureScreen(
+                                title: challenge.title,
+                                challengeId: challengeId,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('카메라 초기화 실패'),
+                            ),
+                          );
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         side: const BorderSide(color: PRIMARY_COLOR),
@@ -161,23 +176,6 @@ class DetailPage extends ConsumerWidget {
             ],
           ),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: PRIMARY_COLOR,
-        onPressed: () {
-          final DateTime selectedDate = DateTime.now();
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => ChallengeAuthImagesScreen(
-                title: '참여자 인증 사진',
-                challengeId: challengeId,
-                selectedDate: selectedDate,
-              ),
-            ),
-          );
-        },
-        child: const Icon(Icons.image), // 아이콘으로 변경 가능
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flick_frontend/challenge/camera/displayPictureScreen.dart';
+import 'package:flick_frontend/challenge/camera/provider/cameraControllerNotifier.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeDetails_provider.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeMy_provider.dart';
 import 'package:flick_frontend/challenge/view/%08challengeAuth_screen.dart';
@@ -7,49 +8,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 
-class TakePictureScreen extends ConsumerStatefulWidget {
+class TakePictureScreen extends ConsumerWidget {
   final String title;
   final int challengeId;
-  final CameraController cameraController;
 
   const TakePictureScreen({
     super.key,
     required this.title,
     required this.challengeId,
-    required this.cameraController,
   });
 
   @override
-  ConsumerState<TakePictureScreen> createState() => _TakePictureScreenState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final cameraController = ref.watch(cameraControllerNotifierProvider);
 
-class _TakePictureScreenState extends ConsumerState<TakePictureScreen> {
-  late CameraController _cameraController;
+    if (cameraController == null || !cameraController.value.isInitialized) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
 
-  @override
-  void initState() {
-    super.initState();
-    _cameraController = widget.cameraController;
-  }
-
-  @override
-  void dispose() {
-    _cameraController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: PRIMARY_COLOR,
-        title: Text(widget.title, style: const TextStyle(color: Colors.white)),
+        title: Text(title, style: const TextStyle(color: Colors.white)),
       ),
       body: Stack(
         children: [
           // 카메라 미리보기
           Positioned.fill(
-            child: CameraPreview(_cameraController),
+            child: CameraPreview(cameraController),
           ),
           // 사진 촬영 버튼
           Positioned(
@@ -61,18 +49,18 @@ class _TakePictureScreenState extends ConsumerState<TakePictureScreen> {
                 onPressed: () async {
                   try {
                     // 사진 촬영
-                    final image = await _cameraController.takePicture();
+                    final image = await cameraController.takePicture();
 
-                    if (!mounted) return;
+                    if (!context.mounted) return;
 
                     // DisplayPictureScreen으로 이동
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => DisplayPictureScreen(
-                          challengeId: widget.challengeId,
+                          challengeId: challengeId,
                           imagePath: image.path,
-                          title: widget.title,
+                          title: title,
                         ),
                       ),
                     );
@@ -111,7 +99,7 @@ class _TakePictureScreenState extends ConsumerState<TakePictureScreen> {
             MaterialPageRoute(
               builder: (context) => ChallengeAuthImagesScreen(
                 title: '참여자 인증 사진',
-                challengeId: widget.challengeId,
+                challengeId: challengeId,
                 selectedDate: selectedDate,
               ),
             ),
@@ -122,7 +110,7 @@ class _TakePictureScreenState extends ConsumerState<TakePictureScreen> {
             final imageCountAsync = ref.watch(
               userChallengeAuthImagesCountProvider(
                 ChallengeImageParams(
-                  challengeId: widget.challengeId,
+                  challengeId: challengeId,
                   month: DateTime.now().month,
                   day: DateTime.now().day,
                 ),
@@ -140,8 +128,6 @@ class _TakePictureScreenState extends ConsumerState<TakePictureScreen> {
           },
         ),
       ),
-
-      //floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
 }

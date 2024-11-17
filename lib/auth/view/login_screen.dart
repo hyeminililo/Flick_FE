@@ -3,8 +3,8 @@ import 'package:flick_frontend/auth/repository/auth_repository.dart';
 import 'package:flick_frontend/auth/repository/google_login_repository.dart';
 import 'package:flick_frontend/auth/repository/kakao_login_repository.dart';
 
-import 'package:flick_frontend/challenge/view/challenge_screen2.dart';
-import 'package:flick_frontend/challenge/view/myChallenge2.dart';
+import 'package:flick_frontend/challenge/view/challenge_screen.dart';
+import 'package:flick_frontend/challenge/view/myChallenge.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:flick_frontend/common/view/error/view/notUseService_error_screen.dart';

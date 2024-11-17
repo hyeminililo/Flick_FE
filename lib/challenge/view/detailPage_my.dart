@@ -1,9 +1,8 @@
+import 'package:flick_frontend/challenge/camera/provider/cameraControllerNotifier.dart';
 import 'package:flick_frontend/challenge/camera/takePictureScreen.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeDetails_provider.dart';
-import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
 import 'package:flick_frontend/challenge/view/challenge_screen.dart';
 import 'package:flick_frontend/common/const/colors.dart';
-import 'package:flick_frontend/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,6 +17,13 @@ class DetailPage extends ConsumerWidget {
     final screenWidth = MediaQuery.of(context).size.width;
     final challengeAsyncValue =
         ref.watch(challengeDetailsProvider(challengeId));
+    final cameraControllerState = ref.watch(cameraControllerNotifierProvider);
+    if (cameraControllerState!.value.isInitialized) {
+      // if (cameraController.value.isInitialized) {
+      print("카메라 초기화됨");
+    } else {
+      print("카메라 해제됨");
+    }
 
     return Scaffold(
       body: challengeAsyncValue.when(
@@ -103,25 +109,29 @@ class DetailPage extends ConsumerWidget {
                     ),
                     SizedBox(width: screenWidth * 0.03),
                     ElevatedButton(
-                      onPressed: () async {
-                        final challengeService =
-                            ref.read(challengeServiceProvider);
-
-                        //   await challengeService.joinChallenge(challengeId);
-
-                        final cameraController = ref.read(cameraProvider);
-
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => TakePictureScreen(
-                              title: challenge.title,
-                              challengeId: challengeId,
-                              cameraController: cameraController,
+                      onPressed:
+                          //cameraControllerState == null
+                          //?
+                          () async {
+                        try {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => TakePictureScreen(
+                                title: challenge.title,
+                                challengeId: challengeId,
+                              ),
                             ),
-                          ),
-                        );
+                          );
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('카메라 초기화 실패'),
+                            ),
+                          );
+                        }
                       },
+                      // : null,
                       style: ElevatedButton.styleFrom(
                         side: const BorderSide(color: PRIMARY_COLOR),
                         backgroundColor: PRIMARY_COLOR,
