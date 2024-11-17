@@ -19,7 +19,6 @@ class DetailPage extends ConsumerWidget {
         ref.watch(challengeDetailsProvider(challengeId));
     final cameraControllerState = ref.watch(cameraControllerNotifierProvider);
     if (cameraControllerState!.value.isInitialized) {
-      // if (cameraController.value.isInitialized) {
       print("카메라 초기화됨");
     } else {
       print("카메라 해제됨");
@@ -109,10 +108,7 @@ class DetailPage extends ConsumerWidget {
                     ),
                     SizedBox(width: screenWidth * 0.03),
                     ElevatedButton(
-                      onPressed:
-                          //cameraControllerState == null
-                          //?
-                          () async {
+                      onPressed: () async {
                         try {
                           Navigator.push(
                             context,

@@ -36,43 +36,21 @@ class _FullPhotoGalleryScreen extends ConsumerState<FullPhotoGalleryScreen> {
     }
   }
 
-  // void _onDateSelected(int day) {
-  //   if (selectedDate.day != day) {
-  //     setState(() {
-  //       selectedDate = DateTime(selectedDate.year, selectedDate.month, day);
-  //       _generateDateList();
-  //     });
-
-  //     // 날짜에 맞는 데이터를 다시 가져오기
-  //     ref.invalidate(challengeImagesProvider(
-  //       ChallengeImageParams(
-  //         challengeId: widget.challengeId,
-  //         month: selectedDate.month,
-  //         day: selectedDate.day,
-  //       ),
-  //     ));
-  //   }
-  // }
   void _onDateSelected(int day, WidgetRef ref) async {
-    // 클릭 상태 확인
     final isProcessing = ref.read(clickStateProvider);
 
-    // 이미 처리 중이면 리턴
     if (isProcessing) return;
 
-    // 클릭 상태를 "처리 중"으로 설정
     final clickNotifier = ref.read(clickStateProvider.notifier);
     clickNotifier.startProcessing();
 
     try {
       if (selectedDate.day != day) {
-        // 날짜 변경 및 UI 갱신
         setState(() {
           selectedDate = DateTime(selectedDate.year, selectedDate.month, day);
           _generateDateList();
         });
 
-        // 날짜에 맞는 데이터를 다시 가져오기
         ref.invalidate(challengeImagesProvider(
           ChallengeImageParams(
             challengeId: widget.challengeId,
@@ -82,7 +60,6 @@ class _FullPhotoGalleryScreen extends ConsumerState<FullPhotoGalleryScreen> {
         ));
       }
     } finally {
-      // 클릭 상태를 "처리 가능"으로 설정
       clickNotifier.stopProcessing();
     }
   }
@@ -137,7 +114,6 @@ class _FullPhotoGalleryScreen extends ConsumerState<FullPhotoGalleryScreen> {
                       ),
                     ),
                     onPressed: () async {
-                      // 신고 로직 추가
                       final challengeService =
                           ref.read(challengeServiceProvider);
 
@@ -207,59 +183,53 @@ class _FullPhotoGalleryScreen extends ConsumerState<FullPhotoGalleryScreen> {
                   );
                 }
                 return Padding(
-                  padding: EdgeInsets.all(screenWidth * 0.02),
-                  child: Stack(
-                    children: [
-                      GridView.builder(
-                        physics: const AlwaysScrollableScrollPhysics(),
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: screenWidth * 0.02,
-                          mainAxisSpacing: screenWidth * 0.02,
-                        ),
-                        itemCount: imageUrls.imageUrls.length,
-                        itemBuilder: (context, index) {
-                          return Stack(
-                            children: [
-                              ClipRRect(
-                                borderRadius: BorderRadius.circular(12.0),
-                                child: Image.network(
-                                  imageUrls.imageUrls[index],
-                                  fit: BoxFit.cover,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return Container(
-                                      color: Colors.grey,
-                                      child: const Center(
-                                        child: Icon(Icons.broken_image,
-                                            color: Colors.white, size: 40),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              Positioned(
-                                right: 8.0,
-                                top: 8.0,
-                                child: IconButton(
-                                  icon: const Icon(Icons.more_horiz,
-                                      color: Colors.white),
-                                  onPressed: () {
-                                    _showReportModal(
-                                        context, imageUrls.imageIds[index]);
-                                  },
-                                ),
-                              ),
-                            ],
-                          );
-                        },
+                    padding: EdgeInsets.all(screenWidth * 0.02),
+                    child: GridView.builder(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2, // 한 행에 2개의 아이템
+                        crossAxisSpacing: screenWidth * 0.02, // 열 간격
+                        mainAxisSpacing: screenWidth * 0.02, // 행 간격
+                        childAspectRatio: 1.0, // 아이템의 가로:세로 비율 (정사각형)
                       ),
-                      if (imageUrlsAsyncValue.isLoading)
-                        const Center(
-                          child: CircularProgressIndicator(color: Colors.white),
-                        ),
-                    ],
-                  ),
-                );
+                      itemCount: imageUrls.imageUrls.length,
+                      itemBuilder: (context, index) {
+                        return Stack(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12.0),
+                              child: Image.network(
+                                imageUrls.imageUrls[index],
+                                fit: BoxFit.cover,
+                                width: double.infinity, // 부모 위젯의 폭에 맞춤
+                                height: double.infinity, // 부모 위젯의 높이에 맞춤
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Container(
+                                    color: Colors.grey,
+                                    child: const Center(
+                                      child: Icon(Icons.broken_image,
+                                          color: Colors.white, size: 40),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                            Positioned(
+                              right: 0.0,
+                              top: 0.0,
+                              child: IconButton(
+                                icon: const Icon(Icons.more_horiz,
+                                    color: SUB_COLOR),
+                                onPressed: () {
+                                  _showReportModal(
+                                      context, imageUrls.imageIds[index]);
+                                },
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ));
               },
               loading: () => const Center(
                   child: CircularProgressIndicator(color: Colors.white)),
