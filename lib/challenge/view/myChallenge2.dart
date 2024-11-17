@@ -55,7 +55,7 @@
 //   }
 // }
 import 'package:flick_frontend/challenge/provider/provs/challengeMy_provider.dart';
-import 'package:flick_frontend/challenge/view/detailPage2.dart';
+import 'package:flick_frontend/challenge/view/detailPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flick_frontend/common/const/colors.dart';

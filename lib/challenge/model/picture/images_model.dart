@@ -1,8 +1,8 @@
-// // import 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-// // part 'images_model.g.dart';
+part 'images_model.g.dart';
 
-// // @JsonSerializable()
+@JsonSerializable()
 // // class ImageUrls {
 // //   final List<int> imageIds;
 // //   final List<String> imageUrls;
@@ -42,15 +42,10 @@ class ImageUrls {
 
   ImageUrls({required this.imageUrls, required this.imageIds});
 
-  factory ImageUrls.fromJson(Map<String, dynamic> json) {
-    final data = json['data']; // 'data' 키에서 실제 데이터를 추출
-    if (data is Map<String, dynamic>) {
-      return ImageUrls(
-        imageUrls: List<String>.from(data['imageUrls']),
-        imageIds: List<int>.from(data['imageIds']),
-      );
-    } else {
-      throw Exception("Unexpected JSON format: $data");
-    }
-  }
+  // 자동 생성된 fromJson 메서드
+  factory ImageUrls.fromJson(Map<String, dynamic> json) =>
+      _$ImageUrlsFromJson(json);
+
+  // 자동 생성된 toJson 메서드
+  Map<String, dynamic> toJson() => _$ImageUrlsToJson(this);
 }

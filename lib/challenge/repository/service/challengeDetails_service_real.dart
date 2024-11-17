@@ -125,6 +125,37 @@ class ChallengeDetailsService {
     }
   }
 
+// 위에서 만든 챌린지의 length를 반환하는 로직
+  Future<int?> fetchUserChallengeAuthImagesCount(
+      int challengeId, int month, int day) async {
+    try {
+      final token = await storage.read(key: 'ACCESS_TOKEN_KEY');
+      if (token == null) {
+        print("[Error]: Token is null");
+        return null;
+      }
+
+      // API 호출
+      final response = await challengeRepository.fetchUserChallengeAuthImages(
+        challengeId: challengeId,
+        month: month,
+        day: day,
+        authorization: 'Bearer $token',
+      );
+      print(response.data.memberPictureUrls);
+      int count = response.data.memberPictureUrls.length;
+      if (response.statusCode == 200) {
+        // ApiResponse 구조에서 data 부분만 MemberPictureUrls로 변환-> 이렇게 하면 이미 바꾼게 또 그런거라 생기는 거였음
+        return count;
+      } else {
+        print("[Error]: Unexpected status code ${response.statusCode}");
+        return null;
+      }
+    } catch (e) {
+      print("[Error]: $e");
+      return null;
+    }
+  }
 // // ?이 안될수도 ~
 //   Future<ImageUrls?> fetchChallengeImages(
 //       int challengeId, int month, int day) async {
