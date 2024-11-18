@@ -275,8 +275,10 @@ class NewsDetailScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // newsDetailsProvider를 통해 데이터 구독
     final newsAsyncValue = ref.watch(newsDetailsProvider(newsId));
+
+    // MediaQuery를 사용하여 화면 크기 정보 가져오기
+    final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
       appBar: AppBar(
@@ -284,14 +286,12 @@ class NewsDetailScreen extends ConsumerWidget {
       ),
       body: newsAsyncValue.when(
         data: (news) {
-          // 단일 뉴스 상세 정보
           if (news == null) {
             return const Center(child: Text('뉴스를 찾을 수 없습니다.'));
           }
 
-          // 뉴스 상세 UI
-          return Padding(
-            padding: const EdgeInsets.all(16.0),
+          return SingleChildScrollView(
+            padding: EdgeInsets.all(screenSize.width * 0.04), // 동적으로 패딩 설정
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -299,26 +299,29 @@ class NewsDetailScreen extends ConsumerWidget {
                   Image.network(
                     news.picture!,
                     width: double.infinity,
-                    height: 200,
+                    height: screenSize.height * 0.25, // 동적으로 높이 설정
                     fit: BoxFit.cover,
                   )
                 else
                   Container(
                     width: double.infinity,
-                    height: 200,
+                    height: screenSize.height * 0.25, // 동적으로 높이 설정
                     color: Colors.grey,
                     child: const Center(child: Text('이미지가 없습니다.')),
                   ),
                 const SizedBox(height: 16),
                 Text(
                   news.title,
-                  style: const TextStyle(
-                      fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    fontSize: screenSize.width * 0.06, // 동적으로 폰트 크기 설정
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 const SizedBox(height: 16),
                 Text(
                   news.contents,
-                  style: const TextStyle(fontSize: 16),
+                  style: TextStyle(
+                      fontSize: screenSize.width * 0.045), // 동적으로 폰트 크기 설정
                 ),
                 const SizedBox(height: 16),
                 Row(
