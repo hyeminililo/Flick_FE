@@ -3,6 +3,7 @@ import 'package:flick_frontend/challenge/view/challenge_screen.dart';
 import 'package:flick_frontend/members/view/myPage/profileScreen.dart';
 import 'package:flick_frontend/news/view/ecology_screen.dart';
 import 'package:flick_frontend/ranking/view/generalRank_screen.dart';
+import 'package:flick_frontend/ranking/view/rank_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flick_frontend/env.dart';
@@ -55,8 +56,8 @@ class _MainScreenState extends State<MainScreen> {
   final List<Widget> _screens = [
     EcologyScreen(),
     ChallengeScreen(),
+    RankScreen(),
     MyPageScreen2(),
-    GeneralRankScreen(),
   ];
 
   void _onItemTapped(int index) {
@@ -83,12 +84,12 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Challenge',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'MyPage',
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.leaderboard),
             label: 'Ranking',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'MyPage',
           ),
         ],
         currentIndex: _selectedIndex,
