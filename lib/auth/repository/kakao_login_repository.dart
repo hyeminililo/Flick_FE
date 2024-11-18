@@ -2,7 +2,6 @@ import 'package:flick_frontend/auth/component/social_login.dart';
 import 'package:flick_frontend/auth/model/token_model.dart';
 import 'package:flick_frontend/auth/provider/auth_provider.dart';
 import 'package:flick_frontend/auth/repository/auth_repository.dart';
-import 'package:flick_frontend/members/provider/members_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
