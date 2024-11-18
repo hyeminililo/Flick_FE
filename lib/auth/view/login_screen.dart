@@ -2,11 +2,14 @@ import 'package:dio/dio.dart';
 import 'package:flick_frontend/auth/repository/auth_repository.dart';
 import 'package:flick_frontend/auth/repository/google_login_repository.dart';
 import 'package:flick_frontend/auth/repository/kakao_login_repository.dart';
+import 'package:flick_frontend/challenge/view/challenge_screen.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:flick_frontend/common/view/error/view/notUseService_error_screen.dart';
 import 'package:flick_frontend/members/provider/members_provider.dart';
+import 'package:flick_frontend/members/view/myPage/profileScreen.dart';
 import 'package:flick_frontend/members/view/onBoarding/PurposeOfUsage_screen.dart';
+import 'package:flick_frontend/ranking/view/generalRank_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flick_frontend/news/view/ecology_screen.dart';
@@ -64,7 +67,7 @@ class LoginScreen extends ConsumerWidget {
                       if (isLogined!) {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const EcologyScreen()));
+                            builder: (context) => ChallengeScreen()));
                       } else {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
