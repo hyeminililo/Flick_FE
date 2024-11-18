@@ -6,6 +6,7 @@ import 'package:flick_frontend/challenge/view/challenge_screen.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/common/dio/uri.dart';
 import 'package:flick_frontend/common/view/error/view/notUseService_error_screen.dart';
+import 'package:flick_frontend/main.dart';
 import 'package:flick_frontend/members/provider/members_provider.dart';
 import 'package:flick_frontend/members/view/myPage/profileScreen.dart';
 import 'package:flick_frontend/members/view/onBoarding/PurposeOfUsage_screen.dart';
@@ -67,7 +68,7 @@ class LoginScreen extends ConsumerWidget {
                       if (isLogined!) {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => ChallengeScreen()));
+                            builder: (context) => MainScreen()));
                       } else {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
