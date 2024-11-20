@@ -119,7 +119,7 @@ class MyPageScreen2 extends ConsumerWidget {
 
   Widget _buildStatCard(
       IconData icon, String stat, String description, double screenWidth) {
-    final double height = screenWidth * 0.16;
+    final double height = screenWidth * 0.20;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -127,7 +127,7 @@ class MyPageScreen2 extends ConsumerWidget {
       ),
       elevation: 2,
       child: SizedBox(
-        width: screenWidth * 0.12,
+        width: screenWidth * 0.14,
         height: height,
         child: Container(
           padding: const EdgeInsets.all(8),

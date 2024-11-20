@@ -13,7 +13,7 @@ class AllBadgesPage extends ConsumerWidget {
     // 전체 뱃지를 보여줌
     List<Widget> allBadges = (badgeCounts / 30).floor() > 0
         ? List.generate(
-            (badgeCounts / 30).floor(),
+            (badgeCounts.clamp(0, 300) / 30).floor(),
             (index) => GestureDetector(
               onTap: () {
                 _showBadgeDetails(context, index + 1); // 뱃지 클릭 시 상세 설명 표시
