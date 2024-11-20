@@ -25,7 +25,7 @@ class MyChallenge extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => DetailPage(
+                      builder: (context) => DetailMyChallengePage(
                         challengeId: challenge.challengeId,
                       ),
                     ),
@@ -34,6 +34,9 @@ class MyChallenge extends ConsumerWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.02,
+                    ),
                     ClipRRect(
                       borderRadius: BorderRadius.circular(12.0), // 둥근 모서리 추가
                       child: Image.network(
@@ -69,12 +72,18 @@ class MyChallenge extends ConsumerWidget {
                           const SizedBox(height: 4.0),
                           Row(
                             children: [
-                              Image.network(
-                                challenge.imageUrl ?? '', // 참가자 수 옆 이미지 URL 사용
-                                width: MediaQuery.of(context).size.width *
-                                    0.1, // 화면 너비의 10%
-                                errorBuilder: (context, error, stackTrace) =>
-                                    Icon(Icons.error), // 이미지 로드 실패 시 대체 아이콘
+                              // Image.network(
+                              //   challenge.imageUrl ?? '', // 참가자 수 옆 이미지 URL 사용
+                              //   width: MediaQuery.of(context).size.width *
+                              //       0.1, // 화면 너비의 10%
+                              //   errorBuilder: (context, error, stackTrace) =>
+                              //       Icon(Icons.error), // 이미지 로드 실패 시 대체 아이콘
+                              // ),
+                              Icon(
+                                Icons.people, // 사람 아이콘
+                                size: MediaQuery.of(context).size.width *
+                                    0.06, // 화면 너비의 10%
+                                color: Colors.grey, // 아이콘 색상 (원하는 색으로 변경 가능)
                               ),
                               const SizedBox(width: 4.0), // 간격 추가
                               Expanded(
