@@ -2,7 +2,7 @@ import 'package:flick_frontend/challenge/camera/provider/cameraControllerNotifie
 import 'package:flick_frontend/challenge/camera/takePictureScreen.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeDetails_provider.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
-import 'package:flick_frontend/challenge/view/%08challengeAuth_screen.dart';
+import 'package:flick_frontend/challenge/view/challengeAuth_screen.dart';
 import 'package:flick_frontend/challenge/view/challenge_screen.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
