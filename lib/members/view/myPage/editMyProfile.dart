@@ -1,5 +1,6 @@
 import 'package:flick_frontend/auth/provider/auth_provider.dart';
 import 'package:flick_frontend/auth/view/login_screen.dart';
+import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart'; // 추가된 import
 import 'editProfileScreen.dart'; // EditProfileScreen 페이지 import
@@ -15,7 +16,11 @@ class EditMyProfile extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('설정'),
+        title: const Text(
+          '설정',
+          style: TextStyle(fontSize: 20),
+        ),
+        centerTitle: true, // AppBar title을 중앙에 배치
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -30,7 +35,7 @@ class EditMyProfile extends ConsumerWidget {
           children: [
             const Text(
               '계정 설정',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             GestureDetector(
@@ -97,15 +102,18 @@ class EditMyProfile extends ConsumerWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[300], // 배경색
+                  backgroundColor: Colors.grey[400], // 배경색
                   padding: EdgeInsets.symmetric(
                     vertical: screenHeight * 0.02,
                     horizontal: screenWidth * 0.1, // 수평 패딩
                   ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // 둥근 정도 줄이기 (5픽셀)
+                  ),
                 ),
                 child: const Text(
                   '플릭 로그아웃',
-                  style: TextStyle(color: Colors.black), // 텍스트 색상
+                  style: TextStyle(color: MAIN_BG_COLOR), // 텍스트 색상
                 ),
               ),
             ),
