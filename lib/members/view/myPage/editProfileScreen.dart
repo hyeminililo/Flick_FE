@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flick_frontend/members/provider/member_state.dart';
 import 'package:flick_frontend/members/provider/members_provider.dart';
+import 'package:flick_frontend/members/view/myPage/profileScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
@@ -207,6 +208,23 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
                             ? File(selectedImage!.path)
                             : null,
                       );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      // builder: (context) => EditMyProfile(
+                      //   profileImage:
+                      //       selectedImage?.path ?? "assets/images/flick.png",
+                      // ),
+                      builder: (context) => MyPageScreen2(),
+                    ),
+                  );
+
+// MaterialPageRoute(
+                  //   builder: (context) => EditMyProfile(
+                  //     profileImage:
+                  //         selectedImage?.path ?? "assets/images/flick.png",
+                  //   ),
+                  // );
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: PRIMARY_COLOR,
