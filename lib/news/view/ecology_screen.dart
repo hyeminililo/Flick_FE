@@ -220,11 +220,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // EcologyScreen 클래스
-class EcologyScreen extends ConsumerWidget {
+class EcologyScreen extends ConsumerStatefulWidget {
   const EcologyScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  _EcologyScreenState createState() => _EcologyScreenState();
+}
+
+class _EcologyScreenState extends ConsumerState<EcologyScreen> {
+  late PageController _pageController;
+  int _currentPage = 0; // 현재 페이지 인덱스를 저장
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(); // PageController 초기화
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose(); // PageController 해제
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -243,31 +263,36 @@ class EcologyScreen extends ConsumerWidget {
         ),
         backgroundColor: Colors.white,
         elevation: 0,
-        centerTitle: false,
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: screenHeight * 0.02), // 2% 여백
-            // 첫 번째 컨테이너: 랜덤으로 4개의 기사 간단히 보여주는 부분
+            SizedBox(height: screenHeight * 0.02),
+            // 첫 번째 컨테이너: 랜덤 뉴스 표시
             newsListAsyncValue.when(
               data: (newsList) {
                 final randomNews = (newsList..shuffle()).take(4).toList();
+                if (randomNews.isEmpty) return SizedBox.shrink();
                 return Column(
                   children: [
-                    // PageView 부분
+                    // PageView
                     SizedBox(
-                      height: screenHeight * 0.2, // 화면 높이의 20%로 설정
+                      height: screenHeight * 0.2, // 화면 높이 20%
                       child: PageView.builder(
+                        controller: _pageController,
                         itemCount: randomNews.length,
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentPage = index;
+                          });
+                        },
                         itemBuilder: (context, index) {
                           final newsItem = randomNews[index];
                           return Container(
                             margin: EdgeInsets.symmetric(
-                                horizontal: screenWidth * 0.05), // 5% 여백
-                            padding:
-                                EdgeInsets.all(screenWidth * 0.02), // 2% 패딩
+                                horizontal: screenWidth * 0.05),
+                            padding: EdgeInsets.all(screenWidth * 0.02),
                             decoration: BoxDecoration(
                               color: PRIMARY_COLOR,
                               borderRadius: BorderRadius.circular(16),
@@ -282,18 +307,18 @@ class EcologyScreen extends ConsumerWidget {
                                     children: [
                                       Text(
                                         newsItem.title ?? '제목 없음',
-                                        style: const TextStyle(
-                                            fontSize: 18,
+                                        style: TextStyle(
+                                            fontSize: screenHeight * 0.02,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.white),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 1,
                                       ),
-                                      const SizedBox(height: 4),
+                                      SizedBox(height: screenHeight * 0.005),
                                       Text(
                                         newsItem.contents ?? '내용 없음',
-                                        style: const TextStyle(
-                                            fontSize: 14,
+                                        style: TextStyle(
+                                            fontSize: screenHeight * 0.015,
                                             color: Colors.white70),
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2,
@@ -303,11 +328,12 @@ class EcologyScreen extends ConsumerWidget {
                                 ),
                                 if (newsItem.picture != null)
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 8.0),
+                                    padding: EdgeInsets.only(
+                                        left: screenWidth * 0.02),
                                     child: Image.network(
                                       newsItem.picture!,
-                                      width: screenWidth * 0.15, // 15% 너비
-                                      height: screenHeight * 0.1, // 10% 높이
+                                      width: screenWidth * 0.1,
+                                      height: screenWidth * 0.1,
                                     ),
                                   ),
                               ],
@@ -316,15 +342,16 @@ class EcologyScreen extends ConsumerWidget {
                         },
                       ),
                     ),
-                    // 페이지 인디케이터 추가
+                    // DotsIndicator
                     SizedBox(
-                      height: 20,
+                      height: screenHeight * 0.03,
                       child: Center(
                         child: DotsIndicator(
                           dotsCount: randomNews.length,
+                          position: _currentPage,
                           decorator: const DotsDecorator(
-                            color: Colors.grey, // 비활성화된 점 색상
-                            activeColor: PRIMARY_COLOR, // 활성화된 점 색상
+                            color: Colors.grey,
+                            activeColor: PRIMARY_COLOR,
                           ),
                         ),
                       ),
@@ -336,68 +363,67 @@ class EcologyScreen extends ConsumerWidget {
               error: (error, stackTrace) =>
                   Center(child: Text('Error: $error')),
             ),
-            SizedBox(height: screenHeight * 0.02), // 2% 여백
+            SizedBox(height: screenHeight * 0.01),
             Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: screenWidth * 0.04), // 4% 여백
-              child: const Text(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.04),
+              child: Text(
                 "최신 환경뉴스",
                 style: TextStyle(
-                  fontSize: 20.0,
+                  fontSize: screenHeight * 0.025,
                   fontWeight: FontWeight.bold,
                   fontFamily: "Pretendard",
                 ),
               ),
             ),
-            SizedBox(height: screenHeight * 0.02), // 2% 여백
-            // 두 번째 컨테이너: 전체 뉴스 리스트를 보여주는 부분
+            SizedBox(height: screenHeight * 0.01),
+            // 두 번째 컨테이너: 뉴스 리스트
             newsListAsyncValue.when(
               data: (newsList) {
                 return ListView.builder(
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: newsList.length,
                   itemBuilder: (context, index) {
                     final news = newsList[index];
-
                     return Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.02,
-                          vertical: screenHeight * 0.01), // 2% 가로, 1% 세로 여백
+                        horizontal: screenWidth * 0.02,
+                        vertical: screenHeight * 0.01,
+                      ),
                       child: Card(
                         elevation: 2,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0),
                         ),
                         child: ListTile(
-                          contentPadding:
-                              EdgeInsets.all(screenWidth * 0.02), // 2% 패딩
+                          contentPadding: EdgeInsets.all(screenWidth * 0.02),
                           leading: news.picture != null
                               ? ClipRRect(
                                   borderRadius: BorderRadius.circular(8.0),
                                   child: Image.network(
                                     news.picture!,
-                                    width: screenWidth * 0.2, // 20% 너비
-                                    height: screenHeight * 0.15, // 15% 높이
-                                    fit: BoxFit.fill,
+                                    width: screenWidth * 0.2,
+                                    height: screenHeight * 0.1,
+                                    fit: BoxFit.cover,
                                   ),
                                 )
-                              : const SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: Placeholder(),
+                              : SizedBox(
+                                  width: screenWidth * 0.2,
+                                  height: screenHeight * 0.1,
+                                  child: const Placeholder(),
                                 ),
                           title: Text(
                             news.title ?? '제목 없음',
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: screenHeight * 0.02),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                           ),
                           subtitle: Row(
                             children: [
                               const Icon(Icons.visibility, size: 16),
-                              const SizedBox(width: 5),
+                              SizedBox(width: screenWidth * 0.01),
                               Text(news.viewCount.toString() ?? '0'),
                             ],
                           ),
