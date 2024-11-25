@@ -72,13 +72,6 @@ class MyChallenge extends ConsumerWidget {
                           const SizedBox(height: 4.0),
                           Row(
                             children: [
-                              // Image.network(
-                              //   challenge.imageUrl ?? '', // 참가자 수 옆 이미지 URL 사용
-                              //   width: MediaQuery.of(context).size.width *
-                              //       0.1, // 화면 너비의 10%
-                              //   errorBuilder: (context, error, stackTrace) =>
-                              //       Icon(Icons.error), // 이미지 로드 실패 시 대체 아이콘
-                              // ),
                               Icon(
                                 Icons.people, // 사람 아이콘
                                 size: MediaQuery.of(context).size.width *

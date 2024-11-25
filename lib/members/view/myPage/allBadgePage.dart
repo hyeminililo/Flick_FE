@@ -1,3 +1,4 @@
+import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -86,9 +87,9 @@ class AllBadgesPage extends ConsumerWidget {
                   Navigator.pop(context); // 확인 버튼 클릭 시 모달 닫기
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: PRIMARY_COLOR,
                   padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.2, // 화면 너비의 20% 패딩
+                    horizontal: screenWidth * 0.4, // 화면 너비의 20% 패딩
                     vertical: screenHeight * 0.02, // 화면 높이의 2% 패딩
                   ),
                   shape: RoundedRectangleBorder(

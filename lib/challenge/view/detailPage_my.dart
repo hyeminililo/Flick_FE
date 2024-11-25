@@ -106,7 +106,7 @@ class DetailMyChallengePage extends ConsumerWidget {
                 ),
                 Spacer(),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(7.0, 0, 0, 0),
+                  padding: const EdgeInsets.fromLTRB(15.0, 0, 0, 0),
                   child: Row(
                     children: [
                       ElevatedButton(

@@ -48,22 +48,13 @@ class NewsDetailScreen extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           const SizedBox(height: 16),
-                          Text(
-                            news.title,
-                            style: TextStyle(
-                              fontSize:
-                                  screenSize.width * 0.06, // 동적으로 폰트 크기 설정
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
                           Container(
                             padding: EdgeInsets.symmetric(
                               vertical: screenSize.height * 0.005, // 동적 세로 패딩
                               horizontal: screenSize.width * 0.03, // 동적 가로 패딩
                             ),
                             decoration: BoxDecoration(
-                              color: Colors.green.shade400, // 배경색
+                              color: PRIMARY_COLOR, // 배경색
                               borderRadius: BorderRadius.circular(15), // 둥근 모서리
                             ),
                             child: Text(
@@ -75,6 +66,16 @@ class NewsDetailScreen extends ConsumerWidget {
                               ),
                             ),
                           ),
+                          const SizedBox(height: 10),
+                          Text(
+                            news.title,
+                            style: TextStyle(
+                              fontSize:
+                                  screenSize.width * 0.06, // 동적으로 폰트 크기 설정
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+
                           const SizedBox(height: 10),
                           Row(
                             children: [
