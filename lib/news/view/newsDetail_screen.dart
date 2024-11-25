@@ -87,7 +87,7 @@ class NewsDetailScreen extends ConsumerWidget {
                                 ),
                               ),
                               SizedBox(
-                                width: screenSize.width * 0.37,
+                                width: screenSize.width * 0.33,
                               ),
                               const Icon(Icons.visibility),
                               SizedBox(width: 5),
