@@ -343,19 +343,19 @@ class _EcologyScreenState extends ConsumerState<EcologyScreen> {
                       ),
                     ),
                     // DotsIndicator
-                    SizedBox(
-                      height: screenHeight * 0.03,
-                      child: Center(
-                        child: DotsIndicator(
-                          dotsCount: randomNews.length,
-                          position: _currentPage,
-                          decorator: const DotsDecorator(
-                            color: Colors.grey,
-                            activeColor: PRIMARY_COLOR,
-                          ),
-                        ),
-                      ),
-                    ),
+                    // SizedBox(
+                    //   height: screenHeight * 0.03,
+                    //   child: Center(
+                    //     child: DotsIndicator(
+                    //       dotsCount: randomNews.length,
+                    //       position: _currentPage,
+                    //       decorator: const DotsDecorator(
+                    //         color: Colors.grey,
+                    //         activeColor: PRIMARY_COLOR,
+                    //       ),
+                    //     ),
+                    //   ),
+                    // ),
                   ],
                 );
               },
