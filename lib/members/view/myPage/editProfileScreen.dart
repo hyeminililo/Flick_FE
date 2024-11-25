@@ -58,14 +58,20 @@ class _EditProfileScreenState extends ConsumerState<EditProfileScreen> {
       appBar: AppBar(
         title: Row(
           children: [
+            SizedBox(
+              width: screenWidth * 0.15,
+            ),
             Image.asset(
               "assets/images/editMyPage.png",
               width: screenWidth * 0.05,
               height: screenHeight * 0.05,
             ),
-            const Text(' 내 프로필 수정'),
+            const Text(
+              ' 내 프로필 수정',
+            ),
           ],
         ),
+        centerTitle: true,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
