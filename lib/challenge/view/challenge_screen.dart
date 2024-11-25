@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flick_frontend/challenge/view/myChallenge.dart';
 import 'package:flick_frontend/challenge/view/openChallenge.dart';
 import 'package:flutter/material.dart';
