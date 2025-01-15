@@ -23,8 +23,19 @@ if (flutterVersionName == null) {
     flutterVersionName = "1.0"
 }
 
+def dartEnvironmentVariables = [:]
+
+if(project.hasProperty('flutterEnvPath')) {
+    def envFile = file("${project.rootDir}/${project.flutterEnvPath}")
+    if (envFile.exists()) {
+        envFile.readLines().each {line ->
+            def (key, value) = line.trim().split('=')
+            dartEnvironmentVariables[key] = value}
+    }
+}
+
 android {
-    namespace = "com.example.flick_frontend"
+    namespace = "com.onef.flick"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -35,20 +46,33 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.flick_frontend"
+        applicationId = "com.onef.flick"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdk = flutter.minSdkVersion
+        minSdk = 21
         targetSdk = flutter.targetSdkVersion
         versionCode = flutterVersionCode.toInteger()
         versionName = flutterVersionName
+        minSdkVersion 21 
+        resValue "string", "kakao_native_app_key", dartEnvironmentVariables.KAKAO_NATIVE_APP_KEY_ANDROID ?: ""
+        
     }
+    signingConfigs {
+        release {
+            def properties = new Properties()
+            properties.load(new FileInputStream(file("keystore.properties")))
 
+            storeFile file(properties["key.store.file"])
+            storePassword properties["key.store.password"]
+            keyAlias properties["key.alias.name"]
+            keyPassword properties["key.alias.password"]
+        }
+    }
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            signingConfig = signingConfigs.release
         }
     }
 }
