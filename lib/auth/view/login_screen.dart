@@ -148,7 +148,8 @@ class LoginScreen extends ConsumerWidget {
                       if (isLogined!) {
                         print("isLogiend $isLogined");
                         await Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const EcologyScreen(),
+                          // 11.25 17 : 29 수정 부분
+                          builder: (context) => const MainScreen(),
                         ));
                       } else {
                         print("isLogiend $isLogined");

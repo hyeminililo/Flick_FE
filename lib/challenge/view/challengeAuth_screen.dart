@@ -48,6 +48,8 @@ class _ChallengeAuthImagesScreenState
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     // 챌린지 ID와 선택된 날짜를 기반으로 ChallengeImageParams 생성
     final params = ChallengeImageParams(
       challengeId: widget.challengeId,
@@ -73,61 +75,71 @@ class _ChallengeAuthImagesScreenState
             data: (memberPictureUrls) {
               if (memberPictureUrls == null ||
                   memberPictureUrls.memberPictureUrls.isEmpty) {
-                return const Center(child: Text("참여자 인증 사진이 없습니다."));
+                return const Center(
+                  child: Text(
+                    "참여자 인증 사진이 없습니다.",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                );
               }
-
-              return ListView.builder(
-                padding: const EdgeInsets.all(8.0),
-                itemCount: memberPictureUrls.memberPictureUrls.length,
-                itemBuilder: (context, index) {
-                  return Card(
-                    margin: const EdgeInsets.symmetric(vertical: 8.0),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    child: Column(
+              return Padding(
+                padding: EdgeInsets.all(screenWidth * 0.02),
+                child: GridView.builder(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: screenWidth * 0.02,
+                    mainAxisSpacing: screenWidth * 0.02,
+                    childAspectRatio: 1.0,
+                  ),
+                  itemCount: memberPictureUrls.memberPictureUrls.length,
+                  itemBuilder: (context, index) {
+                    return Stack(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(10.0),
+                          borderRadius: BorderRadius.circular(12.0),
                           child: Image.network(
                             memberPictureUrls.memberPictureUrls[index],
                             fit: BoxFit.cover,
+                            width: double.infinity,
+                            height: double.infinity,
                             errorBuilder: (context, error, stackTrace) {
                               return Container(
                                 color: Colors.grey,
-                                height: 200,
                                 child: const Center(
-                                  child: Text('이미지 로드 실패'),
+                                  child: Icon(
+                                    Icons.broken_image,
+                                    color: Colors.white,
+                                    size: 40,
+                                  ),
                                 ),
                               );
                             },
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            '참여자 ${index + 1}',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
                       ],
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               );
             },
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (error, stackTrace) => Center(child: Text('오류 발생: $error')),
+            loading: () => const Center(
+              child: CircularProgressIndicator(color: Colors.white),
+            ),
+            error: (error, stack) => Center(
+              child: Text(
+                "오류 발생: $error",
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
           ),
 
           // 날짜 선택 위젯
           Positioned(
-            left: MediaQuery.of(context).size.width * 0.05,
+            left: screenWidth * 0.05,
             top: MediaQuery.of(context).size.height * 0.1,
             child: Container(
-              width: MediaQuery.of(context).size.width * 0.1,
+              width: screenWidth * 0.1,
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(12.0),
@@ -150,7 +162,7 @@ class _ChallengeAuthImagesScreenState
                           day.toString(),
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: MediaQuery.of(context).size.width * 0.04,
+                            fontSize: screenWidth * 0.04,
                             fontWeight: FontWeight.bold,
                           ),
                         ),

@@ -2,16 +2,16 @@ import 'package:flick_frontend/challenge/camera/provider/cameraControllerNotifie
 import 'package:flick_frontend/challenge/camera/takePictureScreen.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeDetails_provider.dart';
 import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
-import 'package:flick_frontend/challenge/view/%08challengeAuth_screen.dart';
+import 'package:flick_frontend/challenge/view/challengeAuth_screen.dart';
 import 'package:flick_frontend/challenge/view/challenge_screen.dart';
 import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class DetailPage extends ConsumerWidget {
+class DetailOpenPage extends ConsumerWidget {
   final int challengeId;
 
-  const DetailPage({super.key, required this.challengeId});
+  const DetailOpenPage({super.key, required this.challengeId});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,13 +29,13 @@ class DetailPage extends ConsumerWidget {
           }
 
           return Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.network(
                   challenge.imageUrl ?? '',
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fitWidth,
                   width: double.infinity,
                   height: 300,
                   errorBuilder: (context, error, stackTrace) =>
@@ -63,7 +63,7 @@ class DetailPage extends ConsumerWidget {
                 ),
                 const SizedBox(height: 16.0),
                 const Text(
-                  "나의 챌린지",
+                  "오픈 챌린지",
                   style: TextStyle(
                     fontSize: 17.0,
                     color: PRIMARY_COLOR,
@@ -75,86 +75,115 @@ class DetailPage extends ConsumerWidget {
                   style: const TextStyle(
                       fontSize: 24, fontWeight: FontWeight.bold),
                 ),
-                const SizedBox(height: 16.0),
                 Row(
                   children: [
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ChallengeScreen(),
-                          ),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        side: const BorderSide(color: PRIMARY_COLOR),
-                        backgroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.115,
-                          vertical: screenHeight * 0.023,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      child: const Text(
-                        "나중에 참여",
-                        style: TextStyle(color: PRIMARY_COLOR),
-                      ),
+                    Icon(
+                      Icons.people, // 사람 아이콘
+                      size: MediaQuery.of(context).size.width *
+                          0.06, // 화면 너비의 10%
+                      color: Colors.grey, // 아이콘 색상 (원하는 색으로 변경 가능)
                     ),
-                    SizedBox(width: screenWidth * 0.03),
-                    ElevatedButton(
-                      onPressed: () async {
-                        final challengeService =
-                            ref.read(challengeServiceProvider);
-
-                        await challengeService.joinChallenge(challengeId);
-
-                        // 카메라 초기화
-                        try {
-                          await ref
-                              .read(cameraControllerNotifierProvider.notifier)
-                              .initializeCamera();
-
-                          final cameraController =
-                              ref.read(cameraControllerNotifierProvider);
-
-                          // 카메라 화면으로 이동
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => TakePictureScreen(
-                                title: challenge.title,
-                                challengeId: challengeId,
-                              ),
-                            ),
-                          );
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('카메라 초기화 실패'),
-                            ),
-                          );
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        side: const BorderSide(color: PRIMARY_COLOR),
-                        backgroundColor: PRIMARY_COLOR,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: screenWidth * 0.19,
-                          vertical: screenHeight * 0.023,
+                    const SizedBox(width: 4.0), // 간격 추가
+                    Expanded(
+                      child: Text(
+                        '${challenge.joinMembersCount ?? 0}명 참가',
+                        style: const TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                      ),
-                      child: const Text(
-                        "참여",
-                        style: TextStyle(color: SUB_COLOR),
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ),
                   ],
+                ),
+                SizedBox(height: screenHeight * 0.02),
+                Text(
+                  challenge.contents!,
+                  style: const TextStyle(fontSize: 16, color: Colors.grey),
+                ),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(7.0, 0, 0, 0),
+                  child: Row(
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ChallengeScreen(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          side: const BorderSide(color: PRIMARY_COLOR),
+                          backgroundColor: Colors.white,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.115,
+                            vertical: screenHeight * 0.023,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        child: const Text(
+                          "나중에 참여",
+                          style: TextStyle(color: PRIMARY_COLOR),
+                        ),
+                      ),
+                      SizedBox(width: screenWidth * 0.03),
+                      ElevatedButton(
+                        onPressed: () async {
+                          final challengeService =
+                              ref.read(challengeServiceProvider);
+
+                          await challengeService.joinChallenge(challengeId);
+
+                          // 카메라 초기화
+                          try {
+                            await ref
+                                .read(cameraControllerNotifierProvider.notifier)
+                                .initializeCamera();
+
+                            final cameraController =
+                                ref.read(cameraControllerNotifierProvider);
+
+                            // 카메라 화면으로 이동
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TakePictureScreen(
+                                  title: challenge.title,
+                                  challengeId: challengeId,
+                                ),
+                              ),
+                            );
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text('카메라 초기화 실패'),
+                              ),
+                            );
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          side: const BorderSide(color: PRIMARY_COLOR),
+                          backgroundColor: PRIMARY_COLOR,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: screenWidth * 0.19,
+                            vertical: screenHeight * 0.023,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(15),
+                          ),
+                        ),
+                        child: const Text(
+                          "참여",
+                          style: TextStyle(color: SUB_COLOR),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),

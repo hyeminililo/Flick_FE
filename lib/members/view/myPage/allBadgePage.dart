@@ -1,3 +1,4 @@
+import 'package:flick_frontend/common/const/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -36,10 +37,10 @@ class AllBadgesPage extends ConsumerWidget {
             ),
           )
         : [];
-
+// 이 부분에 대해서 의문 : 나의 활동 뱃지를 보여주는 건지 전체를 보여주는 건지
     return Scaffold(
       appBar: AppBar(
-        title: const Text("전체 뱃지"),
+        title: const Text("나의 활동 뱃지"),
       ),
       body: Padding(
         padding: EdgeInsets.all(screenWidth * 0.04), // 화면 너비의 4% 패딩
@@ -67,8 +68,8 @@ class AllBadgesPage extends ConsumerWidget {
               SizedBox(height: screenHeight * 0.02),
               Image.asset(
                 "assets/images/badge$badgeIndex.png",
-                width: screenWidth * 0.15, // 화면 너비의 15%로 설정
-                height: screenWidth * 0.15, // 화면 너비의 15%로 설정
+                width: screenWidth * 0.2, // 화면 너비의 15%로 설정
+                height: screenWidth * 0.2, // 화면 너비의 15%로 설정
               ),
               Text(
                 '${badgeIndex * 30} p 뱃지',
@@ -86,9 +87,9 @@ class AllBadgesPage extends ConsumerWidget {
                   Navigator.pop(context); // 확인 버튼 클릭 시 모달 닫기
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
+                  backgroundColor: PRIMARY_COLOR,
                   padding: EdgeInsets.symmetric(
-                    horizontal: screenWidth * 0.2, // 화면 너비의 20% 패딩
+                    horizontal: screenWidth * 0.4, // 화면 너비의 20% 패딩
                     vertical: screenHeight * 0.02, // 화면 높이의 2% 패딩
                   ),
                   shape: RoundedRectangleBorder(
