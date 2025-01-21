@@ -4,6 +4,7 @@ import 'package:flick_frontend/challenge/model/picture/memberPictureUrls_model.d
 import 'package:flick_frontend/challenge/provider/provs/challengeMain_provider_real.dart';
 import 'package:flick_frontend/challenge/repository/service/challenge_service_real.dart';
 import 'package:flick_frontend/members/model/members_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // 마이챌린지 리스트 같은데
@@ -79,6 +80,6 @@ final challengeAuthImagesProvider =
   final challengeAuthResult =
       await challengeDetailsService.fetchUserChallengeAuthImages(
           params.challengeId, params.month, params.day);
-  print("챌린지 Auth 리스트입니다 : ${challengeAuthResult!.memberPictureUrls}");
+  debugPrint("챌린지 Auth 리스트입니다 : ${challengeAuthResult!.memberPictureUrls}");
   return challengeAuthResult;
 });

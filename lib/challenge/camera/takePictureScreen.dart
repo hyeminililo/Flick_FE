@@ -118,8 +118,10 @@ class TakePictureScreen extends ConsumerWidget {
             );
 
             return imageCountAsync.when(
-              data: (count) =>
-                  Text('+$count', style: const TextStyle(fontSize: 16)),
+              data: (count) => Text('참여자\n모아보기',
+                  style: const TextStyle(fontSize: 10, color: MAIN_BG_COLOR)),
+
+              // Text('+$count', style: const TextStyle(fontSize: 16)),
               loading: () => const CircularProgressIndicator(
                 color: Colors.white,
               ),

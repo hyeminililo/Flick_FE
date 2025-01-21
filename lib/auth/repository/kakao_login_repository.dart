@@ -23,6 +23,7 @@ class KakaoLoginRepository implements SocialLogin {
       if (isInstalled) {
         print('kakaoTalk is installed');
         authToken = await UserApi.instance.loginWithKakaoTalk();
+        print("카카오톡으로 로그인 성공");
       } else {
         print('kakaoTalk is not installed');
         authToken = await UserApi.instance.loginWithKakaoAccount();
